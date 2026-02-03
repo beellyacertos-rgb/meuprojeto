@@ -1,1 +1,152 @@
-h1 { font-family: Arial, Helvetica, sans-serif; }
+/* Estilos adicionais para o app de semi jóias */
+
+/* Smooth scroll */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Melhorias para mobile */
+@media (max-width: 768px) {
+    .btn-mobile {
+        font-size: 1.1rem;
+        padding: 1.25rem;
+    }
+    
+    .form-input {
+        font-size: 16px; /* Evita zoom no iOS */
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+}
+
+/* Animações */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.app-container > div:not(.hidden) {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Loading states */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Destaque para campos obrigatórios */
+input:required:invalid {
+    border-color: #fca5a5;
+}
+
+input:required:valid {
+    border-color: #86efac;
+}
+
+/* Melhorias para tabelas em mobile */
+@media (max-width: 640px) {
+    table {
+        font-size: 0.8rem;
+    }
+    
+    th, td {
+        padding: 0.5rem !important;
+    }
+}
+
+/* Efeito hover nos botões */
+button:hover:not(:disabled) {
+    filter: brightness(1.1);
+}
+
+button:active:not(:disabled) {
+    filter: brightness(0.9);
+}
+
+/* Imagens responsivas */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Cards */
+.card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 1.5rem;
+}
+
+/* Badge */
+.badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.badge-success {
+    background-color: #86efac;
+    color: #166534;
+}
+
+.badge-danger {
+    background-color: #fca5a5;
+    color: #991b1b;
+}
+
+/* Melhorias para inputs de cor */
+input[type="color"] {
+    height: 50px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* Transições suaves */
+* {
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+button, a, input[type="file"] {
+    cursor: pointer;
+}
+
+/* Focus visible para acessibilidade */
+*:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+}
+
+/* Print styles */
+@media print {
+    .btn-mobile, button, footer {
+        display: none !important;
+    }
+}
