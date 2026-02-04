@@ -192,17 +192,59 @@ app.get('/', (c) => {
     <title>Semi Jóias App</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="/static/style.css" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --color-primary: #8B4513;
+            --color-secondary: #DAA520;
+            --color-tertiary: #FFD700;
+        }
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             overflow-x: hidden;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            background-color: var(--color-primary);
         }
         .app-container { flex: 1; }
+        
+        /* Bandeiras de idioma */
+        .language-switcher {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+        }
+        .flag-btn {
+            width: 40px;
+            height: 30px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            border-radius: 4px;
+            transition: all 0.3s;
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        .flag-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+        }
+        .flag-btn.active-flag {
+            border-color: #FFD700;
+            box-shadow: 0 0 10px rgba(255,215,0,0.8);
+        }
+        .flag-br {
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMTQwIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iIzAwOTczOSIvPjxwYXRoIGZpbGw9IiNGRkRGMDAiIGQ9Ik0xMCAzMGwxODAgNDBMMTAgMTEweiIvPjxwYXRoIGZpbGw9IiNGRkRGMDAiIGQ9Ik0xOTAgMzBMMTAgNzBsMTgwIDQweiIvPjxjaXJjbGUgY3g9IjEwMCIgY3k9IjcwIiByPSIyNSIgZmlsbD0iIzAwMkY4NyIvPjwvc3ZnPg==');
+        }
+        .flag-py {
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMTIwIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjQwIiBmaWxsPSIjRDAyODJEIi8+PHJlY3QgeT0iNDAiIHdpZHRoPSIyMDAiIGhlaWdodD0iNDAiIGZpbGw9IiNGRkYiLz48cmVjdCB5PSI4MCIgd2lkdGg9IjIwMCIgaGVpZ2h0PSI0MCIgZmlsbD0iIzAxMTNCMCIvPjxjaXJjbGUgY3g9IjYwIiBjeT0iNjAiIHI9IjE1IiBmaWxsPSIjRkZEODAwIi8+PC9zdmc+');
+        }
+        
+        /* Botões mobile */
         .btn-mobile {
             width: 100%;
             padding: 1.5rem;
@@ -210,10 +252,56 @@ app.get('/', (c) => {
             border-radius: 12px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            text-align: center;
         }
         .btn-mobile:active {
             transform: scale(0.98);
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .btn-mobile-home {
+            width: 100%;
+            padding: 2rem 1.5rem;
+            font-size: 1.25rem;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            text-align: center;
+            background-color: white;
+            color: var(--color-primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 140px;
+        }
+        .btn-mobile-home:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+        }
+        .btn-mobile-admin {
+            width: 100%;
+            padding: 2rem 1.5rem;
+            font-size: 1.25rem;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            border: 3px solid #FFD700;
+            cursor: pointer;
+            font-weight: 700;
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 120px;
         }
         .form-input {
             width: 100%;
@@ -221,15 +309,20 @@ app.get('/', (c) => {
             border: 2px solid #e5e7eb;
             border-radius: 8px;
             font-size: 1rem;
+            background: white;
         }
         .form-input:focus {
             outline: none;
-            border-color: var(--color-primary);
+            border-color: var(--color-tertiary);
         }
         .logo-container {
             max-width: 200px;
             max-height: 200px;
             margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
         .logo-container img {
             width: 100%;
@@ -276,6 +369,7 @@ app.get('/', (c) => {
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            background: white;
         }
         .foto-item img {
             width: 100%;
@@ -297,74 +391,53 @@ app.get('/', (c) => {
             justify-content: center;
             cursor: pointer;
         }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @media (max-width: 768px) {
+            .btn-mobile {
+                font-size: 1.1rem;
+                padding: 1.25rem;
+            }
+            .form-input {
+                font-size: 16px;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- Seletor de Idioma -->
+    <div class="language-switcher">
+        <div class="flag-btn flag-br active-flag" data-lang="pt-BR" onclick="setLanguage('pt-BR')" title="Português (Brasil)"></div>
+        <div class="flag-btn flag-py" data-lang="es" onclick="setLanguage('es')" title="Español (Paraguay)"></div>
+    </div>
+
     <div class="app-container">
         <!-- TELA INICIAL -->
-        <div id="home-screen" class="p-6">
-            <div class="logo-container mb-6">
-                <img id="home-logo" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect fill='%238B4513' width='200' height='200'/%3E%3Ctext x='50%25' y='50%25' font-size='60' fill='%23FFD700' text-anchor='middle' dy='.3em'%3E💎%3C/text%3E%3C/svg%3E" alt="Logo">
-            </div>
-            <h1 id="home-title" class="text-3xl font-bold text-center mb-8">Semi Jóias</h1>
-            
-            <div class="space-y-4">
-                <button onclick="showConsultoraForm()" class="btn-mobile text-white" style="background-color: var(--color-primary)">
-                    <i class="fas fa-user-plus mr-2"></i> Consultoras
-                </button>
-                <button onclick="showRepresentanteForm()" class="btn-mobile text-white" style="background-color: var(--color-secondary)">
-                    <i class="fas fa-id-card mr-2"></i> Representante
-                </button>
-                <button onclick="showExplicacoes()" class="btn-mobile text-white" style="background-color: var(--color-tertiary)">
-                    <i class="fas fa-info-circle mr-2"></i> Explicações
-                </button>
-                <button onclick="showFotos()" class="btn-mobile bg-purple-600 text-white">
-                    <i class="fas fa-images mr-2"></i> Fotos
-                </button>
-                <button onclick="showAdminLogin()" class="btn-mobile bg-gray-700 text-white">
-                    <i class="fas fa-lock mr-2"></i> Área Administrativa
-                </button>
-            </div>
-        </div>
+        <div id="home-screen" class="p-6"></div>
 
         <!-- TELA DE LOGIN ADMIN -->
-        <div id="admin-login" class="hidden p-6">
-            <button onclick="showHome()" class="mb-4 text-blue-600">
-                <i class="fas fa-arrow-left mr-2"></i> Voltar
-            </button>
-            <h2 class="text-2xl font-bold mb-6">Área Administrativa</h2>
-            <div class="space-y-4">
-                <input type="password" id="admin-password" placeholder="Digite a senha" class="form-input">
-                <button onclick="login()" class="btn-mobile bg-green-600 text-white">
-                    <i class="fas fa-sign-in-alt mr-2"></i> Entrar
-                </button>
-            </div>
-        </div>
+        <div id="admin-login" class="hidden p-6"></div>
 
         <!-- PAINEL ADMIN -->
-        <div id="admin-panel" class="hidden p-6">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-bold">Painel Administrativo</h2>
-                <button onclick="logout()" class="text-red-600">
-                    <i class="fas fa-sign-out-alt mr-2"></i> Sair
-                </button>
-            </div>
-            
-            <div class="space-y-4">
-                <button onclick="showConfigScreen()" class="btn-mobile bg-blue-600 text-white">
-                    <i class="fas fa-cog mr-2"></i> Configurações
-                </button>
-                <button onclick="showConsultorasList()" class="btn-mobile bg-green-600 text-white">
-                    <i class="fas fa-users mr-2"></i> Gerenciar Consultoras
-                </button>
-                <button onclick="showRepresentantesList()" class="btn-mobile bg-purple-600 text-white">
-                    <i class="fas fa-id-badge mr-2"></i> Gerenciar Representantes
-                </button>
-                <button onclick="showFotosAdmin()" class="btn-mobile bg-orange-600 text-white">
-                    <i class="fas fa-camera mr-2"></i> Gerenciar Fotos
-                </button>
-            </div>
-        </div>
+        <div id="admin-panel" class="hidden p-6"></div>
 
         <!-- TELA DE CONFIGURAÇÕES -->
         <div id="config-screen" class="hidden p-6"></div>
@@ -392,20 +465,23 @@ app.get('/', (c) => {
     </div>
 
     <!-- RODAPÉ -->
-    <footer class="bg-gray-800 text-white p-4 mt-8">
+    <footer class="p-4 mt-8" style="background-color: var(--color-secondary)">
         <div class="flex items-center justify-between">
             <div>
                 <img id="footer-logo" src="" alt="" class="footer-logo hidden">
             </div>
             <div class="text-center flex-1">
-                <p class="font-semibold">Vsual Consultoria em Marketing</p>
-                <p class="text-sm">18 99667-6409</p>
+                <p class="font-semibold text-white">Vsual Consultoria em Marketing</p>
+                <p class="text-sm text-white">18 99667-6409</p>
             </div>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="/static/app.js"></script>
+    <script src="/static/app-extras.js"></script>
+    <script src="/static/app-pdf.js"></script>
 </body>
 </html>
   `)

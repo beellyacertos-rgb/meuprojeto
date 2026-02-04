@@ -1,4 +1,214 @@
-// Estado global
+// ================== SISTEMA DE TRADUÇÃO ==================
+const translations = {
+    'pt-BR': {
+        // Tela inicial
+        consultoras: 'Consultoras',
+        representantes: 'Representantes',
+        explicacoes: 'Explicações',
+        fotos: 'Fotos',
+        areaAdmin: 'Área Administrativa',
+        
+        // Login
+        loginTitle: 'Área Administrativa',
+        senhaPlaceholder: 'Digite a senha',
+        entrar: 'Entrar',
+        voltar: 'Voltar',
+        
+        // Admin Panel
+        painelAdmin: 'Painel Administrativo',
+        sair: 'Sair',
+        configuracoes: 'Configurações',
+        gerenciarConsultoras: 'Gerenciar Consultoras',
+        gerenciarRepresentantes: 'Gerenciar Representantes',
+        gerenciarFotos: 'Gerenciar Fotos',
+        
+        // Configurações
+        configTitle: 'Configurações do Sistema',
+        senhaAdmin: 'Senha do Administrador',
+        nomeEmpresa: 'Nome da Empresa',
+        whatsapp: 'WhatsApp (com DDD)',
+        corPrimaria: 'Cor Primária (Fundo)',
+        corSecundaria: 'Cor Secundária (Rodapé)',
+        corTerciaria: 'Cor Terciária (Botões)',
+        logoEmpresa: 'Logo da Empresa (200x200 pixels)',
+        logoRodape: 'Logo Rodapé (60x40 pixels)',
+        explicacoesText: 'Explicações',
+        salvar: 'Salvar Todas as Configurações',
+        
+        // Consultoras
+        consultorasTitle: 'Consultoras',
+        nova: 'Nova',
+        novo: 'Novo',
+        nome: 'Nome',
+        cpf: 'CPF',
+        telefone: 'Telefone',
+        acoes: 'Ações',
+        editar: 'Editar',
+        cadastro: 'Cadastro de',
+        nomeCompleto: 'Nome Completo',
+        endereco: 'Endereço',
+        bairro: 'Bairro',
+        cep: 'CEP',
+        cidade: 'Cidade',
+        nomePai: 'Nome do Pai',
+        nomeMae: 'Nome da Mãe',
+        telefoneRef: 'Telefone de Referência',
+        nomeRepresentante: 'Nome do Representante',
+        veiculo: 'Veículo',
+        excluir: 'Excluir',
+        gravar: 'Gravar',
+        gravarEnviar: 'Gravar e Enviar',
+        
+        // Relatórios
+        relatorios: 'Relatórios',
+        relatorioCidade: 'Relatório por Cidade',
+        relatorioNome: 'Relatório por Nome',
+        
+        // Mensagens
+        senhaIncorreta: 'Senha incorreta!',
+        erroLogin: 'Erro ao fazer login',
+        configSalva: 'Configurações salvas com sucesso!',
+        erroSalvar: 'Erro ao salvar configurações',
+        preenchaNome: 'Por favor, preencha o nome completo',
+        salvoSucesso: 'Salvo com sucesso!',
+        cadastrado: 'Cadastrado! Redirecionando para WhatsApp...',
+        desejaExcluir: 'Deseja realmente excluir',
+        excluido: 'Excluído com sucesso!',
+        selecioneArquivo: 'Por favor, selecione uma foto',
+        adicionado: 'Adicionado com sucesso!',
+        nenhumCadastro: 'Nenhum cadastro ainda.',
+        
+        // Termos
+        aceitaMostruario: 'Você está de acordo que se for aprovada em nossa avaliação, irá pegar um MOSTRUÁRIO contendo de 50 PEÇAS ou MAIS, e assinará um CONTRATO explicando todas as cláusulas sobre as VENDAS, ACERTOS, PENDÊNCIAS E DEVOLUÇÃO?',
+        aceitaContrato: 'Nós somos uma empresa PARCEIRA e por isto acreditamos na confiança de nossas CONSULTORAS. Mas a NÃO DEVOLUÇÃO do MOSTRUÁRIO ao TÉRMINO do CONTRATO, implicará em denúncia com boletim de ocorrência e AÇÃO JUDICIAL, por apropriação indébita artigo 168 do código penal, com previsão de até 1 ano de detenção. Você está ciente disto?',
+        sim: 'Sim',
+        nao: 'Não'
+    },
+    'es': {
+        // Tela inicial
+        consultoras: 'Consultoras',
+        representantes: 'Representantes',
+        explicacoes: 'Explicaciones',
+        fotos: 'Fotos',
+        areaAdmin: 'Área Administrativa',
+        
+        // Login
+        loginTitle: 'Área Administrativa',
+        senhaPlaceholder: 'Ingrese la contraseña',
+        entrar: 'Entrar',
+        voltar: 'Volver',
+        
+        // Admin Panel
+        painelAdmin: 'Panel Administrativo',
+        sair: 'Salir',
+        configuracoes: 'Configuraciones',
+        gerenciarConsultoras: 'Gestionar Consultoras',
+        gerenciarRepresentantes: 'Gestionar Representantes',
+        gerenciarFotos: 'Gestionar Fotos',
+        
+        // Configurações
+        configTitle: 'Configuraciones del Sistema',
+        senhaAdmin: 'Contraseña del Administrador',
+        nomeEmpresa: 'Nombre de la Empresa',
+        whatsapp: 'WhatsApp (con código de área)',
+        corPrimaria: 'Color Primario (Fondo)',
+        corSecundaria: 'Color Secundario (Pie de página)',
+        corTerciaria: 'Color Terciario (Botones)',
+        logoEmpresa: 'Logo de la Empresa (200x200 píxeles)',
+        logoRodape: 'Logo Pie de página (60x40 píxeles)',
+        explicacoesText: 'Explicaciones',
+        salvar: 'Guardar Todas las Configuraciones',
+        
+        // Consultoras
+        consultorasTitle: 'Consultoras',
+        nova: 'Nueva',
+        novo: 'Nuevo',
+        nome: 'Nombre',
+        cpf: 'CPF',
+        telefone: 'Teléfono',
+        acoes: 'Acciones',
+        editar: 'Editar',
+        cadastro: 'Registro de',
+        nomeCompleto: 'Nombre Completo',
+        endereco: 'Dirección',
+        bairro: 'Barrio',
+        cep: 'CEP',
+        cidade: 'Ciudad',
+        nomePai: 'Nombre del Padre',
+        nomeMae: 'Nombre de la Madre',
+        telefoneRef: 'Teléfono de Referencia',
+        nomeRepresentante: 'Nombre del Representante',
+        veiculo: 'Vehículo',
+        excluir: 'Eliminar',
+        gravar: 'Guardar',
+        gravarEnviar: 'Guardar y Enviar',
+        
+        // Relatórios
+        relatorios: 'Informes',
+        relatorioCidade: 'Informe por Ciudad',
+        relatorioNome: 'Informe por Nombre',
+        
+        // Mensagens
+        senhaIncorreta: '¡Contraseña incorrecta!',
+        erroLogin: 'Error al iniciar sesión',
+        configSalva: '¡Configuraciones guardadas con éxito!',
+        erroSalvar: 'Error al guardar configuraciones',
+        preenchaNome: 'Por favor, complete el nombre completo',
+        salvoSucesso: '¡Guardado con éxito!',
+        cadastrado: '¡Registrado! Redirigiendo a WhatsApp...',
+        desejaExcluir: '¿Realmente desea eliminar',
+        excluido: '¡Eliminado con éxito!',
+        selecioneArquivo: 'Por favor, seleccione una foto',
+        adicionado: '¡Agregado con éxito!',
+        nenhumCadastro: 'Ningún registro todavía.',
+        
+        // Termos
+        aceitaMostruario: '¿Está de acuerdo en que si es aprobada en nuestra evaluación, tomará un MUESTRARIO que contiene 50 PIEZAS o MÁS, y firmará un CONTRATO explicando todas las cláusulas sobre VENTAS, AJUSTES, PENDIENTES Y DEVOLUCIÓN?',
+        aceitaContrato: 'Somos una empresa ASOCIADA y por eso creemos en la confianza de nuestras CONSULTORAS. Pero la NO DEVOLUCIÓN del MUESTRARIO al TÉRMINO del CONTRATO, resultará en denuncia con informe policial y ACCIÓN JUDICIAL, por apropiación indebida artículo 168 del código penal, con previsión de hasta 1 año de detención. ¿Está consciente de esto?',
+        sim: 'Sí',
+        nao: 'No'
+    }
+};
+
+let currentLanguage = 'pt-BR';
+
+function t(key) {
+    return translations[currentLanguage][key] || key;
+}
+
+function setLanguage(lang) {
+    currentLanguage = lang;
+    localStorage.setItem('language', lang);
+    
+    // Atualizar bandeiras ativas
+    document.querySelectorAll('.flag-btn').forEach(btn => {
+        btn.classList.remove('active-flag');
+    });
+    document.querySelector(`[data-lang="${lang}"]`)?.classList.add('active-flag');
+    
+    // Recarregar tela atual
+    const currentScreen = document.querySelector('.app-container > div:not(.hidden)');
+    if (currentScreen) {
+        const screenId = currentScreen.id;
+        if (screenId === 'home-screen') {
+            loadHomeScreen();
+        } else if (screenId === 'admin-panel') {
+            showAdminPanel();
+        }
+        // Outras telas serão atualizadas quando abertas
+    }
+}
+
+// Carregar idioma salvo
+document.addEventListener('DOMContentLoaded', () => {
+    const savedLang = localStorage.getItem('language') || 'pt-BR';
+    currentLanguage = savedLang;
+    setTimeout(() => {
+        document.querySelector(`[data-lang="${savedLang}"]`)?.classList.add('active-flag');
+    }, 100);
+});
+
+// ================== ESTADO GLOBAL ==================
 let currentConfig = {};
 let isAdmin = false;
 let currentConsultoraId = null;
@@ -8,6 +218,7 @@ let currentRepresentanteId = null;
 document.addEventListener('DOMContentLoaded', async () => {
     await loadConfig();
     applyTheme();
+    loadHomeScreen();
 });
 
 // ================== CONFIGURAÇÃO E TEMA ==================
@@ -19,15 +230,19 @@ async function loadConfig() {
         
         // Atualizar elementos da home
         if (currentConfig.nome_empresa) {
-            document.getElementById('home-title').textContent = currentConfig.nome_empresa;
+            const title = document.getElementById('home-title');
+            if (title) title.textContent = currentConfig.nome_empresa;
         }
         if (currentConfig.logo_empresa) {
-            document.getElementById('home-logo').src = currentConfig.logo_empresa;
+            const logo = document.getElementById('home-logo');
+            if (logo) logo.src = currentConfig.logo_empresa;
         }
         if (currentConfig.logo_rodape) {
             const footerLogo = document.getElementById('footer-logo');
-            footerLogo.src = currentConfig.logo_rodape;
-            footerLogo.classList.remove('hidden');
+            if (footerLogo) {
+                footerLogo.src = currentConfig.logo_rodape;
+                footerLogo.classList.remove('hidden');
+            }
         }
     } catch (error) {
         console.error('Erro ao carregar configurações:', error);
@@ -35,9 +250,105 @@ async function loadConfig() {
 }
 
 function applyTheme() {
-    document.documentElement.style.setProperty('--color-primary', currentConfig.cor_primaria || '#8B4513');
-    document.documentElement.style.setProperty('--color-secondary', currentConfig.cor_secundaria || '#DAA520');
-    document.documentElement.style.setProperty('--color-tertiary', currentConfig.cor_terciaria || '#FFD700');
+    const primary = currentConfig.cor_primaria || '#8B4513';
+    const secondary = currentConfig.cor_secundaria || '#DAA520';
+    const tertiary = currentConfig.cor_terciaria || '#FFD700';
+    
+    document.documentElement.style.setProperty('--color-primary', primary);
+    document.documentElement.style.setProperty('--color-secondary', secondary);
+    document.documentElement.style.setProperty('--color-tertiary', tertiary);
+    
+    // Aplicar cor primária no fundo
+    document.body.style.backgroundColor = primary;
+    
+    // Aplicar cor secundária no rodapé
+    const footer = document.querySelector('footer');
+    if (footer) footer.style.backgroundColor = secondary;
+}
+
+// ================== ALERTAS CUSTOMIZADOS ==================
+function showAlert(message, type = 'info') {
+    const alertDiv = document.createElement('div');
+    alertDiv.className = 'custom-alert';
+    alertDiv.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        z-index: 10000;
+        max-width: 90%;
+        animation: slideIn 0.3s ease-out;
+        font-weight: 500;
+    `;
+    
+    const colors = {
+        success: { bg: currentConfig.cor_terciaria || '#FFD700', text: '#000' },
+        error: { bg: '#ef4444', text: '#fff' },
+        info: { bg: currentConfig.cor_secundaria || '#DAA520', text: '#000' }
+    };
+    
+    const color = colors[type] || colors.info;
+    alertDiv.style.backgroundColor = color.bg;
+    alertDiv.style.color = color.text;
+    alertDiv.textContent = message;
+    
+    document.body.appendChild(alertDiv);
+    
+    setTimeout(() => {
+        alertDiv.style.animation = 'slideOut 0.3s ease-in';
+        setTimeout(() => alertDiv.remove(), 300);
+    }, 3000);
+}
+
+function showConfirm(message, callback) {
+    const modal = document.createElement('div');
+    modal.className = 'custom-modal';
+    modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+        animation: fadeIn 0.2s;
+    `;
+    
+    const dialog = document.createElement('div');
+    dialog.style.cssText = `
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+        max-width: 90%;
+        width: 400px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    `;
+    
+    dialog.innerHTML = `
+        <p style="margin-bottom: 1.5rem; font-size: 1.1rem; color: #333;">${message}</p>
+        <div style="display: flex; gap: 1rem;">
+            <button id="confirm-yes" style="flex: 1; padding: 0.75rem; border: none; border-radius: 8px; background: ${currentConfig.cor_terciaria || '#FFD700'}; font-weight: 600; cursor: pointer;">${t('sim')}</button>
+            <button id="confirm-no" style="flex: 1; padding: 0.75rem; border: none; border-radius: 8px; background: #ccc; font-weight: 600; cursor: pointer;">${t('nao')}</button>
+        </div>
+    `;
+    
+    modal.appendChild(dialog);
+    document.body.appendChild(modal);
+    
+    document.getElementById('confirm-yes').onclick = () => {
+        modal.remove();
+        callback(true);
+    };
+    
+    document.getElementById('confirm-no').onclick = () => {
+        modal.remove();
+        callback(false);
+    };
 }
 
 // ================== NAVEGAÇÃO ==================
@@ -46,18 +357,104 @@ function showScreen(screenId) {
                     'consultoras-list', 'consultora-form', 'representantes-list', 
                     'representante-form', 'explicacoes-screen', 'fotos-screen', 'fotos-admin'];
     screens.forEach(id => {
-        document.getElementById(id).classList.add('hidden');
+        const el = document.getElementById(id);
+        if (el) el.classList.add('hidden');
     });
-    document.getElementById(screenId).classList.remove('hidden');
+    const target = document.getElementById(screenId);
+    if (target) target.classList.remove('hidden');
     window.scrollTo(0, 0);
 }
 
-function showHome() {
+function loadHomeScreen() {
+    const homeScreen = document.getElementById('home-screen');
+    if (!homeScreen) return;
+    
+    homeScreen.innerHTML = `
+        <div class="logo-container mb-6">
+            <img id="home-logo" src="${currentConfig.logo_empresa || 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 200 200\'%3E%3Crect fill=\'%238B4513\' width=\'200\' height=\'200\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' font-size=\'60\' fill=\'%23FFD700\' text-anchor=\'middle\' dy=\'.3em\'%3E💎%3C/text%3E%3C/svg%3E'}" alt="Logo">
+        </div>
+        <h1 id="home-title" class="text-3xl font-bold text-center mb-8 text-white">${currentConfig.nome_empresa || 'Semi Jóias'}</h1>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <button onclick="showConsultoraForm()" class="btn-mobile-home">
+                <i class="fas fa-user-plus text-2xl mb-2"></i>
+                <i class="fas fa-gem text-2xl mb-2 ml-2"></i>
+                <div>${t('consultoras')}</div>
+            </button>
+            <button onclick="showRepresentanteForm()" class="btn-mobile-home">
+                <i class="fas fa-id-card text-2xl mb-2"></i>
+                <i class="fas fa-handshake text-2xl mb-2 ml-2"></i>
+                <div>${t('representantes')}</div>
+            </button>
+            <button onclick="showExplicacoes()" class="btn-mobile-home">
+                <i class="fas fa-info-circle text-2xl mb-2"></i>
+                <i class="fas fa-book text-2xl mb-2 ml-2"></i>
+                <div>${t('explicacoes')}</div>
+            </button>
+            <button onclick="showFotos()" class="btn-mobile-home">
+                <i class="fas fa-images text-2xl mb-2"></i>
+                <i class="fas fa-camera text-2xl mb-2 ml-2"></i>
+                <div>${t('fotos')}</div>
+            </button>
+        </div>
+        
+        <button onclick="showAdminLogin()" class="btn-mobile-admin">
+            <i class="fas fa-lock text-2xl mb-2"></i>
+            <i class="fas fa-user-shield text-2xl mb-2 ml-2"></i>
+            <div>${t('areaAdmin')}</div>
+        </button>
+    `;
+    
     showScreen('home-screen');
 }
 
+function showHome() {
+    loadHomeScreen();
+}
+
 function showAdminLogin() {
+    const screen = document.getElementById('admin-login');
+    screen.innerHTML = `
+        <button onclick="showHome()" class="mb-4" style="color: ${currentConfig.cor_terciaria || '#FFD700'}">
+            <i class="fas fa-arrow-left mr-2"></i> ${t('voltar')}
+        </button>
+        <h2 class="text-2xl font-bold mb-6 text-white">${t('loginTitle')}</h2>
+        <div class="space-y-4">
+            <input type="password" id="admin-password" placeholder="${t('senhaPlaceholder')}" class="form-input">
+            <button onclick="login()" class="btn-mobile" style="background-color: ${currentConfig.cor_terciaria || '#FFD700'}">
+                <i class="fas fa-sign-in-alt mr-2"></i> ${t('entrar')}
+            </button>
+        </div>
+    `;
     showScreen('admin-login');
+}
+
+function showAdminPanel() {
+    const screen = document.getElementById('admin-panel');
+    screen.innerHTML = `
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-bold text-white">${t('painelAdmin')}</h2>
+            <button onclick="logout()" style="color: #ef4444">
+                <i class="fas fa-sign-out-alt mr-2"></i> ${t('sair')}
+            </button>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <button onclick="showConfigScreen()" class="btn-mobile" style="background-color: ${currentConfig.cor_terciaria || '#FFD700'}">
+                <i class="fas fa-cog mr-2"></i> ${t('configuracoes')}
+            </button>
+            <button onclick="showConsultorasList()" class="btn-mobile" style="background-color: ${currentConfig.cor_terciaria || '#FFD700'}">
+                <i class="fas fa-users mr-2"></i> ${t('gerenciarConsultoras')}
+            </button>
+            <button onclick="showRepresentantesList()" class="btn-mobile" style="background-color: ${currentConfig.cor_terciaria || '#FFD700'}">
+                <i class="fas fa-id-badge mr-2"></i> ${t('gerenciarRepresentantes')}
+            </button>
+            <button onclick="showFotosAdmin()" class="btn-mobile" style="background-color: ${currentConfig.cor_terciaria || '#FFD700'}">
+                <i class="fas fa-camera mr-2"></i> ${t('gerenciarFotos')}
+            </button>
+        </div>
+    `;
+    showScreen('admin-panel');
 }
 
 function logout() {
@@ -72,125 +469,102 @@ async function login() {
         const response = await axios.post('/api/login', { password });
         if (response.data.success) {
             isAdmin = true;
-            showScreen('admin-panel');
+            showAdminPanel();
         } else {
-            alert('Senha incorreta!');
+            showAlert(t('senhaIncorreta'), 'error');
         }
     } catch (error) {
-        alert('Erro ao fazer login');
+        showAlert(t('erroLogin'), 'error');
     }
 }
+
+// Continua no próximo arquivo...
 
 // ================== CONFIGURAÇÕES ==================
 async function showConfigScreen() {
     const screen = document.getElementById('config-screen');
     screen.innerHTML = `
-        <button onclick="showScreen('admin-panel')" class="mb-4 text-blue-600">
-            <i class="fas fa-arrow-left mr-2"></i> Voltar
+        <button onclick="showAdminPanel()" class="mb-4" style="color: ${currentConfig.cor_terciaria || '#FFD700'}">
+            <i class="fas fa-arrow-left mr-2"></i> ${t('voltar')}
         </button>
-        <h2 class="text-2xl font-bold mb-6">Configurações do Sistema</h2>
+        <h2 class="text-2xl font-bold mb-6 text-white">${t('configTitle')}</h2>
         
         <div class="space-y-6">
-            <!-- Senha -->
             <div>
-                <label class="block font-semibold mb-2">Senha do Administrador</label>
+                <label class="block font-semibold mb-2 text-white">${t('senhaAdmin')}</label>
                 <input type="password" id="config-password" value="${currentConfig.admin_password || ''}" class="form-input">
             </div>
-
-            <!-- Nome da Empresa -->
+            
             <div>
-                <label class="block font-semibold mb-2">Nome da Empresa</label>
+                <label class="block font-semibold mb-2 text-white">${t('nomeEmpresa')}</label>
                 <input type="text" id="config-empresa" value="${currentConfig.nome_empresa || ''}" class="form-input">
             </div>
-
-            <!-- WhatsApp -->
+            
             <div>
-                <label class="block font-semibold mb-2">WhatsApp (com DDD, ex: 5518996676409)</label>
+                <label class="block font-semibold mb-2 text-white">${t('whatsapp')}</label>
                 <input type="text" id="config-whatsapp" value="${currentConfig.whatsapp || ''}" class="form-input" placeholder="5518996676409">
             </div>
-
-            <!-- Cores -->
+            
             <div>
-                <label class="block font-semibold mb-2">Cor Primária</label>
+                <label class="block font-semibold mb-2 text-white">${t('corPrimaria')}</label>
                 <div class="color-picker-container">
                     <input type="color" id="config-cor1" value="${currentConfig.cor_primaria || '#8B4513'}" class="form-input" style="width: 100px;">
                     <div class="color-preview" style="background-color: ${currentConfig.cor_primaria || '#8B4513'}"></div>
                 </div>
             </div>
-
+            
             <div>
-                <label class="block font-semibold mb-2">Cor Secundária</label>
+                <label class="block font-semibold mb-2 text-white">${t('corSecundaria')}</label>
                 <div class="color-picker-container">
                     <input type="color" id="config-cor2" value="${currentConfig.cor_secundaria || '#DAA520'}" class="form-input" style="width: 100px;">
                     <div class="color-preview" style="background-color: ${currentConfig.cor_secundaria || '#DAA520'}"></div>
                 </div>
             </div>
-
+            
             <div>
-                <label class="block font-semibold mb-2">Cor Terciária</label>
+                <label class="block font-semibold mb-2 text-white">${t('corTerciaria')}</label>
                 <div class="color-picker-container">
                     <input type="color" id="config-cor3" value="${currentConfig.cor_terciaria || '#FFD700'}" class="form-input" style="width: 100px;">
                     <div class="color-preview" style="background-color: ${currentConfig.cor_terciaria || '#FFD700'}"></div>
                 </div>
             </div>
-
-            <!-- Logo Empresa -->
+            
             <div>
-                <label class="block font-semibold mb-2">Logo da Empresa (200x200 pixels)</label>
-                ${currentConfig.logo_empresa ? `<img src="${currentConfig.logo_empresa}" class="mb-2" style="max-width: 200px; max-height: 200px;">` : ''}
-                <input type="file" id="config-logo" accept="image/*" class="form-input" onchange="previewImage('config-logo')">
+                <label class="block font-semibold mb-2 text-white">${t('logoEmpresa')}</label>
+                ${currentConfig.logo_empresa ? `<img src="${currentConfig.logo_empresa}" class="mb-2" style="max-width: 200px; max-height: 200px; background: white; padding: 10px; border-radius: 8px;">` : ''}
+                <input type="file" id="config-logo" accept="image/*" class="form-input">
             </div>
-
-            <!-- Logo Rodapé -->
+            
             <div>
-                <label class="block font-semibold mb-2">Logo Rodapé (60x40 pixels)</label>
-                ${currentConfig.logo_rodape ? `<img src="${currentConfig.logo_rodape}" class="mb-2" style="max-width: 60px; max-height: 40px;">` : ''}
-                <input type="file" id="config-logo-rodape" accept="image/*" class="form-input" onchange="previewImage('config-logo-rodape')">
+                <label class="block font-semibold mb-2 text-white">${t('logoRodape')}</label>
+                ${currentConfig.logo_rodape ? `<img src="${currentConfig.logo_rodape}" class="mb-2" style="max-width: 60px; max-height: 40px; background: white; padding: 5px; border-radius: 4px;">` : ''}
+                <input type="file" id="config-logo-rodape" accept="image/*" class="form-input">
             </div>
-
-            <!-- Explicações -->
+            
             <div>
-                <label class="block font-semibold mb-2">Explicações</label>
+                <label class="block font-semibold mb-2 text-white">${t('explicacoesText')}</label>
                 <textarea id="config-explicacoes" class="form-input" rows="8">${currentConfig.explicacoes || ''}</textarea>
             </div>
-
-            <button onclick="saveConfig()" class="btn-mobile bg-green-600 text-white">
-                <i class="fas fa-save mr-2"></i> Salvar Todas as Configurações
+            
+            <button onclick="saveConfig()" class="btn-mobile" style="background-color: ${currentConfig.cor_terciaria || '#FFD700'}">
+                <i class="fas fa-save mr-2"></i> ${t('salvar')}
             </button>
         </div>
     `;
     
-    // Atualizar preview de cores ao mudar
     ['config-cor1', 'config-cor2', 'config-cor3'].forEach(id => {
-        document.getElementById(id).addEventListener('input', (e) => {
-            e.target.nextElementSibling.style.backgroundColor = e.target.value;
-        });
+        setTimeout(() => {
+            const el = document.getElementById(id);
+            if (el) {
+                el.addEventListener('input', (e) => {
+                    const preview = e.target.nextElementSibling;
+                    if (preview) preview.style.backgroundColor = e.target.value;
+                });
+            }
+        }, 100);
     });
     
     showScreen('config-screen');
-}
-
-function previewImage(inputId) {
-    const input = document.getElementById(inputId);
-    const file = input.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            const img = document.createElement('img');
-            img.src = e.target.result;
-            img.className = 'mt-2';
-            img.style.maxWidth = inputId.includes('rodape') ? '60px' : '200px';
-            img.style.maxHeight = inputId.includes('rodape') ? '40px' : '200px';
-            
-            const existingImg = input.previousElementSibling;
-            if (existingImg && existingImg.tagName === 'IMG') {
-                existingImg.src = e.target.result;
-            } else {
-                input.parentNode.insertBefore(img, input);
-            }
-        };
-        reader.readAsDataURL(file);
-    }
 }
 
 async function saveConfig() {
@@ -204,32 +578,29 @@ async function saveConfig() {
             cor_terciaria: document.getElementById('config-cor3').value,
             explicacoes: document.getElementById('config-explicacoes').value
         };
-
-        // Upload logo empresa
+        
         const logoFile = document.getElementById('config-logo').files[0];
         if (logoFile) {
             updates.logo_empresa = await fileToBase64(logoFile);
         }
-
-        // Upload logo rodapé
+        
         const logoRodapeFile = document.getElementById('config-logo-rodape').files[0];
         if (logoRodapeFile) {
             updates.logo_rodape = await fileToBase64(logoRodapeFile);
         }
-
-        // Salvar cada configuração
+        
         for (const [key, value] of Object.entries(updates)) {
             if (value !== undefined && value !== null && value !== '') {
                 await axios.put(`/api/config/${key}`, { value });
             }
         }
-
-        alert('Configurações salvas com sucesso!');
+        
+        showAlert(t('configSalva'), 'success');
         await loadConfig();
-        showScreen('admin-panel');
+        showAdminPanel();
     } catch (error) {
         console.error('Erro ao salvar configurações:', error);
-        alert('Erro ao salvar configurações');
+        showAlert(t('erroSalvar'), 'error');
     }
 }
 
@@ -238,31 +609,43 @@ async function showConsultorasList() {
     try {
         const response = await axios.get('/api/consultoras');
         const consultoras = response.data;
-
+        
         let html = `
-            <button onclick="showScreen('admin-panel')" class="mb-4 text-blue-600">
-                <i class="fas fa-arrow-left mr-2"></i> Voltar
+            <button onclick="showAdminPanel()" class="mb-4" style="color: ${currentConfig.cor_terciaria || '#FFD700'}">
+                <i class="fas fa-arrow-left mr-2"></i> ${t('voltar')}
             </button>
             <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-bold">Consultoras</h2>
-                <button onclick="showConsultoraForm(null)" class="bg-green-600 text-white px-4 py-2 rounded">
-                    <i class="fas fa-plus mr-2"></i> Nova
+                <h2 class="text-2xl font-bold text-white">${t('consultorasTitle')}</h2>
+                <button onclick="showConsultoraForm(null)" class="px-4 py-2 rounded text-white" style="background-color: ${currentConfig.cor_terciaria || '#FFD700'}">
+                    <i class="fas fa-plus mr-2"></i> ${t('nova')}
                 </button>
+            </div>
+            
+            <div class="mb-4 space-y-2">
+                <h3 class="text-lg font-semibold text-white">${t('relatorios')}</h3>
+                <div class="flex gap-2 flex-wrap">
+                    <button onclick="gerarRelatorioPDFConsultoras('cidade')" class="px-4 py-2 rounded text-white" style="background-color: ${currentConfig.cor_secundaria || '#DAA520'}">
+                        <i class="fas fa-file-pdf mr-2"></i> ${t('relatorioCidade')}
+                    </button>
+                    <button onclick="gerarRelatorioPDFConsultoras('nome')" class="px-4 py-2 rounded text-white" style="background-color: ${currentConfig.cor_secundaria || '#DAA520'}">
+                        <i class="fas fa-file-pdf mr-2"></i> ${t('relatorioNome')}
+                    </button>
+                </div>
             </div>
             
             <div class="table-container">
                 <table class="w-full bg-white shadow rounded">
-                    <thead class="bg-gray-200">
+                    <thead style="background-color: ${currentConfig.cor_secundaria || '#DAA520'}">
                         <tr>
-                            <th class="p-2 text-left">Nome</th>
-                            <th class="p-2 text-left">CPF</th>
-                            <th class="p-2 text-left">Telefone</th>
-                            <th class="p-2 text-center">Ações</th>
+                            <th class="p-2 text-left">${t('nome')}</th>
+                            <th class="p-2 text-left">${t('cpf')}</th>
+                            <th class="p-2 text-left">${t('telefone')}</th>
+                            <th class="p-2 text-center">${t('acoes')}</th>
                         </tr>
                     </thead>
                     <tbody>
         `;
-
+        
         consultoras.forEach(c => {
             html += `
                 <tr class="border-t">
@@ -270,7 +653,7 @@ async function showConsultorasList() {
                     <td class="p-2">${c.cpf || ''}</td>
                     <td class="p-2">${c.telefone || ''}</td>
                     <td class="p-2 text-center">
-                        <button onclick="showConsultoraForm(${c.id})" class="text-blue-600 mr-2">
+                        <button onclick="showConsultoraForm(${c.id})" style="color: ${currentConfig.cor_terciaria || '#FFD700'}" class="mr-2">
                             <i class="fas fa-edit"></i>
                         </button>
                         <button onclick="deleteConsultora(${c.id})" class="text-red-600">
@@ -280,13 +663,13 @@ async function showConsultorasList() {
                 </tr>
             `;
         });
-
+        
         html += `
                     </tbody>
                 </table>
             </div>
         `;
-
+        
         document.getElementById('consultoras-list').innerHTML = html;
         showScreen('consultoras-list');
     } catch (error) {
@@ -301,125 +684,125 @@ async function showConsultoraForm(id = null) {
         cpf: '', telefone: '', nome_pai: '', nome_mae: '', telefone_referencia: '',
         nome_representante: '', aceita_mostruario: 'nao', aceita_contrato: 'nao'
     };
-
+    
     if (id && isAdmin) {
         const response = await axios.get(`/api/consultoras/${id}`);
         consultora = response.data;
     }
-
+    
     const isEdit = id !== null;
     const backFunction = isAdmin ? "showConsultorasList()" : "showHome()";
-
+    
     const html = `
-        <button onclick="${backFunction}" class="mb-4 text-blue-600">
-            <i class="fas fa-arrow-left mr-2"></i> Voltar
+        <button onclick="${backFunction}" class="mb-4" style="color: ${currentConfig.cor_terciaria || '#FFD700'}">
+            <i class="fas fa-arrow-left mr-2"></i> ${t('voltar')}
         </button>
-        <h2 class="text-2xl font-bold mb-6">${isEdit ? 'Editar' : 'Cadastro de'} Consultora</h2>
+        <h2 class="text-2xl font-bold mb-6 text-white">${isEdit ? t('editar') : t('cadastro')} ${t('consultorasTitle')}</h2>
         
         <div class="space-y-4">
             <div>
-                <label class="block font-semibold mb-1">Nome Completo *</label>
+                <label class="block font-semibold mb-1 text-white">${t('nomeCompleto')} *</label>
                 <input type="text" id="consultora-nome" value="${consultora.nome_completo}" class="form-input" required>
             </div>
-
+            
             <div>
-                <label class="block font-semibold mb-1">Endereço</label>
+                <label class="block font-semibold mb-1 text-white">${t('endereco')}</label>
                 <input type="text" id="consultora-endereco" value="${consultora.endereco || ''}" class="form-input">
             </div>
-
+            
             <div class="grid grid-cols-2 gap-4">
                 <div>
-                    <label class="block font-semibold mb-1">Bairro</label>
+                    <label class="block font-semibold mb-1 text-white">${t('bairro')}</label>
                     <input type="text" id="consultora-bairro" value="${consultora.bairro || ''}" class="form-input">
                 </div>
                 <div>
-                    <label class="block font-semibold mb-1">CEP</label>
+                    <label class="block font-semibold mb-1 text-white">${t('cep')}</label>
                     <input type="text" id="consultora-cep" value="${consultora.cep || ''}" class="form-input">
                 </div>
             </div>
-
+            
             <div>
-                <label class="block font-semibold mb-1">Cidade</label>
+                <label class="block font-semibold mb-1 text-white">${t('cidade')}</label>
                 <input type="text" id="consultora-cidade" value="${consultora.cidade || ''}" class="form-input">
             </div>
-
+            
             <div class="grid grid-cols-2 gap-4">
                 <div>
-                    <label class="block font-semibold mb-1">CPF</label>
+                    <label class="block font-semibold mb-1 text-white">${t('cpf')}</label>
                     <input type="text" id="consultora-cpf" value="${consultora.cpf || ''}" class="form-input">
                 </div>
                 <div>
-                    <label class="block font-semibold mb-1">Telefone</label>
+                    <label class="block font-semibold mb-1 text-white">${t('telefone')}</label>
                     <input type="text" id="consultora-telefone" value="${consultora.telefone || ''}" class="form-input">
                 </div>
             </div>
-
+            
             <div>
-                <label class="block font-semibold mb-1">Nome do Pai</label>
+                <label class="block font-semibold mb-1 text-white">${t('nomePai')}</label>
                 <input type="text" id="consultora-pai" value="${consultora.nome_pai || ''}" class="form-input">
             </div>
-
+            
             <div>
-                <label class="block font-semibold mb-1">Nome da Mãe</label>
+                <label class="block font-semibold mb-1 text-white">${t('nomeMae')}</label>
                 <input type="text" id="consultora-mae" value="${consultora.nome_mae || ''}" class="form-input">
             </div>
-
+            
             <div>
-                <label class="block font-semibold mb-1">Telefone de Referência</label>
+                <label class="block font-semibold mb-1 text-white">${t('telefoneRef')}</label>
                 <input type="text" id="consultora-telefone-ref" value="${consultora.telefone_referencia || ''}" class="form-input">
             </div>
-
+            
             <div>
-                <label class="block font-semibold mb-1">Nome do Representante</label>
+                <label class="block font-semibold mb-1 text-white">${t('nomeRepresentante')}</label>
                 <input type="text" id="consultora-representante" value="${consultora.nome_representante || ''}" class="form-input">
             </div>
-
-            <div class="border-2 border-gray-300 rounded-lg p-4">
-                <p class="mb-2 text-sm">Você está de acordo que se for aprovada em nossa avaliação, irá pegar um MOSTRUÁRIO contendo de 50 PEÇAS ou MAIS, e assinará um CONTRATO explicando todas as cláusulas sobre as VENDAS, ACERTOS, PENDÊNCIAS E DEVOLUÇÃO?</p>
+            
+            <div class="border-2 border-white rounded-lg p-4 bg-white bg-opacity-10">
+                <p class="mb-2 text-sm text-white">${t('aceitaMostruario')}</p>
                 <div class="flex gap-4">
-                    <label class="flex items-center">
+                    <label class="flex items-center text-white">
                         <input type="radio" name="mostruario" value="sim" ${consultora.aceita_mostruario === 'sim' ? 'checked' : ''} class="mr-2">
-                        Sim
+                        ${t('sim')}
                     </label>
-                    <label class="flex items-center">
+                    <label class="flex items-center text-white">
                         <input type="radio" name="mostruario" value="nao" ${consultora.aceita_mostruario === 'nao' ? 'checked' : ''} class="mr-2">
-                        Não
+                        ${t('nao')}
                     </label>
                 </div>
             </div>
-
-            <div class="border-2 border-gray-300 rounded-lg p-4">
-                <p class="mb-2 text-sm">Nós somos uma empresa PARCEIRA e por isto acreditamos na confiança de nossas CONSULTORAS. Mas a NÃO DEVOLUÇÃO do MOSTRUÁRIO ao TÉRMINO do CONTRATO, implicará em denúncia com boletim de ocorrência e AÇÃO JUDICIAL, por apropriação indébita artigo 168 do código penal, com previsão de até 1 ano de detenção. Você está ciente disto?</p>
+            
+            <div class="border-2 border-white rounded-lg p-4 bg-white bg-opacity-10">
+                <p class="mb-2 text-sm text-white">${t('aceitaContrato')}</p>
                 <div class="flex gap-4">
-                    <label class="flex items-center">
+                    <label class="flex items-center text-white">
                         <input type="radio" name="contrato" value="sim" ${consultora.aceita_contrato === 'sim' ? 'checked' : ''} class="mr-2">
-                        Sim
+                        ${t('sim')}
                     </label>
-                    <label class="flex items-center">
+                    <label class="flex items-center text-white">
                         <input type="radio" name="contrato" value="nao" ${consultora.aceita_contrato === 'nao' ? 'checked' : ''} class="mr-2">
-                        Não
+                        ${t('nao')}
                     </label>
                 </div>
             </div>
-
+            
             <div class="flex gap-2">
                 ${isEdit && isAdmin ? `
                     <button onclick="deleteConsultora(${id})" class="flex-1 bg-red-600 text-white py-3 rounded-lg">
-                        <i class="fas fa-trash mr-2"></i> Excluir
+                        <i class="fas fa-trash mr-2"></i> ${t('excluir')}
                     </button>
                 ` : ''}
-                <button onclick="saveConsultora()" class="flex-1 bg-green-600 text-white py-3 rounded-lg">
-                    <i class="fas fa-save mr-2"></i> Gravar
+                <button onclick="saveConsultora()" class="flex-1 text-white py-3 rounded-lg" style="background-color: ${currentConfig.cor_terciaria || '#FFD700'}">
+                    <i class="fas fa-save mr-2"></i> ${t('gravar')}
                 </button>
                 ${!isEdit ? `
-                    <button onclick="saveAndSendConsultora()" class="flex-1 bg-blue-600 text-white py-3 rounded-lg">
-                        <i class="fab fa-whatsapp mr-2"></i> Gravar e Enviar
+                    <button onclick="saveAndSendConsultora()" class="flex-1 text-white py-3 rounded-lg" style="background-color: ${currentConfig.cor_secundaria || '#DAA520'}">
+                        <i class="fab fa-whatsapp mr-2"></i> ${t('gravarEnviar')}
                     </button>
                 ` : ''}
             </div>
         </div>
     `;
-
+    
     document.getElementById('consultora-form').innerHTML = html;
     showScreen('consultora-form');
 }
@@ -440,19 +823,19 @@ async function saveConsultora() {
         aceita_mostruario: document.querySelector('input[name="mostruario"]:checked')?.value || 'nao',
         aceita_contrato: document.querySelector('input[name="contrato"]:checked')?.value || 'nao'
     };
-
+    
     if (!data.nome_completo) {
-        alert('Por favor, preencha o nome completo');
+        showAlert(t('preenchaNome'), 'error');
         return;
     }
-
+    
     try {
         if (currentConsultoraId) {
             await axios.put(`/api/consultoras/${currentConsultoraId}`, data);
         } else {
             await axios.post('/api/consultoras', data);
         }
-        alert('Consultora salva com sucesso!');
+        showAlert(t('salvoSucesso'), 'success');
         if (isAdmin) {
             showConsultorasList();
         } else {
@@ -460,7 +843,7 @@ async function saveConsultora() {
         }
     } catch (error) {
         console.error('Erro ao salvar consultora:', error);
-        alert('Erro ao salvar consultora');
+        showAlert(t('erroSalvar'), 'error');
     }
 }
 
@@ -480,16 +863,15 @@ async function saveAndSendConsultora() {
         aceita_mostruario: document.querySelector('input[name="mostruario"]:checked')?.value || 'nao',
         aceita_contrato: document.querySelector('input[name="contrato"]:checked')?.value || 'nao'
     };
-
+    
     if (!data.nome_completo) {
-        alert('Por favor, preencha o nome completo');
+        showAlert(t('preenchaNome'), 'error');
         return;
     }
-
+    
     try {
         await axios.post('/api/consultoras', data);
         
-        // Enviar via WhatsApp
         const message = `
 🌟 *NOVA CONSULTORA* 🌟
 
@@ -510,407 +892,32 @@ async function saveAndSendConsultora() {
 📦 *Aceita Mostruário:* ${data.aceita_mostruario.toUpperCase()}
 📋 *Aceita Contrato:* ${data.aceita_contrato.toUpperCase()}
         `.trim();
-
+        
         const whatsapp = currentConfig.whatsapp || '5518996676409';
         const url = `https://wa.me/${whatsapp}?text=${encodeURIComponent(message)}`;
         window.open(url, '_blank');
-
-        alert('Consultora cadastrada! Redirecionando para WhatsApp...');
+        
+        showAlert(t('cadastrado'), 'success');
         showHome();
     } catch (error) {
         console.error('Erro:', error);
-        alert('Erro ao cadastrar consultora');
+        showAlert(t('erroSalvar'), 'error');
     }
 }
 
 async function deleteConsultora(id) {
-    if (!confirm('Deseja realmente excluir esta consultora?')) return;
-
-    try {
-        await axios.delete(`/api/consultoras/${id}`);
-        alert('Consultora excluída com sucesso!');
-        showConsultorasList();
-    } catch (error) {
-        console.error('Erro ao excluir consultora:', error);
-        alert('Erro ao excluir consultora');
-    }
-}
-
-// ================== REPRESENTANTES ==================
-async function showRepresentantesList() {
-    try {
-        const response = await axios.get('/api/representantes');
-        const representantes = response.data;
-
-        let html = `
-            <button onclick="showScreen('admin-panel')" class="mb-4 text-blue-600">
-                <i class="fas fa-arrow-left mr-2"></i> Voltar
-            </button>
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-bold">Representantes</h2>
-                <button onclick="showRepresentanteForm(null)" class="bg-green-600 text-white px-4 py-2 rounded">
-                    <i class="fas fa-plus mr-2"></i> Novo
-                </button>
-            </div>
-            
-            <div class="table-container">
-                <table class="w-full bg-white shadow rounded">
-                    <thead class="bg-gray-200">
-                        <tr>
-                            <th class="p-2 text-left">Nome</th>
-                            <th class="p-2 text-left">CPF</th>
-                            <th class="p-2 text-left">Telefone</th>
-                            <th class="p-2 text-center">Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-        `;
-
-        representantes.forEach(r => {
-            html += `
-                <tr class="border-t">
-                    <td class="p-2">${r.nome_completo}</td>
-                    <td class="p-2">${r.cpf || ''}</td>
-                    <td class="p-2">${r.telefone || ''}</td>
-                    <td class="p-2 text-center">
-                        <button onclick="showRepresentanteForm(${r.id})" class="text-blue-600 mr-2">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button onclick="deleteRepresentante(${r.id})" class="text-red-600">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </td>
-                </tr>
-            `;
-        });
-
-        html += `
-                    </tbody>
-                </table>
-            </div>
-        `;
-
-        document.getElementById('representantes-list').innerHTML = html;
-        showScreen('representantes-list');
-    } catch (error) {
-        console.error('Erro ao carregar representantes:', error);
-    }
-}
-
-async function showRepresentanteForm(id = null) {
-    currentRepresentanteId = id;
-    let representante = {
-        nome_completo: '', endereco: '', bairro: '', cep: '', cidade: '',
-        cpf: '', telefone: '', veiculo: ''
-    };
-
-    if (id && isAdmin) {
-        const response = await axios.get(`/api/representantes/${id}`);
-        representante = response.data;
-    }
-
-    const isEdit = id !== null;
-    const backFunction = isAdmin ? "showRepresentantesList()" : "showHome()";
-
-    const html = `
-        <button onclick="${backFunction}" class="mb-4 text-blue-600">
-            <i class="fas fa-arrow-left mr-2"></i> Voltar
-        </button>
-        <h2 class="text-2xl font-bold mb-6">${isEdit ? 'Editar' : 'Cadastro de'} Representante</h2>
+    showConfirm(`${t('desejaExcluir')} ${t('consultorasTitle').toLowerCase()}?`, async (confirmed) => {
+        if (!confirmed) return;
         
-        <div class="space-y-4">
-            <div>
-                <label class="block font-semibold mb-1">Nome Completo *</label>
-                <input type="text" id="representante-nome" value="${representante.nome_completo}" class="form-input" required>
-            </div>
-
-            <div>
-                <label class="block font-semibold mb-1">Endereço</label>
-                <input type="text" id="representante-endereco" value="${representante.endereco || ''}" class="form-input">
-            </div>
-
-            <div class="grid grid-cols-2 gap-4">
-                <div>
-                    <label class="block font-semibold mb-1">Bairro</label>
-                    <input type="text" id="representante-bairro" value="${representante.bairro || ''}" class="form-input">
-                </div>
-                <div>
-                    <label class="block font-semibold mb-1">CEP</label>
-                    <input type="text" id="representante-cep" value="${representante.cep || ''}" class="form-input">
-                </div>
-            </div>
-
-            <div>
-                <label class="block font-semibold mb-1">Cidade</label>
-                <input type="text" id="representante-cidade" value="${representante.cidade || ''}" class="form-input">
-            </div>
-
-            <div class="grid grid-cols-2 gap-4">
-                <div>
-                    <label class="block font-semibold mb-1">CPF</label>
-                    <input type="text" id="representante-cpf" value="${representante.cpf || ''}" class="form-input">
-                </div>
-                <div>
-                    <label class="block font-semibold mb-1">Telefone</label>
-                    <input type="text" id="representante-telefone" value="${representante.telefone || ''}" class="form-input">
-                </div>
-            </div>
-
-            <div>
-                <label class="block font-semibold mb-1">Veículo</label>
-                <input type="text" id="representante-veiculo" value="${representante.veiculo || ''}" class="form-input">
-            </div>
-
-            <div class="flex gap-2">
-                ${isEdit && isAdmin ? `
-                    <button onclick="deleteRepresentante(${id})" class="flex-1 bg-red-600 text-white py-3 rounded-lg">
-                        <i class="fas fa-trash mr-2"></i> Excluir
-                    </button>
-                ` : ''}
-                <button onclick="saveRepresentante()" class="flex-1 bg-green-600 text-white py-3 rounded-lg">
-                    <i class="fas fa-save mr-2"></i> Gravar
-                </button>
-                ${!isEdit ? `
-                    <button onclick="saveAndSendRepresentante()" class="flex-1 bg-blue-600 text-white py-3 rounded-lg">
-                        <i class="fab fa-whatsapp mr-2"></i> Gravar e Enviar
-                    </button>
-                ` : ''}
-            </div>
-        </div>
-    `;
-
-    document.getElementById('representante-form').innerHTML = html;
-    showScreen('representante-form');
-}
-
-async function saveRepresentante() {
-    const data = {
-        nome_completo: document.getElementById('representante-nome').value,
-        endereco: document.getElementById('representante-endereco').value,
-        bairro: document.getElementById('representante-bairro').value,
-        cep: document.getElementById('representante-cep').value,
-        cidade: document.getElementById('representante-cidade').value,
-        cpf: document.getElementById('representante-cpf').value,
-        telefone: document.getElementById('representante-telefone').value,
-        veiculo: document.getElementById('representante-veiculo').value
-    };
-
-    if (!data.nome_completo) {
-        alert('Por favor, preencha o nome completo');
-        return;
-    }
-
-    try {
-        if (currentRepresentanteId) {
-            await axios.put(`/api/representantes/${currentRepresentanteId}`, data);
-        } else {
-            await axios.post('/api/representantes', data);
+        try {
+            await axios.delete(`/api/consultoras/${id}`);
+            showAlert(t('excluido'), 'success');
+            showConsultorasList();
+        } catch (error) {
+            console.error('Erro ao excluir consultora:', error);
+            showAlert(t('erroSalvar'), 'error');
         }
-        alert('Representante salvo com sucesso!');
-        if (isAdmin) {
-            showRepresentantesList();
-        } else {
-            showHome();
-        }
-    } catch (error) {
-        console.error('Erro ao salvar representante:', error);
-        alert('Erro ao salvar representante');
-    }
-}
-
-async function saveAndSendRepresentante() {
-    const data = {
-        nome_completo: document.getElementById('representante-nome').value,
-        endereco: document.getElementById('representante-endereco').value,
-        bairro: document.getElementById('representante-bairro').value,
-        cep: document.getElementById('representante-cep').value,
-        cidade: document.getElementById('representante-cidade').value,
-        cpf: document.getElementById('representante-cpf').value,
-        telefone: document.getElementById('representante-telefone').value,
-        veiculo: document.getElementById('representante-veiculo').value
-    };
-
-    if (!data.nome_completo) {
-        alert('Por favor, preencha o nome completo');
-        return;
-    }
-
-    try {
-        await axios.post('/api/representantes', data);
-        
-        // Enviar via WhatsApp
-        const message = `
-🎯 *NOVO REPRESENTANTE* 🎯
-
-👤 *Nome:* ${data.nome_completo}
-📍 *Endereço:* ${data.endereco}
-🏘️ *Bairro:* ${data.bairro}
-📮 *CEP:* ${data.cep}
-🏙️ *Cidade:* ${data.cidade}
-📝 *CPF:* ${data.cpf}
-📱 *Telefone:* ${data.telefone}
-🚗 *Veículo:* ${data.veiculo}
-        `.trim();
-
-        const whatsapp = currentConfig.whatsapp || '5518996676409';
-        const url = `https://wa.me/${whatsapp}?text=${encodeURIComponent(message)}`;
-        window.open(url, '_blank');
-
-        alert('Representante cadastrado! Redirecionando para WhatsApp...');
-        showHome();
-    } catch (error) {
-        console.error('Erro:', error);
-        alert('Erro ao cadastrar representante');
-    }
-}
-
-async function deleteRepresentante(id) {
-    if (!confirm('Deseja realmente excluir este representante?')) return;
-
-    try {
-        await axios.delete(`/api/representantes/${id}`);
-        alert('Representante excluído com sucesso!');
-        showRepresentantesList();
-    } catch (error) {
-        console.error('Erro ao excluir representante:', error);
-        alert('Erro ao excluir representante');
-    }
-}
-
-// ================== EXPLICAÇÕES ==================
-async function showExplicacoes() {
-    const html = `
-        <button onclick="showHome()" class="mb-4 text-blue-600">
-            <i class="fas fa-arrow-left mr-2"></i> Voltar
-        </button>
-        <h2 class="text-2xl font-bold mb-6">Explicações</h2>
-        <div class="bg-white rounded-lg shadow p-6">
-            <div style="white-space: pre-wrap; line-height: 1.6;">${currentConfig.explicacoes || 'Nenhuma explicação cadastrada ainda.'}</div>
-        </div>
-    `;
-    document.getElementById('explicacoes-screen').innerHTML = html;
-    showScreen('explicacoes-screen');
-}
-
-// ================== FOTOS ==================
-async function showFotos() {
-    try {
-        const response = await axios.get('/api/fotos');
-        const fotos = response.data;
-
-        let html = `
-            <button onclick="showHome()" class="mb-4 text-blue-600">
-                <i class="fas fa-arrow-left mr-2"></i> Voltar
-            </button>
-            <h2 class="text-2xl font-bold mb-6">Galeria de Fotos</h2>
-        `;
-
-        if (fotos.length === 0) {
-            html += '<p class="text-center text-gray-500">Nenhuma foto cadastrada ainda.</p>';
-        } else {
-            html += '<div class="foto-grid">';
-            fotos.forEach(foto => {
-                html += `
-                    <div class="foto-item">
-                        <img src="${foto.imagem_base64}" alt="Foto ${foto.id}">
-                    </div>
-                `;
-            });
-            html += '</div>';
-        }
-
-        document.getElementById('fotos-screen').innerHTML = html;
-        showScreen('fotos-screen');
-    } catch (error) {
-        console.error('Erro ao carregar fotos:', error);
-    }
-}
-
-async function showFotosAdmin() {
-    try {
-        const response = await axios.get('/api/fotos');
-        const fotos = response.data;
-
-        let html = `
-            <button onclick="showScreen('admin-panel')" class="mb-4 text-blue-600">
-                <i class="fas fa-arrow-left mr-2"></i> Voltar
-            </button>
-            <h2 class="text-2xl font-bold mb-6">Gerenciar Fotos</h2>
-            
-            <div class="mb-6">
-                <label class="block font-semibold mb-2">Adicionar Nova Foto (400x600 pixels)</label>
-                <input type="file" id="nova-foto" accept="image/*" class="form-input mb-2">
-                <button onclick="uploadFoto()" class="bg-green-600 text-white px-6 py-2 rounded">
-                    <i class="fas fa-upload mr-2"></i> Salvar Foto
-                </button>
-            </div>
-
-            <h3 class="text-xl font-bold mb-4">Fotos Cadastradas</h3>
-        `;
-
-        if (fotos.length === 0) {
-            html += '<p class="text-center text-gray-500">Nenhuma foto cadastrada ainda.</p>';
-        } else {
-            html += '<div class="foto-grid">';
-            fotos.forEach(foto => {
-                html += `
-                    <div class="foto-item">
-                        <img src="${foto.imagem_base64}" alt="Foto ${foto.id}">
-                        <button onclick="deleteFoto(${foto.id})">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                `;
-            });
-            html += '</div>';
-        }
-
-        document.getElementById('fotos-admin').innerHTML = html;
-        showScreen('fotos-admin');
-    } catch (error) {
-        console.error('Erro ao carregar fotos:', error);
-    }
-}
-
-async function uploadFoto() {
-    const fileInput = document.getElementById('nova-foto');
-    const file = fileInput.files[0];
-
-    if (!file) {
-        alert('Por favor, selecione uma foto');
-        return;
-    }
-
-    try {
-        const base64 = await fileToBase64(file);
-        await axios.post('/api/fotos', { imagem_base64: base64 });
-        alert('Foto adicionada com sucesso!');
-        showFotosAdmin();
-    } catch (error) {
-        console.error('Erro ao adicionar foto:', error);
-        alert('Erro ao adicionar foto');
-    }
-}
-
-async function deleteFoto(id) {
-    if (!confirm('Deseja realmente excluir esta foto?')) return;
-
-    try {
-        await axios.delete(`/api/fotos/${id}`);
-        alert('Foto excluída com sucesso!');
-        showFotosAdmin();
-    } catch (error) {
-        console.error('Erro ao excluir foto:', error);
-        alert('Erro ao excluir foto');
-    }
-}
-
-// ================== UTILITÁRIOS ==================
-function fileToBase64(file) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
     });
 }
+
+// Continua...

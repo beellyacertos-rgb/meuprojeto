@@ -13,7 +13,8 @@
     "clean-port": "fuser -k 3000/tcp 2>/dev/null || true"
   },
   "dependencies": {
-    "hono": "^4.11.7"
+    "hono": "^4.11.7",
+    "jspdf": "^4.1.0"
   },
   "devDependencies": {
     "@hono/vite-build": "^1.2.0",
