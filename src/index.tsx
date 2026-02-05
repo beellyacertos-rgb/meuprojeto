@@ -61,6 +61,23 @@ app.get('/api/consultoras/:id', async (c) => {
   return c.json(result)
 })
 
+// Relatório por cidade
+app.get('/api/consultoras/relatorio/cidade', async (c) => {
+  const result = await c.env.DB.prepare(
+    'SELECT * FROM consultoras ORDER BY cidade, nome_completo'
+  ).all()
+  return c.json(result.results)
+})
+
+// Buscar por nome
+app.get('/api/consultoras/buscar/:nome', async (c) => {
+  const nome = c.req.param('nome')
+  const result = await c.env.DB.prepare(
+    'SELECT * FROM consultoras WHERE nome_completo LIKE ? ORDER BY nome_completo'
+  ).bind(`%${nome}%`).all()
+  return c.json(result.results)
+})
+
 app.post('/api/consultoras', async (c) => {
   const data = await c.req.json()
   const result = await c.env.DB.prepare(`
@@ -118,6 +135,23 @@ app.get('/api/representantes/:id', async (c) => {
     'SELECT * FROM representantes WHERE id = ?'
   ).bind(id).first()
   return c.json(result)
+})
+
+// Relatório por cidade
+app.get('/api/representantes/relatorio/cidade', async (c) => {
+  const result = await c.env.DB.prepare(
+    'SELECT * FROM representantes ORDER BY cidade, nome_completo'
+  ).all()
+  return c.json(result.results)
+})
+
+// Buscar por nome
+app.get('/api/representantes/buscar/:nome', async (c) => {
+  const nome = c.req.param('nome')
+  const result = await c.env.DB.prepare(
+    'SELECT * FROM representantes WHERE nome_completo LIKE ? ORDER BY nome_completo'
+  ).bind(`%${nome}%`).all()
+  return c.json(result.results)
 })
 
 app.post('/api/representantes', async (c) => {
@@ -192,246 +226,61 @@ app.get('/', (c) => {
     <title>Semi Jóias App</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root {
-            --color-primary: #8B4513;
-            --color-secondary: #DAA520;
-            --color-tertiary: #FFD700;
-        }
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow-x: hidden;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            background-color: var(--color-primary);
-        }
-        .app-container { flex: 1; }
-        
-        /* Bandeiras de idioma */
-        .language-switcher {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            z-index: 1000;
-            display: flex;
-            gap: 10px;
-        }
-        .flag-btn {
-            width: 40px;
-            height: 30px;
-            cursor: pointer;
-            border: 2px solid transparent;
-            border-radius: 4px;
-            transition: all 0.3s;
-            background-size: cover;
-            background-position: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        }
-        .flag-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
-        }
-        .flag-btn.active-flag {
-            border-color: #FFD700;
-            box-shadow: 0 0 10px rgba(255,215,0,0.8);
-        }
-        .flag-br {
-            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMTQwIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iIzAwOTczOSIvPjxwYXRoIGZpbGw9IiNGRkRGMDAiIGQ9Ik0xMCAzMGwxODAgNDBMMTAgMTEweiIvPjxwYXRoIGZpbGw9IiNGRkRGMDAiIGQ9Ik0xOTAgMzBMMTAgNzBsMTgwIDQweiIvPjxjaXJjbGUgY3g9IjEwMCIgY3k9IjcwIiByPSIyNSIgZmlsbD0iIzAwMkY4NyIvPjwvc3ZnPg==');
-        }
-        .flag-py {
-            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMTIwIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjQwIiBmaWxsPSIjRDAyODJEIi8+PHJlY3QgeT0iNDAiIHdpZHRoPSIyMDAiIGhlaWdodD0iNDAiIGZpbGw9IiNGRkYiLz48cmVjdCB5PSI4MCIgd2lkdGg9IjIwMCIgaGVpZ2h0PSI0MCIgZmlsbD0iIzAxMTNCMCIvPjxjaXJjbGUgY3g9IjYwIiBjeT0iNjAiIHI9IjE1IiBmaWxsPSIjRkZEODAwIi8+PC9zdmc+');
-        }
-        
-        /* Botões mobile */
-        .btn-mobile {
-            width: 100%;
-            padding: 1.5rem;
-            font-size: 1.25rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: all 0.3s;
-            border: none;
-            cursor: pointer;
-            font-weight: 600;
-            text-align: center;
-        }
-        .btn-mobile:active {
-            transform: scale(0.98);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .btn-mobile-home {
-            width: 100%;
-            padding: 2rem 1.5rem;
-            font-size: 1.25rem;
-            border-radius: 12px;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
-            transition: all 0.3s;
-            border: none;
-            cursor: pointer;
-            font-weight: 600;
-            text-align: center;
-            background-color: white;
-            color: var(--color-primary);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 140px;
-        }
-        .btn-mobile-home:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
-        }
-        .btn-mobile-admin {
-            width: 100%;
-            padding: 2rem 1.5rem;
-            font-size: 1.25rem;
-            border-radius: 12px;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
-            transition: all 0.3s;
-            border: 3px solid #FFD700;
-            cursor: pointer;
-            font-weight: 700;
-            text-align: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 120px;
-        }
-        .form-input {
-            width: 100%;
-            padding: 0.75rem;
-            border: 2px solid #e5e7eb;
-            border-radius: 8px;
-            font-size: 1rem;
-            background: white;
-        }
-        .form-input:focus {
-            outline: none;
-            border-color: var(--color-tertiary);
-        }
-        .logo-container {
-            max-width: 200px;
-            max-height: 200px;
-            margin: 0 auto;
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-        .logo-container img {
-            width: 100%;
-            height: auto;
-            border-radius: 8px;
-        }
-        .footer-logo {
-            width: 60px;
-            height: 40px;
-            object-fit: cover;
-            border-radius: 4px;
-        }
-        textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
-        .table-container {
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-        table {
-            min-width: 100%;
-            font-size: 0.9rem;
-        }
-        .hidden { display: none !important; }
-        .color-picker-container {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        .color-preview {
-            width: 50px;
-            height: 50px;
-            border-radius: 8px;
-            border: 2px solid #e5e7eb;
-        }
-        .foto-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 1rem;
-        }
-        .foto-item {
-            position: relative;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            background: white;
-        }
-        .foto-item img {
-            width: 100%;
-            height: 225px;
-            object-fit: cover;
-        }
-        .foto-item button {
-            position: absolute;
-            top: 0.5rem;
-            right: 0.5rem;
-            background: rgba(239, 68, 68, 0.9);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
-        
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-        @keyframes slideOut {
-            from { transform: translateX(0); opacity: 1; }
-            to { transform: translateX(100%); opacity: 0; }
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        @media (max-width: 768px) {
-            .btn-mobile {
-                font-size: 1.1rem;
-                padding: 1.25rem;
-            }
-            .form-input {
-                font-size: 16px;
-            }
-            h1 {
-                font-size: 2rem;
-            }
-            h2 {
-                font-size: 1.5rem;
-            }
-        }
-    </style>
+    <link href="/static/style.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
 </head>
-<body>
-    <!-- Seletor de Idioma -->
-    <div class="language-switcher">
-        <div class="flag-btn flag-br active-flag" data-lang="pt-BR" onclick="setLanguage('pt-BR')" title="Português (Brasil)"></div>
-        <div class="flag-btn flag-py" data-lang="es" onclick="setLanguage('es')" title="Español (Paraguay)"></div>
+<body id="app-body">
+    <!-- Bandeiras de Idioma -->
+    <div class="language-flags">
+        <button onclick="changeLanguage('pt')" class="flag-btn" title="Português">
+            🇧🇷
+        </button>
+        <button onclick="changeLanguage('es')" class="flag-btn" title="Español">
+            🇪🇸
+        </button>
     </div>
 
     <div class="app-container">
         <!-- TELA INICIAL -->
-        <div id="home-screen" class="p-6"></div>
+        <div id="home-screen" class="p-6">
+            <div class="logo-container mb-6">
+                <img id="home-logo" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect fill='%238B4513' width='200' height='200'/%3E%3Ctext x='50%25' y='50%25' font-size='60' fill='%23FFD700' text-anchor='middle' dy='.3em'%3E💎%3C/text%3E%3C/svg%3E" alt="Logo">
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4">
+                <button onclick="showConsultoraForm()" class="btn-grid">
+                    <i class="fas fa-user-plus text-4xl mb-2"></i>
+                    <i class="fas fa-gem text-2xl mb-2"></i>
+                    <span data-i18n="consultoras"></span>
+                </button>
+                <button onclick="showRepresentanteForm()" class="btn-grid">
+                    <i class="fas fa-id-card text-4xl mb-2"></i>
+                    <i class="fas fa-briefcase text-2xl mb-2"></i>
+                    <span data-i18n="representante"></span>
+                </button>
+                <button onclick="showExplicacoes()" class="btn-grid">
+                    <i class="fas fa-info-circle text-4xl mb-2"></i>
+                    <i class="fas fa-book text-2xl mb-2"></i>
+                    <span data-i18n="explicacoes"></span>
+                </button>
+                <button onclick="showFotos()" class="btn-grid">
+                    <i class="fas fa-images text-4xl mb-2"></i>
+                    <i class="fas fa-camera text-2xl mb-2"></i>
+                    <span data-i18n="fotos"></span>
+                </button>
+                <button onclick="showQuemSomos()" class="btn-grid">
+                    <i class="fas fa-building text-4xl mb-2"></i>
+                    <i class="fas fa-users text-2xl mb-2"></i>
+                    <span data-i18n="quemSomos"></span>
+                </button>
+                <button onclick="showAdminLogin()" class="btn-grid">
+                    <i class="fas fa-lock text-4xl mb-2"></i>
+                    <i class="fas fa-cog text-2xl mb-2"></i>
+                    <span data-i18n="areaAdmin"></span>
+                </button>
+            </div>
+        </div>
 
         <!-- TELA DE LOGIN ADMIN -->
         <div id="admin-login" class="hidden p-6"></div>
@@ -462,26 +311,42 @@ app.get('/', (c) => {
 
         <!-- TELA ADMIN FOTOS -->
         <div id="fotos-admin" class="hidden p-6"></div>
+
+        <!-- TELA QUEM SOMOS -->
+        <div id="quem-somos-screen" class="hidden p-6"></div>
     </div>
 
     <!-- RODAPÉ -->
-    <footer class="p-4 mt-8" style="background-color: var(--color-secondary)">
+    <footer id="app-footer" class="p-4 mt-8">
         <div class="flex items-center justify-between">
             <div>
                 <img id="footer-logo" src="" alt="" class="footer-logo hidden">
             </div>
             <div class="text-center flex-1">
-                <p class="font-semibold text-white">Vsual Consultoria em Marketing</p>
-                <p class="text-sm text-white">18 99667-6409</p>
+                <p class="font-semibold">Vsual Consultoria em Marketing</p>
+                <p class="text-sm">18 99667-6409</p>
             </div>
         </div>
     </footer>
 
+    <!-- Modal de Confirmação -->
+    <div id="confirm-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h3 class="text-xl font-bold mb-4" data-i18n="desejaSair"></h3>
+            <div class="flex gap-4">
+                <button onclick="confirmExit(true)" class="flex-1 btn-confirm-yes">
+                    <span data-i18n="sim"></span>
+                </button>
+                <button onclick="confirmExit(false)" class="flex-1 btn-confirm-no">
+                    <span data-i18n="nao"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="/static/translations.js"></script>
     <script src="/static/app.js"></script>
-    <script src="/static/app-extras.js"></script>
-    <script src="/static/app-pdf.js"></script>
 </body>
 </html>
   `)

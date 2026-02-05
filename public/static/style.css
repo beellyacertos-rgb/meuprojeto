@@ -1,19 +1,316 @@
-/* Estilos adicionais para o app de semi jóias */
+/* Estilos para o app de semi jóias */
 
-/* Smooth scroll */
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+}
+
 html {
     scroll-behavior: smooth;
 }
 
-/* Melhorias para mobile */
+body { 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition: background-color 0.3s ease;
+}
+
+.app-container { 
+    flex: 1; 
+}
+
+/* Bandeiras de idioma */
+.language-flags {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+    display: flex;
+    gap: 8px;
+}
+
+.flag-btn {
+    font-size: 32px;
+    border: none;
+    background: white;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flag-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.flag-btn:active {
+    transform: scale(0.95);
+}
+
+/* Botões em grid (2 ícones) */
+.btn-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    min-height: 150px;
+    border-radius: 16px;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    background: var(--color-tertiary);
+}
+
+.btn-grid span {
+    margin-top: 8px;
+    color: var(--color-quaternary);
+}
+
+.btn-grid:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+}
+
+.btn-grid:active {
+    transform: translateY(-2px);
+}
+
+/* Botão Voltar */
+.btn-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    background: var(--color-tertiary);
+    color: var(--color-quaternary);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 1rem;
+}
+
+.btn-back:hover {
+    filter: brightness(1.1);
+}
+
+/* Botões de ação */
+.btn-action {
+    padding: 12px 24px;
+    border-radius: 8px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: var(--color-quaternary);
+}
+
+.btn-primary {
+    background: var(--color-tertiary);
+}
+
+.btn-success {
+    background: #10b981;
+}
+
+.btn-danger {
+    background: #ef4444;
+}
+
+.btn-warning {
+    background: #f59e0b;
+}
+
+/* Inputs */
+.form-input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--color-tertiary);
+}
+
+/* Logo */
+.logo-container {
+    max-width: 200px;
+    margin: 0 auto;
+}
+
+.logo-container img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+/* Rodapé */
+#app-footer {
+    color: var(--color-quaternary);
+    transition: background-color 0.3s ease;
+}
+
+.footer-logo {
+    width: 60px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+/* Modal de confirmação */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+
+.modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 16px;
+    max-width: 90%;
+    width: 400px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+
+.btn-confirm-yes {
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    background: var(--color-tertiary);
+    color: var(--color-quaternary);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-confirm-no {
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    background: #6b7280;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Tabelas */
+.table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+table {
+    min-width: 100%;
+    font-size: 0.9rem;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Fotos */
+.foto-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+}
+
+.foto-item {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.foto-item img {
+    width: 100%;
+    height: 225px;
+    object-fit: cover;
+}
+
+.foto-item button {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: rgba(239, 68, 68, 0.9);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+/* Color pickers */
+.color-picker-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.color-preview {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    border: 2px solid #e5e7eb;
+}
+
+/* Utilitários */
+.hidden { 
+    display: none !important; 
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Responsivo */
 @media (max-width: 768px) {
-    .btn-mobile {
-        font-size: 1.1rem;
-        padding: 1.25rem;
+    .btn-grid {
+        min-height: 130px;
+        font-size: 0.9rem;
+    }
+    
+    .btn-grid i {
+        font-size: 2rem !important;
+    }
+    
+    .btn-grid i:nth-child(2) {
+        font-size: 1.5rem !important;
     }
     
     .form-input {
-        font-size: 16px; /* Evita zoom no iOS */
+        font-size: 16px;
     }
     
     h1 {
@@ -23,25 +320,46 @@ html {
     h2 {
         font-size: 1.5rem;
     }
+    
+    .language-flags {
+        top: 5px;
+        right: 5px;
+    }
+    
+    .flag-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 640px) {
+    table {
+        font-size: 0.8rem;
+    }
+    
+    th, td {
+        padding: 0.5rem !important;
+    }
 }
 
 /* Animações */
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from { 
+        opacity: 0; 
+        transform: translateY(10px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
 }
 
 .app-container > div:not(.hidden) {
     animation: fadeIn 0.3s ease-in-out;
 }
 
-/* Loading states */
-.loading {
-    opacity: 0.6;
-    pointer-events: none;
-}
-
-/* Custom scrollbar */
+/* Scrollbar customizada */
 ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
@@ -60,93 +378,9 @@ html {
     background: #555;
 }
 
-/* Destaque para campos obrigatórios */
-input:required:invalid {
-    border-color: #fca5a5;
-}
-
-input:required:valid {
-    border-color: #86efac;
-}
-
-/* Melhorias para tabelas em mobile */
-@media (max-width: 640px) {
-    table {
-        font-size: 0.8rem;
-    }
-    
-    th, td {
-        padding: 0.5rem !important;
-    }
-}
-
-/* Efeito hover nos botões */
-button:hover:not(:disabled) {
-    filter: brightness(1.1);
-}
-
-button:active:not(:disabled) {
-    filter: brightness(0.9);
-}
-
-/* Imagens responsivas */
-img {
-    max-width: 100%;
-    height: auto;
-}
-
-/* Cards */
-.card {
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    padding: 1.5rem;
-}
-
-/* Badge */
-.badge {
-    display: inline-block;
-    padding: 0.25rem 0.75rem;
-    border-radius: 9999px;
-    font-size: 0.875rem;
-    font-weight: 600;
-}
-
-.badge-success {
-    background-color: #86efac;
-    color: #166534;
-}
-
-.badge-danger {
-    background-color: #fca5a5;
-    color: #991b1b;
-}
-
-/* Melhorias para inputs de cor */
-input[type="color"] {
-    height: 50px;
-    border-radius: 8px;
-    cursor: pointer;
-}
-
-/* Transições suaves */
-* {
-    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
-}
-
-button, a, input[type="file"] {
-    cursor: pointer;
-}
-
-/* Focus visible para acessibilidade */
-*:focus-visible {
-    outline: 2px solid currentColor;
-    outline-offset: 2px;
-}
-
-/* Print styles */
+/* Print */
 @media print {
-    .btn-mobile, button, footer {
+    .btn-grid, .btn-back, .btn-action, button, footer, .language-flags {
         display: none !important;
     }
 }
