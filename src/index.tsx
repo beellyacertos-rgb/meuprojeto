@@ -227,97 +227,24 @@ app.get('/', (c) => {
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
     <link href="/static/style.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
 </head>
-<body id="app-body">
-    <!-- Bandeiras de Idioma -->
-    <div class="language-flags">
-        <button onclick="changeLanguage('pt')" class="flag-btn" title="Português">
-            🇧🇷
-        </button>
-        <button onclick="changeLanguage('es')" class="flag-btn" title="Español">
-            🇪🇸
-        </button>
-    </div>
-
+<body>
     <div class="app-container">
-        <!-- TELA INICIAL -->
-        <div id="home-screen" class="p-6">
-            <div class="logo-container mb-6">
-                <img id="home-logo" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect fill='%238B4513' width='200' height='200'/%3E%3Ctext x='50%25' y='50%25' font-size='60' fill='%23FFD700' text-anchor='middle' dy='.3em'%3E💎%3C/text%3E%3C/svg%3E" alt="Logo">
-            </div>
-            
-            <div class="grid grid-cols-2 gap-4">
-                <button onclick="showConsultoraForm()" class="btn-grid">
-                    <i class="fas fa-user-plus text-4xl mb-2"></i>
-                    <i class="fas fa-gem text-2xl mb-2"></i>
-                    <span data-i18n="consultoras"></span>
-                </button>
-                <button onclick="showRepresentanteForm()" class="btn-grid">
-                    <i class="fas fa-id-card text-4xl mb-2"></i>
-                    <i class="fas fa-briefcase text-2xl mb-2"></i>
-                    <span data-i18n="representante"></span>
-                </button>
-                <button onclick="showExplicacoes()" class="btn-grid">
-                    <i class="fas fa-info-circle text-4xl mb-2"></i>
-                    <i class="fas fa-book text-2xl mb-2"></i>
-                    <span data-i18n="explicacoes"></span>
-                </button>
-                <button onclick="showFotos()" class="btn-grid">
-                    <i class="fas fa-images text-4xl mb-2"></i>
-                    <i class="fas fa-camera text-2xl mb-2"></i>
-                    <span data-i18n="fotos"></span>
-                </button>
-                <button onclick="showQuemSomos()" class="btn-grid">
-                    <i class="fas fa-building text-4xl mb-2"></i>
-                    <i class="fas fa-users text-2xl mb-2"></i>
-                    <span data-i18n="quemSomos"></span>
-                </button>
-                <button onclick="showAdminLogin()" class="btn-grid">
-                    <i class="fas fa-lock text-4xl mb-2"></i>
-                    <i class="fas fa-cog text-2xl mb-2"></i>
-                    <span data-i18n="areaAdmin"></span>
-                </button>
-            </div>
-        </div>
-
-        <!-- TELA DE LOGIN ADMIN -->
+        <div id="home-screen" class="p-6"></div>
         <div id="admin-login" class="hidden p-6"></div>
-
-        <!-- PAINEL ADMIN -->
         <div id="admin-panel" class="hidden p-6"></div>
-
-        <!-- TELA DE CONFIGURAÇÕES -->
         <div id="config-screen" class="hidden p-6"></div>
-
-        <!-- TELA LISTA CONSULTORAS -->
         <div id="consultoras-list" class="hidden p-6"></div>
-
-        <!-- TELA FORM CONSULTORA -->
         <div id="consultora-form" class="hidden p-6"></div>
-
-        <!-- TELA LISTA REPRESENTANTES -->
         <div id="representantes-list" class="hidden p-6"></div>
-
-        <!-- TELA FORM REPRESENTANTE -->
         <div id="representante-form" class="hidden p-6"></div>
-
-        <!-- TELA EXPLICAÇÕES -->
         <div id="explicacoes-screen" class="hidden p-6"></div>
-
-        <!-- TELA FOTOS -->
         <div id="fotos-screen" class="hidden p-6"></div>
-
-        <!-- TELA ADMIN FOTOS -->
         <div id="fotos-admin" class="hidden p-6"></div>
-
-        <!-- TELA QUEM SOMOS -->
         <div id="quem-somos-screen" class="hidden p-6"></div>
     </div>
 
-    <!-- RODAPÉ -->
-    <footer id="app-footer" class="p-4 mt-8">
+    <footer>
         <div class="flex items-center justify-between">
             <div>
                 <img id="footer-logo" src="" alt="" class="footer-logo hidden">
@@ -329,24 +256,9 @@ app.get('/', (c) => {
         </div>
     </footer>
 
-    <!-- Modal de Confirmação -->
-    <div id="confirm-modal" class="modal-overlay hidden">
-        <div class="modal-content">
-            <h3 class="text-xl font-bold mb-4" data-i18n="desejaSair"></h3>
-            <div class="flex gap-4">
-                <button onclick="confirmExit(true)" class="flex-1 btn-confirm-yes">
-                    <span data-i18n="sim"></span>
-                </button>
-                <button onclick="confirmExit(false)" class="flex-1 btn-confirm-no">
-                    <span data-i18n="nao"></span>
-                </button>
-            </div>
-        </div>
-    </div>
-
     <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
-    <script src="/static/translations.js"></script>
     <script src="/static/app.js"></script>
+    <script src="/static/app-part2.js"></script>
 </body>
 </html>
   `)
