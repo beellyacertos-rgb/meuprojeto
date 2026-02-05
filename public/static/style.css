@@ -1,173 +1,219 @@
-/* Estilos para o app de semi jóias */
-
-* { 
-    margin: 0; 
-    padding: 0; 
-    box-sizing: border-box; 
+/* Reset e Base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 html {
     scroll-behavior: smooth;
 }
 
-body { 
+body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     overflow-x: hidden;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    transition: background-color 0.3s ease;
 }
 
-.app-container { 
-    flex: 1; 
+.app-container {
+    flex: 1;
+    padding: 2rem 1rem;
 }
 
-/* Bandeiras de idioma */
-.language-flags {
+/* Seletor de Idioma */
+.language-switcher {
     position: fixed;
-    top: 10px;
-    right: 10px;
+    top: 1rem;
+    right: 1rem;
+    display: flex;
+    gap: 0.5rem;
     z-index: 1000;
-    display: flex;
-    gap: 8px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 0.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
 }
 
-.flag-btn {
-    font-size: 32px;
-    border: none;
-    background: white;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
+.language-switcher button {
+    background: transparent;
+    border: 2px solid transparent;
+    border-radius: 8px;
     cursor: pointer;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    padding: 0.25rem;
+    transition: all 0.3s;
 }
 
-.flag-btn:hover {
+.language-switcher button.active {
+    border-color: var(--color-tertiary);
+    background: rgba(255, 215, 0, 0.2);
+}
+
+.language-switcher button:hover {
     transform: scale(1.1);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 
-.flag-btn:active {
-    transform: scale(0.95);
+/* Grid de Botões */
+.button-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
-/* Botões em grid (2 ícones) */
-.btn-grid {
+@media (max-width: 640px) {
+    .button-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Botões Mobile Home e Admin */
+.btn-mobile-home,
+.btn-mobile-admin {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 1.5rem;
-    min-height: 150px;
+    gap: 0.75rem;
+    padding: 2rem 1rem;
     border-radius: 16px;
     border: none;
-    color: white;
-    font-size: 1rem;
-    font-weight: 600;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    transition: all 0.3s ease;
     cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 600;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    transition: all 0.3s;
+    min-height: 140px;
     background: var(--color-tertiary);
-}
-
-.btn-grid span {
-    margin-top: 8px;
     color: var(--color-quaternary);
 }
 
-.btn-grid:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+.btn-mobile-home i,
+.btn-mobile-admin i {
+    font-size: 2rem;
 }
 
-.btn-grid:active {
+.btn-mobile-home:active,
+.btn-mobile-admin:active {
+    transform: scale(0.95);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+}
+
+.btn-mobile-home:hover,
+.btn-mobile-admin:hover {
     transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
 }
 
 /* Botão Voltar */
-.btn-back {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 20px;
-    border-radius: 8px;
-    border: none;
+.btn-voltar {
     background: var(--color-tertiary);
     color: var(--color-quaternary);
-    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    border: none;
     cursor: pointer;
-    transition: all 0.3s ease;
+    font-size: 1rem;
+    font-weight: 600;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
     margin-bottom: 1rem;
 }
 
-.btn-back:hover {
-    filter: brightness(1.1);
+.btn-voltar:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }
 
-/* Botões de ação */
-.btn-action {
-    padding: 12px 24px;
+/* Botões Gerais */
+.btn-mobile {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 600;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: all 0.3s;
+}
+
+.btn-mobile:active {
+    transform: scale(0.98);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn-mobile:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+}
+
+/* Botão Relatório */
+.btn-relatorio {
+    background: #dc2626;
+    color: white;
+    padding: 0.75rem 1.5rem;
     border-radius: 8px;
     border: none;
-    font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
-    color: var(--color-quaternary);
+    font-weight: 600;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: all 0.3s;
 }
 
-.btn-primary {
-    background: var(--color-tertiary);
+.btn-relatorio:hover {
+    background: #b91c1c;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }
 
-.btn-success {
-    background: #10b981;
-}
-
-.btn-danger {
-    background: #ef4444;
-}
-
-.btn-warning {
-    background: #f59e0b;
-}
-
-/* Inputs */
+/* Formulários */
 .form-input {
     width: 100%;
     padding: 0.75rem;
     border: 2px solid #e5e7eb;
     border-radius: 8px;
     font-size: 1rem;
-    transition: border-color 0.2s;
+    background: white;
 }
 
 .form-input:focus {
     outline: none;
     border-color: var(--color-tertiary);
+    box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.1);
+}
+
+.form-container,
+.config-form {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1.5rem;
+    border-radius: 12px;
 }
 
 /* Logo */
 .logo-container {
     max-width: 200px;
-    margin: 0 auto;
+    max-height: 200px;
+    margin: 3rem auto 2rem;
 }
 
 .logo-container img {
     width: 100%;
     height: auto;
-    border-radius: 8px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
 /* Rodapé */
-#app-footer {
-    color: var(--color-quaternary);
-    transition: background-color 0.3s ease;
+footer {
+    padding: 1.5rem;
+    text-align: center;
+    color: white;
+    margin-top: auto;
 }
 
 .footer-logo {
@@ -177,64 +223,40 @@ body {
     border-radius: 4px;
 }
 
-/* Modal de confirmação */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 2000;
-}
-
-.modal-content {
-    background: white;
-    padding: 2rem;
-    border-radius: 16px;
-    max-width: 90%;
-    width: 400px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-}
-
-.btn-confirm-yes {
-    padding: 12px;
-    border-radius: 8px;
-    border: none;
-    background: var(--color-tertiary);
-    color: var(--color-quaternary);
-    font-weight: 600;
-    cursor: pointer;
-}
-
-.btn-confirm-no {
-    padding: 12px;
-    border-radius: 8px;
-    border: none;
-    background: #6b7280;
-    color: white;
-    font-weight: 600;
-    cursor: pointer;
-}
-
 /* Tabelas */
 .table-container {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 table {
     min-width: 100%;
     font-size: 0.9rem;
-    background: white;
-    border-radius: 8px;
-    overflow: hidden;
 }
 
-/* Fotos */
+th, td {
+    padding: 0.75rem;
+    text-align: left;
+}
+
+th {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+}
+
+tbody tr {
+    transition: background-color 0.2s;
+}
+
+tbody tr:hover {
+    background-color: rgba(0,0,0,0.02);
+}
+
+/* Galeria de Fotos */
 .foto-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -243,9 +265,14 @@ table {
 
 .foto-item {
     position: relative;
-    border-radius: 8px;
+    border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+}
+
+.foto-item:hover {
+    transform: scale(1.03);
 }
 
 .foto-item img {
@@ -262,15 +289,21 @@ table {
     color: white;
     border: none;
     border-radius: 50%;
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    transition: all 0.3s;
 }
 
-/* Color pickers */
+.foto-item button:hover {
+    background: rgba(220, 38, 38, 1);
+    transform: scale(1.1);
+}
+
+/* Color Picker */
 .color-picker-container {
     display: flex;
     align-items: center;
@@ -282,76 +315,71 @@ table {
     height: 50px;
     border-radius: 8px;
     border: 2px solid #e5e7eb;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-/* Utilitários */
-.hidden { 
-    display: none !important; 
+input[type="color"] {
+    height: 50px;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 2px solid #e5e7eb;
 }
 
+/* Textarea */
 textarea {
     resize: vertical;
     min-height: 100px;
 }
 
-/* Responsivo */
-@media (max-width: 768px) {
-    .btn-grid {
-        min-height: 130px;
-        font-size: 0.9rem;
+/* Modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    padding: 1rem;
+}
+
+.modal-content {
+    max-width: 400px;
+    width: 100%;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
     }
-    
-    .btn-grid i {
-        font-size: 2rem !important;
-    }
-    
-    .btn-grid i:nth-child(2) {
-        font-size: 1.5rem !important;
-    }
-    
-    .form-input {
-        font-size: 16px;
-    }
-    
-    h1 {
-        font-size: 2rem;
-    }
-    
-    h2 {
-        font-size: 1.5rem;
-    }
-    
-    .language-flags {
-        top: 5px;
-        right: 5px;
-    }
-    
-    .flag-btn {
-        width: 40px;
-        height: 40px;
-        font-size: 24px;
+    to {
+        opacity: 1;
+        transform: scale(1);
     }
 }
 
-@media (max-width: 640px) {
-    table {
-        font-size: 0.8rem;
-    }
-    
-    th, td {
-        padding: 0.5rem !important;
-    }
+/* Hidden */
+.hidden {
+    display: none !important;
 }
 
 /* Animações */
 @keyframes fadeIn {
-    from { 
-        opacity: 0; 
-        transform: translateY(10px); 
+    from {
+        opacity: 0;
+        transform: translateY(10px);
     }
-    to { 
-        opacity: 1; 
-        transform: translateY(0); 
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
@@ -359,7 +387,7 @@ textarea {
     animation: fadeIn 0.3s ease-in-out;
 }
 
-/* Scrollbar customizada */
+/* Scrollbar Customizado */
 ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
@@ -370,17 +398,75 @@ textarea {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #888;
+    background: var(--color-tertiary);
     border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #555;
+    background: var(--color-secondary);
+}
+
+/* Focus Visible */
+*:focus-visible {
+    outline: 2px solid var(--color-tertiary);
+    outline-offset: 2px;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .app-container {
+        padding: 1rem 0.75rem;
+    }
+    
+    .btn-mobile-home,
+    .btn-mobile-admin {
+        padding: 1.5rem 0.75rem;
+        min-height: 120px;
+    }
+    
+    .form-input {
+        font-size: 16px; /* Evita zoom no iOS */
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+    
+    table {
+        font-size: 0.8rem;
+    }
+    
+    th, td {
+        padding: 0.5rem !important;
+    }
 }
 
 /* Print */
 @media print {
-    .btn-grid, .btn-back, .btn-action, button, footer, .language-flags {
+    .btn-mobile, .btn-voltar, button, footer, .language-switcher {
         display: none !important;
     }
+    
+    body {
+        background: white !important;
+    }
+}
+
+/* Loading */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* Transições */
+button, a, input[type="file"], .foto-item {
+    cursor: pointer;
+}
+
+* {
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }

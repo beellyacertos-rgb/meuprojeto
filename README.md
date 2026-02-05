@@ -1,6 +1,6 @@
-# 💎 App Mobile para Semi Jóias
+# 💎 App Mobile para Semi Jóias - ATUALIZADO
 
-Aplicativo mobile completo para gestão de consultoras, representantes e galeria de produtos de semi jóias.
+Aplicativo mobile completo para gestão de consultoras, representantes e galeria de produtos de semi jóias com sistema de tradução bilíngue (PT-BR/ES).
 
 ## 🌐 URLs
 
@@ -9,187 +9,246 @@ Aplicativo mobile completo para gestão de consultoras, representantes e galeria
 
 ## ✨ Funcionalidades Implementadas
 
+### 🎨 **NOVAS FUNCIONALIDADES ADICIONADAS:**
+
+1. **Sistema de Tradução Bilíngue** 🇧🇷🇪🇸
+   - Bandeiras clicáveis (Brasil e Espanha) no canto superior direito
+   - Tradução completa do aplicativo para Português e Espanhol
+   - Todos os textos, botões, mensagens e formulários traduzidos
+   - Preferência de idioma salva localmente
+
+2. **Personalização Completa de Cores**
+   - **Cor Primária**: Fundo do aplicativo
+   - **Cor Secundária**: Rodapé
+   - **Cor Terciária**: Botões
+   - **Cor Quaternária**: Textos dos botões
+   - Aplicação em tempo real em todo o app
+
+3. **Interface Melhorada**
+   - Layout em grid 2x2 com 2 ícones por botão
+   - Design mais atraente e profissional
+   - Botões "Voltar" estilizados (não mais apenas seta)
+   - Modal de confirmação personalizado ao sair
+
+4. **Campo "Quem Somos"**
+   - Novo campo na área administrativa
+   - Botão dedicado na tela inicial
+   - Exibição da história da empresa
+
+5. **Relatórios em PDF** (APIs Preparadas)
+   - Consultoras por cidade
+   - Consultoras por nome
+   - Representantes por cidade  
+   - Representantes por nome
+   - Biblioteca jsPDF incluída
+
+6. **Simplificação de Cadastros**
+   - Removido botão "Gravar" isolado
+   - Mantido apenas "Gravar e Enviar WhatsApp"
+   - Fluxo mais direto e intuitivo
+
 ### 📱 Área Pública (Frontend)
-1. **Tela Inicial** com 5 botões principais:
-   - Cadastro de Consultoras
-   - Cadastro de Representantes
-   - Explicações
-   - Galeria de Fotos
-   - Área Administrativa
+
+1. **Tela Inicial** com 6 botões em grid 2x2:
+   - 👥💎 Cadastro de Consultoras
+   - 🆔💼 Cadastro de Representantes  
+   - ℹ️📖 Explicações
+   - 🖼️📷 Galeria de Fotos
+   - 🏢👥 Quem Somos (NOVO)
+   - 🔒⚙️ Área Administrativa
 
 2. **Cadastro de Consultoras**:
-   - Formulário completo com todos os campos solicitados
-   - Aceite de mostruário (Sim/Não)
-   - Aceite de contrato com termo de responsabilidade (Sim/Não)
-   - Botões: Gravar e Enviar via WhatsApp
+   - Formulário completo traduzível
+   - Botão único: "Gravar e Enviar WhatsApp"
+   - Validação de campos obrigatórios
 
 3. **Cadastro de Representantes**:
-   - Formulário com dados pessoais e veículo
-   - Botões: Gravar e Enviar via WhatsApp
+   - Formulário completo traduzível
+   - Botão único: "Gravar e Enviar WhatsApp"
+   - Envio automático para WhatsApp
 
-4. **Explicações**:
-   - Exibição do texto cadastrado pelo administrador
+4. **Explicações & Quem Somos**:
+   - Textos configuráveis pelo admin
+   - Suporte a quebras de linha
 
 5. **Galeria de Fotos**:
-   - Grid responsivo de fotos 400x600 pixels
+   - Grid responsivo
+   - Fotos 400x600 pixels
 
-6. **Rodapé Fixo**:
-   - Logo customizável (60x40 pixels)
-   - Texto: "Vsual Consultoria em Marketing"
-   - Contato: "18 99667-6409"
+6. **Rodapé Personalizado**:
+   - Logo customizável (60x40px)
+   - Cor configurável (cor secundária)
+   - Informações de contato
 
 ### 🔐 Área Administrativa
 
 **Senha padrão: 123**
 
 1. **Configurações do Sistema**:
-   - Alterar senha do administrador
-   - Nome da empresa
-   - WhatsApp para envio de cadastros
-   - 3 cores customizáveis (primária, secundária, terciária)
-   - Upload de logo da empresa (200x200 pixels)
-   - Upload de logo do rodapé (60x40 pixels)
-   - Campo de explicações com suporte a enter/quebras de linha
+   - ✅ Alterar senha
+   - ✅ **4 cores** personalizáveis (primária, secundária, terciária, quaternária)
+   - ✅ WhatsApp para envios
+   - ✅ Upload logo empresa (200x200px)
+   - ✅ Upload logo rodapé (60x40px)
+   - ✅ Campo Explicações
+   - ✅ Campo Quem Somos (NOVO)
 
 2. **Gerenciar Consultoras**:
-   - Listagem em tabela
-   - Botões: Novo, Alterar, Gravar, Excluir
-   - Visualização de todos os dados cadastrados
+   - ✅ Listagem em tabela
+   - ✅ CRUD completo (Novo, Alterar, Excluir)
+   - ✅ APIs para relatórios PDF preparadas
+   - 🔄 Geração de PDF (integração pendente)
 
 3. **Gerenciar Representantes**:
-   - Listagem em tabela
-   - Botões: Novo, Alterar, Gravar, Excluir
-   - Visualização de todos os dados cadastrados
+   - ✅ Listagem em tabela
+   - ✅ CRUD completo
+   - ✅ APIs para relatórios PDF preparadas
+   - 🔄 Geração de PDF (integração pendente)
 
 4. **Gerenciar Fotos**:
-   - Upload de fotos 400x600 pixels
-   - Grid de visualização
-   - Botões: Novo, Gravar, Excluir
+   - ✅ Upload de fotos
+   - ✅ Grid visual
+   - ✅ Exclusão individual
 
 ## 📊 Estrutura do Banco de Dados
 
-### Tabela: config
-Armazena configurações do sistema:
-- admin_password (senha de acesso)
-- cor_primaria, cor_secundaria, cor_terciaria (cores do tema)
-- nome_empresa (nome exibido no app)
-- logo_empresa (imagem 200x200 em base64)
-- logo_rodape (imagem 60x40 em base64)
-- explicacoes (texto explicativo)
-- whatsapp (número para envio de cadastros)
+### Tabela: config (ATUALIZADA)
+- admin_password
+- cor_primaria, cor_secundaria, cor_terciaria, **cor_quaternaria** (NOVO)
+- nome_empresa
+- logo_empresa, logo_rodape
+- explicacoes
+- **quem_somos** (NOVO)
+- whatsapp
 
-### Tabela: consultoras
-- id, nome_completo, endereco, bairro, cep, cidade, cpf, telefone
-- nome_pai, nome_mae, telefone_referencia, nome_representante
-- aceita_mostruario (sim/nao)
-- aceita_contrato (sim/nao)
-- created_at, updated_at
+### Tabelas: consultoras, representantes, fotos
+- Estrutura mantida com índices otimizados por cidade e nome
 
-### Tabela: representantes
-- id, nome_completo, endereco, bairro, cep, cidade, cpf, telefone, veiculo
-- created_at, updated_at
+## 🎨 Personalização Avançada
 
-### Tabela: fotos
-- id, imagem_base64 (imagem 400x600 em base64)
-- created_at
+### Sistema de Cores
+- **Primária (#8B4513)**: Fundo do aplicativo completo
+- **Secundária (#DAA520)**: Rodapé e áreas secundárias
+- **Terciária (#FFD700)**: Todos os botões
+- **Quaternária (#FFFFFF)**: Textos nos botões
 
-## 🎨 Tema e Personalização
-
-- **Cores Customizáveis**: 3 cores definidas pelo administrador
-- **Logo Empresa**: 200x200 pixels, exibida na tela inicial
-- **Logo Rodapé**: 60x40 pixels, exibida no rodapé de todas as páginas
-- **Design Responsivo**: 100% otimizado para dispositivos móveis
+### Bandeiras de Idioma
+- 🇧🇷 Português (Brasil)
+- 🇪🇸 Español (Espanha)
+- Mudança instantânea de idioma
+- Persistência local da preferência
 
 ## 📱 Integração WhatsApp
 
-Ao cadastrar uma consultora ou representante, o botão "Gravar e Enviar" envia automaticamente um resumo formatado para o WhatsApp configurado no painel administrativo.
+Mensagens automáticas formatadas em ambos idiomas:
 
-**Formato da mensagem (Consultora)**:
+**Português:**
 ```
 🌟 NOVA CONSULTORA 🌟
 👤 Nome: [nome]
-📍 Endereço: [endereço completo]
-📝 CPF: [cpf]
-📱 Telefone: [telefone]
-👨 Pai: [nome_pai]
-👩 Mãe: [nome_mae]
-☎️ Tel. Referência: [telefone_referencia]
-🤝 Representante: [nome_representante]
-📦 Aceita Mostruário: SIM/NÃO
-📋 Aceita Contrato: SIM/NÃO
+📍 Endereço: [endereço]
+...
 ```
 
-## 🚀 Como Usar
-
-### Para Consultoras/Representantes:
-1. Acesse o app pelo navegador do celular
-2. Clique em "Consultoras" ou "Representante"
-3. Preencha o formulário
-4. Clique em "Gravar e Enviar" para enviar via WhatsApp
-
-### Para o Administrador:
-1. Acesse o app
-2. Clique em "Área Administrativa"
-3. Digite a senha (padrão: 123)
-4. Personalize as configurações
-5. Gerencie cadastros e fotos
+**Español:**
+```
+🌟 NUEVA CONSULTORA 🌟
+👤 Nombre: [nombre]
+📍 Dirección: [dirección]
+...
+```
 
 ## 🛠️ Tecnologias Utilizadas
 
 - **Backend**: Hono + TypeScript
-- **Banco de Dados**: Cloudflare D1 (SQLite)
-- **Frontend**: HTML5 + CSS3 + JavaScript
-- **Estilização**: TailwindCSS + Font Awesome
+- **Banco**: Cloudflare D1 (SQLite)
+- **Frontend**: HTML5 + JavaScript + TailwindCSS
+- **PDF**: jsPDF + jsPDF-AutoTable
+- **Ícones**: Font Awesome 6
+- **Traduções**: Sistema custom PT-BR/ES
 - **Deploy**: Cloudflare Pages/Workers
-- **Desenvolvimento**: PM2 + Wrangler
+
+## 🚀 Como Usar
+
+### Para Usuários:
+1. Acesse pelo celular
+2. Escolha o idioma (🇧🇷 ou 🇪🇸)
+3. Clique no botão desejado
+4. Preencha e envie via WhatsApp
+
+### Para Administrador:
+1. Clique em "Área Administrativa"
+2. Senha: **123**
+3. Configure cores, logos e textos
+4. Gerencie cadastros
+
+## ✅ Status do Projeto
+
+**Status**: ✅ **ATIVO E FUNCIONAL**
+
+### Implementado ✅
+- [x] Sistema de tradução PT-BR/ES
+- [x] 4 cores customizáveis
+- [x] Layout 2 ícones por botão
+- [x] Modal de confirmação
+- [x] Botão "Quem Somos"
+- [x] Botão "Voltar" estilizado
+- [x] APIs de relatórios preparadas
+- [x] Simplificação de cadastros
+
+### Em Desenvolvimento 🔄
+- [ ] Geração completa de PDFs
+- [ ] Ajustes finais de UI/UX
+
+### Próximas Melhorias 📋
+- [ ] Exportação CSV
+- [ ] Gráficos e estatísticas
+- [ ] Sistema de notificações
 
 ## 📝 Comandos Úteis
 
 ```bash
-# Desenvolvimento local
-npm run dev:sandbox
-
-# Build do projeto
-npm run build
-
 # Aplicar migrations
 npm run db:migrate:local
 
-# Limpar porta
-npm run clean-port
+# Iniciar dev
+pm2 start ecosystem.config.cjs
 
 # Ver logs
 pm2 logs semijoias-app --nostream
 
-# Reiniciar serviço
-fuser -k 3000/tcp 2>/dev/null || true && pm2 start ecosystem.config.cjs
+# Rebuild
+npm run build && pm2 restart semijoias-app
 ```
 
-## 📂 Estrutura de Arquivos
+## 📂 Arquivos Principais
 
 ```
 webapp/
 ├── src/
-│   └── index.tsx           # Backend Hono com todas as rotas API
-├── public/
-│   └── static/
-│       └── app.js          # Frontend JavaScript completo
+│   └── index.tsx              # Backend com rotas de relatórios
+├── public/static/
+│   ├── app.js                 # JavaScript principal
+│   ├── translations.js        # Sistema de traduções PT-BR/ES
+│   └── style.css              # Estilos personalizados
 ├── migrations/
-│   └── 0001_initial_schema.sql  # Schema do banco de dados
-├── ecosystem.config.cjs    # Configuração PM2
-├── wrangler.jsonc          # Configuração Cloudflare
-├── package.json
+│   ├── 0001_initial_schema.sql
+│   └── 0002_add_new_configs.sql
 └── README.md
 ```
 
-## ✅ Status do Projeto
+## 🎯 Diferenciais
 
-**Status**: ✅ ATIVO
-
-**Última Atualização**: 03 de Fevereiro de 2026
-
-**Todas as funcionalidades solicitadas foram implementadas e testadas com sucesso!**
+✨ **Bilíngue**: Suporte completo PT-BR e ES  
+🎨 **Personalizável**: 4 cores configuráveis  
+📱 **Mobile-First**: 100% otimizado para celular  
+🚀 **Edge**: Deploy global em Cloudflare  
+💾 **Persistente**: Banco D1 SQLite  
+📊 **Relatórios**: APIs preparadas para PDF  
+🔒 **Seguro**: Autenticação administrativa  
 
 ---
 
-Desenvolvido com ❤️ por Vsual Consultoria em Marketing
+**Última Atualização**: 05 de Fevereiro de 2026
+
+Desenvolvido com ❤️ por Vsual Consultoria em Marketing | 18 99667-6409
