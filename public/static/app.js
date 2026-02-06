@@ -385,11 +385,20 @@ function renderHomePage() {
     const homeScreen = document.getElementById('home-screen');
     homeScreen.innerHTML = `
         <div class="language-switcher">
-            <button onclick="toggleLanguage('pt')" class="${currentLang === 'pt' ? 'active' : ''}">
-                <span style="font-size: 2rem;">🇧🇷</span>
+            <button onclick="toggleLanguage('pt')" class="${currentLang === 'pt' ? 'active' : ''}" title="Português">
+                <svg width="40" height="30" viewBox="0 0 40 30" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="40" height="30" fill="#009b3a"/>
+                    <polygon points="20,5 35,15 20,25 5,15" fill="#fedf00"/>
+                    <circle cx="20" cy="15" r="5" fill="#002776"/>
+                    <path d="M 15,15 Q 20,12 25,15 Q 20,18 15,15" fill="white"/>
+                </svg>
             </button>
-            <button onclick="toggleLanguage('es')" class="${currentLang === 'es' ? 'active' : ''}">
-                <span style="font-size: 2rem;">🇪🇸</span>
+            <button onclick="toggleLanguage('es')" class="${currentLang === 'es' ? 'active' : ''}" title="Español">
+                <svg width="40" height="30" viewBox="0 0 40 30" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="40" height="30" fill="#AA151B"/>
+                    <rect y="7.5" width="40" height="15" fill="#F1BF00"/>
+                    <rect y="11.25" width="40" height="7.5" fill="#AA151B"/>
+                </svg>
             </button>
         </div>
         
@@ -468,15 +477,6 @@ async function login() {
 function renderAdminPanel() {
     const adminPanel = document.getElementById('admin-panel');
     adminPanel.innerHTML = `
-        <div class="language-switcher">
-            <button onclick="toggleLanguage('pt')" class="${currentLang === 'pt' ? 'active' : ''}">
-                <span style="font-size: 2rem;">🇧🇷</span>
-            </button>
-            <button onclick="toggleLanguage('es')" class="${currentLang === 'es' ? 'active' : ''}">
-                <span style="font-size: 2rem;">🇪🇸</span>
-            </button>
-        </div>
-        
         <div class="flex justify-between items-center mb-6">
             <h2 class="text-2xl font-bold" style="color: white;">${t('painelAdministrativo')}</h2>
             <button onclick="logout()" style="color: white;">
