@@ -290,14 +290,19 @@ async function deleteConsultora(id) {
 async function generateConsultorasPDF(type) {
     try {
         let filtro = '';
+        let titulo = '';
+        
         if (type === 'cidade') {
-            filtro = prompt(t('digiteCidade'));
+            titulo = t('relatorioPorCidade');
+            filtro = await showInputModal(titulo, t('digiteCidade'));
             if (!filtro) return; // Cancelou ou não digitou
         } else if (type === 'nome') {
-            filtro = prompt(t('digiteNome'));
+            titulo = t('relatorioPorNome');
+            filtro = await showInputModal(titulo, t('digiteNome'));
             if (!filtro) return; // Cancelou ou não digitou
         } else if (type === 'mes') {
-            filtro = prompt(t('digiteMes'));
+            titulo = t('relatorioPorMes');
+            filtro = await showInputModal(titulo, t('digiteMes'));
             if (!filtro) return; // Cancelou ou não digitou
         }
         
@@ -614,11 +619,15 @@ async function deleteRepresentante(id) {
 async function generateRepresentantesPDF(type) {
     try {
         let filtro = '';
+        let titulo = '';
+        
         if (type === 'cidade') {
-            filtro = prompt(t('digiteCidade'));
+            titulo = t('relatorioPorCidade');
+            filtro = await showInputModal(titulo, t('digiteCidade'));
             if (!filtro) return; // Cancelou ou não digitou
         } else if (type === 'nome') {
-            filtro = prompt(t('digiteNome'));
+            titulo = t('relatorioPorNome');
+            filtro = await showInputModal(titulo, t('digiteNome'));
             if (!filtro) return; // Cancelou ou não digitou
         }
         

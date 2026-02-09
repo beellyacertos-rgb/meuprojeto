@@ -92,6 +92,8 @@ const translations = {
         digiteNome: 'Digite o nome:',
         digiteMes: 'Digite o mês:',
         gerarRelatorio: 'Gerar Relatório',
+        cancelar: 'Cancelar',
+        confirmar: 'Confirmar',
         
         // Tabelas
         nome: 'Nome',
@@ -207,6 +209,8 @@ const translations = {
         digiteNome: 'Ingrese el nombre:',
         digiteMes: 'Ingrese el mes:',
         gerarRelatorio: 'Generar Informe',
+        cancelar: 'Cancelar',
+        confirmar: 'Confirmar',
         
         // Tablas
         nome: 'Nombre',
@@ -392,6 +396,81 @@ function showConfirmModal(title, message, onConfirm) {
     };
     
     document.body.appendChild(modal);
+}
+
+// Modal de input customizado
+function showInputModal(title, message, onConfirm) {
+    return new Promise((resolve) => {
+        const modal = document.createElement('div');
+        modal.className = 'modal-overlay';
+        modal.innerHTML = `
+            <div class="modal-content" style="background: white; border: 3px solid var(--color-tertiary); max-width: 500px;">
+                <h3 class="text-xl font-bold mb-4" style="color: var(--color-primary);">${title}</h3>
+                <p class="mb-4 font-semibold" style="color: var(--color-primary);">${message}</p>
+                <input type="text" id="modal-input" class="form-input mb-6" 
+                       style="border: 2px solid var(--color-tertiary);" 
+                       placeholder="${message.replace(':', '')}">
+                <div class="flex gap-4">
+                    <button id="modal-cancel" 
+                            class="flex-1 py-3 rounded-lg font-bold"
+                            style="background: #dc2626; color: white;">
+                        ${t('cancelar')}
+                    </button>
+                    <button id="modal-confirm" 
+                            class="flex-1 py-3 rounded-lg font-bold"
+                            style="background: var(--color-tertiary); color: var(--color-quaternary);">
+                        ${t('confirmar')}
+                    </button>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+        const input = modal.querySelector('#modal-input');
+        const cancelBtn = modal.querySelector('#modal-cancel');
+        const confirmBtn = modal.querySelector('#modal-confirm');
+        
+        // Focar no input
+        setTimeout(() => input.focus(), 100);
+        
+        // Enter para confirmar
+        input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const value = input.value.trim();
+                if (value) {
+                    modal.remove();
+                    resolve(value);
+                }
+            }
+        });
+        
+        // Botão cancelar
+        cancelBtn.onclick = () => {
+            modal.remove();
+            resolve(null);
+        };
+        
+        // Botão confirmar
+        confirmBtn.onclick = () => {
+            const value = input.value.trim();
+            if (value) {
+                modal.remove();
+                resolve(value);
+            } else {
+                input.style.borderColor = '#dc2626';
+                input.focus();
+            }
+        };
+        
+        // Clicar fora fecha o modal
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.remove();
+                resolve(null);
+            }
+        });
+    });
 }
 
 // ================== RENDERIZAÇÃO DA HOME ==================
