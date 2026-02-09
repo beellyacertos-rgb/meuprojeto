@@ -81,9 +81,11 @@ body {
     margin: 0 auto;
 }
 
+/* Mantém 2 colunas mesmo em celular */
 @media (max-width: 640px) {
     .button-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
     }
 }
 

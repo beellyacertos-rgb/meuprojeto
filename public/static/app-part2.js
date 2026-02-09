@@ -73,7 +73,7 @@ async function showConsultoraForm(id = null) {
     let consultora = {
         nome_completo: '', endereco: '', bairro: '', cep: '', cidade: '',
         cpf: '', telefone: '', nome_pai: '', nome_mae: '', telefone_referencia: '',
-        nome_representante: '', aceita_mostruario: 'nao', aceita_contrato: 'nao'
+        nome_representante: '', aceita_mostruario: 'nao', aceita_contrato: 'nao', mes: ''
     };
 
     if (id && isAdmin) {
@@ -148,6 +148,11 @@ async function showConsultoraForm(id = null) {
                 <input type="text" id="consultora-representante" value="${consultora.nome_representante || ''}" class="form-input">
             </div>
 
+            <div>
+                <label class="block font-semibold mb-1 text-white">${t('mes')}</label>
+                <input type="text" id="consultora-mes" value="${consultora.mes || ''}" class="form-input" placeholder="Ex: Janeiro, Fevereiro...">
+            </div>
+
             <div class="border-2 rounded-lg p-4" style="border-color: var(--color-tertiary); background: rgba(255,255,255,0.1);">
                 <p class="mb-2 text-sm text-white">${t('aceitaMostruario')}</p>
                 <div class="flex gap-4">
@@ -206,6 +211,7 @@ async function saveAndSendConsultora() {
         nome_mae: document.getElementById('consultora-mae').value,
         telefone_referencia: document.getElementById('consultora-telefone-ref').value,
         nome_representante: document.getElementById('consultora-representante').value,
+        mes: document.getElementById('consultora-mes').value,
         aceita_mostruario: document.querySelector('input[name="mostruario"]:checked')?.value || 'nao',
         aceita_contrato: document.querySelector('input[name="contrato"]:checked')?.value || 'nao'
     };
@@ -280,13 +286,34 @@ async function deleteConsultora(id) {
 // Gerar PDF de Consultoras
 async function generateConsultorasPDF(type) {
     try {
+        let filtro = '';
+        if (type === 'cidade') {
+            filtro = prompt(t('digiteCidade'));
+            if (!filtro) return; // Cancelou ou não digitou
+        } else if (type === 'nome') {
+            filtro = prompt(t('digiteNome'));
+            if (!filtro) return; // Cancelou ou não digitou
+        }
+        
         const response = await axios.get('/api/consultoras');
         let consultoras = response.data;
         
-        if (type === 'cidade') {
+        // Aplicar filtro
+        if (type === 'cidade' && filtro) {
+            consultoras = consultoras.filter(c => 
+                (c.cidade || '').toLowerCase().includes(filtro.toLowerCase())
+            );
             consultoras.sort((a, b) => (a.cidade || '').localeCompare(b.cidade || ''));
-        } else {
+        } else if (type === 'nome' && filtro) {
+            consultoras = consultoras.filter(c => 
+                c.nome_completo.toLowerCase().includes(filtro.toLowerCase())
+            );
             consultoras.sort((a, b) => a.nome_completo.localeCompare(b.nome_completo));
+        }
+        
+        if (consultoras.length === 0) {
+            alert('Nenhum resultado encontrado!');
+            return;
         }
         
         // Criar janela para impressão
@@ -307,6 +334,7 @@ async function generateConsultorasPDF(type) {
             <body>
                 <h1>${t('relatorios')} - ${t('consultoras')}</h1>
                 <p><strong>${type === 'cidade' ? t('relatorioPorCidade') : t('relatorioPorNome')}</strong></p>
+                <p><em>Filtro: ${filtro}</em></p>
                 <table>
                     <thead>
                         <tr>
@@ -562,13 +590,34 @@ async function deleteRepresentante(id) {
 // Gerar PDF de Representantes
 async function generateRepresentantesPDF(type) {
     try {
+        let filtro = '';
+        if (type === 'cidade') {
+            filtro = prompt(t('digiteCidade'));
+            if (!filtro) return; // Cancelou ou não digitou
+        } else if (type === 'nome') {
+            filtro = prompt(t('digiteNome'));
+            if (!filtro) return; // Cancelou ou não digitou
+        }
+        
         const response = await axios.get('/api/representantes');
         let representantes = response.data;
         
-        if (type === 'cidade') {
+        // Aplicar filtro
+        if (type === 'cidade' && filtro) {
+            representantes = representantes.filter(r => 
+                (r.cidade || '').toLowerCase().includes(filtro.toLowerCase())
+            );
             representantes.sort((a, b) => (a.cidade || '').localeCompare(b.cidade || ''));
-        } else {
+        } else if (type === 'nome' && filtro) {
+            representantes = representantes.filter(r => 
+                r.nome_completo.toLowerCase().includes(filtro.toLowerCase())
+            );
             representantes.sort((a, b) => a.nome_completo.localeCompare(b.nome_completo));
+        }
+        
+        if (representantes.length === 0) {
+            alert('Nenhum resultado encontrado!');
+            return;
         }
         
         // Criar janela para impressão
@@ -589,6 +638,7 @@ async function generateRepresentantesPDF(type) {
             <body>
                 <h1>${t('relatorios')} - ${t('representantes')}</h1>
                 <p><strong>${type === 'cidade' ? t('relatorioPorCidade') : t('relatorioPorNome')}</strong></p>
+                <p><em>Filtro: ${filtro}</em></p>
                 <table>
                     <thead>
                         <tr>

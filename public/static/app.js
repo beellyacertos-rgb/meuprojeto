@@ -55,6 +55,7 @@ const translations = {
         nomeDaMae: 'Nome da Mãe',
         telefoneReferencia: 'Telefone de Referência',
         nomeDoRepresentante: 'Nome do Representante',
+        mes: 'Mês',
         aceitaMostruario: 'Você está de acordo que se for aprovada em nossa avaliação, irá pegar um MOSTRUÁRIO contendo de 50 PEÇAS ou MAIS, e assinará um CONTRATO explicando todas as cláusulas sobre as VENDAS, ACERTOS, PENDÊNCIAS E DEVOLUÇÃO?',
         aceitaContrato: 'Nós somos uma empresa PARCEIRA e por isto acreditamos na confiança de nossas CONSULTORAS. Mas a NÃO DEVOLUÇÃO do MOSTRUÁRIO ao TÉRMINO do CONTRATO, implicará em denúncia com boletim de ocorrência e AÇÃO JUDICIAL, por apropriação indébita artigo 168 do código penal, com previsão de até 1 ano de detenção. Você está ciente disto?',
         sim: 'Sim',
@@ -86,6 +87,9 @@ const translations = {
         relatorios: 'Relatórios',
         relatorioPorCidade: 'Relatório por Cidade',
         relatorioPorNome: 'Relatório por Nome',
+        digiteCidade: 'Digite a cidade:',
+        digiteNome: 'Digite o nome:',
+        gerarRelatorio: 'Gerar Relatório',
         
         // Tabelas
         nome: 'Nome',
@@ -164,6 +168,7 @@ const translations = {
         nomeDaMae: 'Nombre de la Madre',
         telefoneReferencia: 'Teléfono de Referencia',
         nomeDoRepresentante: 'Nombre del Representante',
+        mes: 'Mes',
         aceitaMostruario: '¿Está de acuerdo en que si es aprobada en nuestra evaluación, tomará un MUESTRARIO que contenga 50 PIEZAS o MÁS, y firmará un CONTRATO explicando todas las cláusulas sobre VENTAS, AJUSTES, PENDIENTES Y DEVOLUCIÓN?',
         aceitaContrato: 'Somos una empresa SOCIA y por eso creemos en la confianza de nuestras CONSULTORAS. Pero la NO DEVOLUCIÓN del MUESTRARIO al FINAL del CONTRATO, implicará denuncia con acta policial y ACCIÓN JUDICIAL, por apropiación indebida artículo 168 del código penal, con previsión de hasta 1 año de detención. ¿Está consciente de esto?',
         sim: 'Sí',
@@ -195,6 +200,9 @@ const translations = {
         relatorios: 'Informes',
         relatorioPorCidade: 'Informe por Ciudad',
         relatorioPorNome: 'Informe por Nombre',
+        digiteCidade: 'Ingrese la ciudad:',
+        digiteNome: 'Ingrese el nombre:',
+        gerarRelatorio: 'Generar Informe',
         
         // Tablas
         nome: 'Nombre',

@@ -84,12 +84,12 @@ app.post('/api/consultoras', async (c) => {
     INSERT INTO consultoras (
       nome_completo, endereco, bairro, cep, cidade, cpf, telefone,
       nome_pai, nome_mae, telefone_referencia, nome_representante,
-      aceita_mostruario, aceita_contrato
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      aceita_mostruario, aceita_contrato, mes
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `).bind(
     data.nome_completo, data.endereco, data.bairro, data.cep, data.cidade,
     data.cpf, data.telefone, data.nome_pai, data.nome_mae, data.telefone_referencia,
-    data.nome_representante, data.aceita_mostruario, data.aceita_contrato
+    data.nome_representante, data.aceita_mostruario, data.aceita_contrato, data.mes
   ).run()
   
   return c.json({ success: true, id: result.meta.last_row_id })
@@ -103,13 +103,13 @@ app.put('/api/consultoras/:id', async (c) => {
     UPDATE consultoras SET
       nome_completo = ?, endereco = ?, bairro = ?, cep = ?, cidade = ?,
       cpf = ?, telefone = ?, nome_pai = ?, nome_mae = ?, telefone_referencia = ?,
-      nome_representante = ?, aceita_mostruario = ?, aceita_contrato = ?,
+      nome_representante = ?, aceita_mostruario = ?, aceita_contrato = ?, mes = ?,
       updated_at = CURRENT_TIMESTAMP
     WHERE id = ?
   `).bind(
     data.nome_completo, data.endereco, data.bairro, data.cep, data.cidade,
     data.cpf, data.telefone, data.nome_pai, data.nome_mae, data.telefone_referencia,
-    data.nome_representante, data.aceita_mostruario, data.aceita_contrato, id
+    data.nome_representante, data.aceita_mostruario, data.aceita_contrato, data.mes, id
   ).run()
   
   return c.json({ success: true })
