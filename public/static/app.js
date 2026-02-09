@@ -19,6 +19,7 @@ const translations = {
         // Admin
         painelAdministrativo: 'Painel Administrativo',
         sair: 'Sair',
+        entrar: 'Entrar',
         configuracoes: 'Configurações',
         gerenciarConsultoras: 'Gerenciar Consultoras',
         gerenciarRepresentantes: 'Gerenciar Representantes',
@@ -127,6 +128,7 @@ const translations = {
         // Admin
         painelAdministrativo: 'Panel Administrativo',
         sair: 'Salir',
+        entrar: 'Entrar',
         configuracoes: 'Configuraciones',
         gerenciarConsultoras: 'Administrar Consultoras',
         gerenciarRepresentantes: 'Administrar Representantes',
@@ -386,7 +388,7 @@ function renderHomePage() {
     homeScreen.innerHTML = `
         <div class="language-switcher">
             <button onclick="toggleLanguage('pt')" class="${currentLang === 'pt' ? 'active' : ''}" title="Português">
-                <svg width="40" height="30" viewBox="0 0 40 30" xmlns="http://www.w3.org/2000/svg">
+                <svg width="32" height="24" viewBox="0 0 40 30" xmlns="http://www.w3.org/2000/svg">
                     <rect width="40" height="30" fill="#009b3a"/>
                     <polygon points="20,5 35,15 20,25 5,15" fill="#fedf00"/>
                     <circle cx="20" cy="15" r="5" fill="#002776"/>
@@ -394,7 +396,7 @@ function renderHomePage() {
                 </svg>
             </button>
             <button onclick="toggleLanguage('es')" class="${currentLang === 'es' ? 'active' : ''}" title="Español">
-                <svg width="40" height="30" viewBox="0 0 40 30" xmlns="http://www.w3.org/2000/svg">
+                <svg width="32" height="24" viewBox="0 0 40 30" xmlns="http://www.w3.org/2000/svg">
                     <rect width="40" height="30" fill="#AA151B"/>
                     <rect y="7.5" width="40" height="15" fill="#F1BF00"/>
                     <rect y="11.25" width="40" height="7.5" fill="#AA151B"/>
@@ -452,7 +454,7 @@ function renderAdminLogin() {
         <div class="space-y-4">
             <input type="password" id="admin-password" placeholder="${t('senhaDoAdministrador')}" class="form-input">
             <button onclick="login()" class="btn-mobile" style="background: var(--color-tertiary); color: var(--color-quaternary);">
-                <i class="fas fa-sign-in-alt mr-2"></i> ${t('sair')}
+                <i class="fas fa-sign-in-alt mr-2"></i> ${t('entrar')}
             </button>
         </div>
     `;

@@ -25,25 +25,25 @@ body {
 /* Seletor de Idioma */
 .language-switcher {
     position: fixed;
-    top: 1rem;
-    right: 1rem;
+    top: 0.75rem;
+    right: 0.75rem;
     display: flex;
-    gap: 0.75rem;
+    gap: 0.5rem;
     z-index: 1000;
     background: rgba(255, 255, 255, 0.95);
-    padding: 0.75rem;
-    border-radius: 16px;
-    box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+    padding: 0.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
 .language-switcher button {
     background: white;
-    border: 3px solid transparent;
-    border-radius: 10px;
+    border: 2px solid transparent;
+    border-radius: 6px;
     cursor: pointer;
-    padding: 0.5rem;
+    padding: 0.25rem;
     transition: all 0.3s;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -51,8 +51,10 @@ body {
 
 .language-switcher button svg {
     display: block;
-    border-radius: 4px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    border-radius: 3px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+    width: 32px;
+    height: 24px;
 }
 
 .language-switcher button.active {
@@ -62,12 +64,12 @@ body {
 }
 
 .language-switcher button:hover {
-    transform: scale(1.1);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    transform: scale(1.08);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.15);
 }
 
 .language-switcher button:active {
-    transform: scale(1.05);
+    transform: scale(1.02);
 }
 
 /* Grid de Botões */
