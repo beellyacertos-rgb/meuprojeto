@@ -15,12 +15,15 @@ async function showConsultorasList() {
                 </button>
             </div>
             
-            <div class="mb-4 flex gap-2">
+            <div class="mb-4 flex gap-2 flex-wrap">
                 <button onclick="generateConsultorasPDF('cidade')" class="btn-relatorio">
                     <i class="fas fa-file-pdf mr-2"></i> ${t('relatorioPorCidade')}
                 </button>
                 <button onclick="generateConsultorasPDF('nome')" class="btn-relatorio">
                     <i class="fas fa-file-pdf mr-2"></i> ${t('relatorioPorNome')}
+                </button>
+                <button onclick="generateConsultorasPDF('mes')" class="btn-relatorio">
+                    <i class="fas fa-file-pdf mr-2"></i> ${t('relatorioPorMes')}
                 </button>
             </div>
             
@@ -293,6 +296,9 @@ async function generateConsultorasPDF(type) {
         } else if (type === 'nome') {
             filtro = prompt(t('digiteNome'));
             if (!filtro) return; // Cancelou ou não digitou
+        } else if (type === 'mes') {
+            filtro = prompt(t('digiteMes'));
+            if (!filtro) return; // Cancelou ou não digitou
         }
         
         const response = await axios.get('/api/consultoras');
@@ -309,11 +315,26 @@ async function generateConsultorasPDF(type) {
                 c.nome_completo.toLowerCase().includes(filtro.toLowerCase())
             );
             consultoras.sort((a, b) => a.nome_completo.localeCompare(b.nome_completo));
+        } else if (type === 'mes' && filtro) {
+            consultoras = consultoras.filter(c => 
+                (c.mes || '').toLowerCase().includes(filtro.toLowerCase())
+            );
+            consultoras.sort((a, b) => (a.mes || '').localeCompare(b.mes || ''));
         }
         
         if (consultoras.length === 0) {
             alert('Nenhum resultado encontrado!');
             return;
+        }
+        
+        // Determinar título do relatório
+        let tituloRelatorio = '';
+        if (type === 'cidade') {
+            tituloRelatorio = t('relatorioPorCidade');
+        } else if (type === 'nome') {
+            tituloRelatorio = t('relatorioPorNome');
+        } else if (type === 'mes') {
+            tituloRelatorio = t('relatorioPorMes');
         }
         
         // Criar janela para impressão
@@ -333,7 +354,7 @@ async function generateConsultorasPDF(type) {
             </head>
             <body>
                 <h1>${t('relatorios')} - ${t('consultoras')}</h1>
-                <p><strong>${type === 'cidade' ? t('relatorioPorCidade') : t('relatorioPorNome')}</strong></p>
+                <p><strong>${tituloRelatorio}</strong></p>
                 <p><em>Filtro: ${filtro}</em></p>
                 <table>
                     <thead>
@@ -342,6 +363,7 @@ async function generateConsultorasPDF(type) {
                             <th>${t('cidade')}</th>
                             <th>${t('telefone')}</th>
                             <th>${t('cpf')}</th>
+                            ${type === 'mes' ? `<th>${t('mes')}</th>` : ''}
                         </tr>
                     </thead>
                     <tbody>
@@ -351,6 +373,7 @@ async function generateConsultorasPDF(type) {
                                 <td>${c.cidade || ''}</td>
                                 <td>${c.telefone || ''}</td>
                                 <td>${c.cpf || ''}</td>
+                                ${type === 'mes' ? `<td>${c.mes || ''}</td>` : ''}
                             </tr>
                         `).join('')}
                     </tbody>

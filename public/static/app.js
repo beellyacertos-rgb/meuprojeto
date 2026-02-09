@@ -28,7 +28,7 @@ const translations = {
         // Configurações
         configuracoesDoSistema: 'Configurações do Sistema',
         senhaDoAdministrador: 'Senha do Administrador',
-        whatsapp: 'WhatsApp (com DDD, ex: 5518996676409)',
+        whatsapp: 'WhatsApp (apenas números: DDD + telefone)',
         corPrimaria: 'Cor Primária (Fundo do App)',
         corSecundaria: 'Cor Secundária (Rodapé)',
         corTerciaria: 'Cor Terciária (Botões)',
@@ -87,8 +87,10 @@ const translations = {
         relatorios: 'Relatórios',
         relatorioPorCidade: 'Relatório por Cidade',
         relatorioPorNome: 'Relatório por Nome',
+        relatorioPorMes: 'Relatório por Mês',
         digiteCidade: 'Digite a cidade:',
         digiteNome: 'Digite o nome:',
+        digiteMes: 'Digite o mês:',
         gerarRelatorio: 'Gerar Relatório',
         
         // Tabelas
@@ -141,7 +143,7 @@ const translations = {
         // Configuraciones
         configuracoesDoSistema: 'Configuraciones del Sistema',
         senhaDoAdministrador: 'Contraseña del Administrador',
-        whatsapp: 'WhatsApp (con código de área, ej: 5518996676409)',
+        whatsapp: 'WhatsApp (solo números: código de área + teléfono)',
         corPrimaria: 'Color Primario (Fondo de la App)',
         corSecundaria: 'Color Secundario (Pie de página)',
         corTerciaria: 'Color Terciario (Botones)',
@@ -200,8 +202,10 @@ const translations = {
         relatorios: 'Informes',
         relatorioPorCidade: 'Informe por Ciudad',
         relatorioPorNome: 'Informe por Nombre',
+        relatorioPorMes: 'Informe por Mes',
         digiteCidade: 'Ingrese la ciudad:',
         digiteNome: 'Ingrese el nombre:',
+        digiteMes: 'Ingrese el mes:',
         gerarRelatorio: 'Generar Informe',
         
         // Tablas
@@ -538,7 +542,11 @@ async function showConfigScreen() {
             <!-- WhatsApp -->
             <div>
                 <label class="block font-semibold mb-2 text-white">${t('whatsapp')}</label>
-                <input type="text" id="config-whatsapp" value="${currentConfig.whatsapp || ''}" class="form-input" placeholder="5518996676409">
+                <div class="flex items-center gap-2">
+                    <span class="text-white font-mono bg-gray-700 px-3 py-2 rounded border-2 border-gray-600">https://wa.me/55</span>
+                    <input type="text" id="config-whatsapp" value="${(currentConfig.whatsapp || '').replace('https://wa.me/55', '')}" class="form-input flex-1" placeholder="18996676409" maxlength="11">
+                </div>
+                <p class="text-sm text-gray-300 mt-1">Digite apenas os números do telefone (DDD + número)</p>
             </div>
 
             <!-- Cores -->
@@ -646,9 +654,12 @@ function previewImage(inputId) {
 
 async function saveConfig() {
     try {
+        const whatsappNumero = document.getElementById('config-whatsapp').value;
+        const whatsappCompleto = whatsappNumero ? `https://wa.me/55${whatsappNumero}` : '';
+        
         const updates = {
             admin_password: document.getElementById('config-password').value,
-            whatsapp: document.getElementById('config-whatsapp').value,
+            whatsapp: whatsappCompleto,
             cor_primaria: document.getElementById('config-cor1').value,
             cor_secundaria: document.getElementById('config-cor2').value,
             cor_terciaria: document.getElementById('config-cor3').value,
