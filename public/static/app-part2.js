@@ -857,3 +857,197 @@ function fileToBase64(file) {
         reader.readAsDataURL(file);
     });
 }
+
+// ================== USUÁRIOS ==================
+async function showUsuariosList() {
+    try {
+        const response = await axios.get('/api/usuarios');
+        const usuarios = response.data;
+
+        let html = `
+            <div class="config-container">
+                <div class="flex items-center mb-4">
+                    <button onclick="renderAdminPanel()" class="btn-voltar">
+                        <i class="fas fa-arrow-left"></i> ${t('voltar')}
+                    </button>
+                </div>
+                
+                <h2 class="text-2xl font-bold mb-4" style="color: ${currentConfig.cor_primaria || '#876f5e'}">
+                    <i class="fas fa-users mr-2"></i>${t('usuarios')}
+                </h2>
+                
+                <div class="mb-4">
+                    <button onclick="showUsuarioForm(null)" class="btn-novo">
+                        <i class="fas fa-plus"></i> ${t('novo')}
+                    </button>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <h3 class="text-xl font-semibold mb-3">${t('usuariosCadastrados')}</h3>
+        `;
+
+        if (usuarios.length === 0) {
+            html += `<p class="text-gray-600">${t('nenhumUsuarioCadastrado')}</p>`;
+        } else {
+            html += `
+                <table class="min-w-full bg-white">
+                    <thead>
+                        <tr style="background-color: ${currentConfig.cor_terciaria || '#da8720'}; color: ${currentConfig.cor_quaternaria || '#fafafa'};">
+                            <th class="py-2 px-4 text-left">${t('nomeDoUsuario')}</th>
+                            <th class="py-2 px-4 text-left">${t('senha')}</th>
+                            <th class="py-2 px-4 text-center">${t('acoes')}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            usuarios.forEach(usuario => {
+                html += `
+                    <tr class="border-b hover:bg-gray-50">
+                        <td class="py-2 px-4">${usuario.username}</td>
+                        <td class="py-2 px-4">${usuario.password}</td>
+                        <td class="py-2 px-4 text-center">
+                            <button onclick="showUsuarioForm(${usuario.id})" class="btn-alterar">
+                                <i class="fas fa-edit"></i> ${t('alterar')}
+                            </button>
+                            <button onclick="deleteUsuario(${usuario.id})" class="btn-excluir">
+                                <i class="fas fa-trash"></i> ${t('excluir')}
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            html += `
+                    </tbody>
+                </table>
+            `;
+        }
+
+        html += `
+                </div>
+            </div>
+        `;
+
+        document.getElementById('usuarios-list').innerHTML = html;
+        hideAllScreens();
+        document.getElementById('usuarios-list').classList.remove('hidden');
+    } catch (error) {
+        console.error('Erro:', error);
+        alert(t('erroLogin'));
+    }
+}
+
+async function showUsuarioForm(id = null) {
+    currentUsuarioId = id;
+    
+    let usuario = {
+        username: '',
+        password: ''
+    };
+
+    if (id) {
+        try {
+            const response = await axios.get(`/api/usuarios/${id}`);
+            usuario = response.data;
+        } catch (error) {
+            console.error('Erro ao carregar usuário:', error);
+        }
+    }
+
+    const isEdit = id !== null;
+    const title = isEdit ? t('editarUsuario') : t('cadastroDeUsuario');
+
+    const html = `
+        <div class="config-container">
+            <div class="flex items-center mb-4">
+                <button onclick="showUsuariosList()" class="btn-voltar">
+                    <i class="fas fa-arrow-left"></i> ${t('voltar')}
+                </button>
+            </div>
+            
+            <h2 class="text-2xl font-bold mb-4" style="color: ${currentConfig.cor_primaria || '#876f5e'}">
+                <i class="fas fa-user mr-2"></i>${title}
+            </h2>
+            
+            <form id="usuario-form" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium mb-1">${t('nomeDoUsuario')}</label>
+                    <input type="text" id="username" value="${usuario.username}" 
+                           class="w-full p-2 border rounded" required>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium mb-1">${t('senha')}</label>
+                    <input type="text" id="password" value="${usuario.password}" 
+                           class="w-full p-2 border rounded" required>
+                </div>
+                
+                <div class="flex gap-2 flex-wrap">
+                    ${isEdit ? `
+                        <button type="button" onclick="deleteUsuario(${id})" class="btn-excluir">
+                            <i class="fas fa-trash"></i> ${t('excluir')}
+                        </button>
+                    ` : ''}
+                    <button type="submit" class="btn-gravar">
+                        <i class="fas fa-save"></i> ${t('gravar')}
+                    </button>
+                </div>
+            </form>
+        </div>
+    `;
+
+    document.getElementById('usuario-form').innerHTML = html;
+    hideAllScreens();
+    document.getElementById('usuario-form').classList.remove('hidden');
+
+    // Form submit handler
+    setTimeout(() => {
+        document.getElementById('usuario-form').addEventListener('submit', saveUsuario);
+    }, 100);
+}
+
+async function saveUsuario(e) {
+    e.preventDefault();
+
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    if (!username || !password) {
+        alert(t('preenchaNome'));
+        return;
+    }
+
+    const data = { username, password };
+
+    try {
+        if (currentUsuarioId) {
+            await axios.put(`/api/usuarios/${currentUsuarioId}`, data);
+        } else {
+            await axios.post('/api/usuarios', data);
+        }
+
+        alert(t('usuarioSalvo'));
+        showUsuariosList();
+    } catch (error) {
+        console.error('Erro:', error);
+        alert(t('erroSalvar'));
+    }
+}
+
+async function deleteUsuario(id) {
+    showConfirmModal(
+        t('excluir') + ' ' + t('usuarios'),
+        t('desejaExcluir') + '?',
+        async () => {
+            try {
+                await axios.delete(`/api/usuarios/${id}`);
+                alert(t('usuarioExcluido'));
+                showUsuariosList();
+            } catch (error) {
+                console.error('Erro:', error);
+                alert(t('erroSalvar'));
+            }
+        }
+    );
+}

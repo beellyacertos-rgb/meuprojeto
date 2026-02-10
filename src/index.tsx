@@ -215,6 +215,52 @@ app.delete('/api/fotos/:id', async (c) => {
   return c.json({ success: true })
 })
 
+// ================== USUÁRIOS ==================
+app.get('/api/usuarios', async (c) => {
+  const result = await c.env.DB.prepare(
+    'SELECT * FROM users ORDER BY created_at DESC'
+  ).all()
+  return c.json(result.results)
+})
+
+app.get('/api/usuarios/:id', async (c) => {
+  const id = c.req.param('id')
+  const result = await c.env.DB.prepare(
+    'SELECT * FROM users WHERE id = ?'
+  ).bind(id).first()
+  return c.json(result)
+})
+
+app.post('/api/usuarios', async (c) => {
+  const data = await c.req.json()
+  
+  const result = await c.env.DB.prepare(`
+    INSERT INTO users (username, password) VALUES (?, ?)
+  `).bind(data.username, data.password).run()
+  
+  return c.json({ success: true, id: result.meta.last_row_id })
+})
+
+app.put('/api/usuarios/:id', async (c) => {
+  const id = c.req.param('id')
+  const data = await c.req.json()
+  
+  await c.env.DB.prepare(`
+    UPDATE users SET
+      username = ?, password = ?,
+      updated_at = CURRENT_TIMESTAMP
+    WHERE id = ?
+  `).bind(data.username, data.password, id).run()
+  
+  return c.json({ success: true })
+})
+
+app.delete('/api/usuarios/:id', async (c) => {
+  const id = c.req.param('id')
+  await c.env.DB.prepare('DELETE FROM users WHERE id = ?').bind(id).run()
+  return c.json({ success: true })
+})
+
 // ================== PÁGINA PRINCIPAL ==================
 app.get('/', (c) => {
   return c.html(`
@@ -238,6 +284,8 @@ app.get('/', (c) => {
         <div id="consultora-form" class="hidden p-6"></div>
         <div id="representantes-list" class="hidden p-6"></div>
         <div id="representante-form" class="hidden p-6"></div>
+        <div id="usuarios-list" class="hidden p-6"></div>
+        <div id="usuario-form" class="hidden p-6"></div>
         <div id="explicacoes-screen" class="hidden p-6"></div>
         <div id="fotos-screen" class="hidden p-6"></div>
         <div id="fotos-admin" class="hidden p-6"></div>
@@ -262,6 +310,71 @@ app.get('/', (c) => {
 </body>
 </html>
   `)
+})
+
+// ================== USUÁRIOS ==================
+app.get('/api/users', async (c) => {
+  const result = await c.env.DB.prepare(
+    'SELECT id, username, password, created_at FROM users ORDER BY username'
+  ).all()
+  return c.json(result.results)
+})
+
+app.get('/api/users/:id', async (c) => {
+  const id = c.req.param('id')
+  const result = await c.env.DB.prepare(
+    'SELECT id, username, password FROM users WHERE id = ?'
+  ).bind(id).first()
+  return c.json(result)
+})
+
+app.post('/api/users', async (c) => {
+  const data = await c.req.json()
+  
+  // Verificar se username já existe
+  const existing = await c.env.DB.prepare(
+    'SELECT id FROM users WHERE username = ?'
+  ).bind(data.username).first()
+  
+  if (existing) {
+    return c.json({ success: false, message: 'Usuário já existe' }, 400)
+  }
+  
+  const result = await c.env.DB.prepare(
+    'INSERT INTO users (username, password) VALUES (?, ?)'
+  ).bind(data.username, data.password).run()
+  
+  return c.json({ success: true, id: result.meta.last_row_id })
+})
+
+app.put('/api/users/:id', async (c) => {
+  const id = c.req.param('id')
+  const data = await c.req.json()
+  
+  await c.env.DB.prepare(
+    'UPDATE users SET username = ?, password = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?'
+  ).bind(data.username, data.password, id).run()
+  
+  return c.json({ success: true })
+})
+
+app.delete('/api/users/:id', async (c) => {
+  const id = c.req.param('id')
+  await c.env.DB.prepare('DELETE FROM users WHERE id = ?').bind(id).run()
+  return c.json({ success: true })
+})
+
+// Login com usuários da tabela
+app.post('/api/user-login', async (c) => {
+  const { username, password } = await c.req.json()
+  const user = await c.env.DB.prepare(
+    'SELECT id, username FROM users WHERE username = ? AND password = ?'
+  ).bind(username, password).first()
+  
+  if (user) {
+    return c.json({ success: true, user })
+  }
+  return c.json({ success: false, message: 'Usuário ou senha incorretos' }, 401)
 })
 
 export default app

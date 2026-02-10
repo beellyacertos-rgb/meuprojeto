@@ -3,6 +3,7 @@ let currentConfig = {};
 let isAdmin = false;
 let currentConsultoraId = null;
 let currentRepresentanteId = null;
+let currentUsuarioId = null;
 let currentLang = 'pt'; // pt ou es
 
 // Traduções
@@ -24,6 +25,7 @@ const translations = {
         gerenciarConsultoras: 'Gerenciar Consultoras',
         gerenciarRepresentantes: 'Gerenciar Representantes',
         gerenciarFotos: 'Gerenciar Fotos',
+        gerenciarUsuarios: 'Gerenciar Usuários',
         
         // Configurações
         configuracoesDoSistema: 'Configurações do Sistema',
@@ -95,6 +97,16 @@ const translations = {
         cancelar: 'Cancelar',
         confirmar: 'Confirmar',
         
+        // Usuários
+        usuarios: 'Usuários',
+        cadastroDeUsuario: 'Cadastro de Usuário',
+        editarUsuario: 'Editar Usuário',
+        novoUsuario: 'Novo Usuário',
+        nomeDoUsuario: 'Nome do Usuário',
+        senha: 'Senha',
+        usuariosCadastrados: 'Usuários Cadastrados',
+        nenhumUsuarioCadastrado: 'Nenhum usuário cadastrado ainda.',
+        
         // Tabelas
         nome: 'Nome',
         acoes: 'Ações',
@@ -122,7 +134,17 @@ const translations = {
         
         // Quem Somos
         quemSomosTitle: 'Quem Somos',
-        nenhumaInfo: 'Nenhuma informação cadastrada ainda.'
+        nenhumaInfo: 'Nenhuma informação cadastrada ainda.',
+        
+        // Usuários
+        usuarios: 'Usuários',
+        nomeUsuario: 'Nome do Usuário',
+        senha: 'Senha',
+        novoUsuario: 'Novo Usuário',
+        editarUsuario: 'Editar Usuário',
+        usuarioJaExiste: 'Usuário já existe!',
+        usuarioExcluido: 'Usuário excluído com sucesso!',
+        usuarioSalvo: 'Usuário salvo com sucesso!',
     },
     es: {
         // Pantalla Inicial
@@ -141,6 +163,7 @@ const translations = {
         gerenciarConsultoras: 'Administrar Consultoras',
         gerenciarRepresentantes: 'Administrar Representantes',
         gerenciarFotos: 'Administrar Fotos',
+        gerenciarUsuarios: 'Administrar Usuarios',
         
         // Configuraciones
         configuracoesDoSistema: 'Configuraciones del Sistema',
@@ -212,6 +235,16 @@ const translations = {
         cancelar: 'Cancelar',
         confirmar: 'Confirmar',
         
+        // Usuarios
+        usuarios: 'Usuarios',
+        cadastroDeUsuario: 'Registro de Usuario',
+        editarUsuario: 'Editar Usuario',
+        novoUsuario: 'Nuevo Usuario',
+        nomeDoUsuario: 'Nombre de Usuario',
+        senha: 'Contraseña',
+        usuariosCadastrados: 'Usuarios Registrados',
+        nenhumUsuarioCadastrado: 'Aún no hay usuarios registrados.',
+        
         // Tablas
         nome: 'Nombre',
         acoes: 'Acciones',
@@ -229,6 +262,8 @@ const translations = {
         fotoAdicionada: '¡Foto agregada con éxito!',
         selecioneFoto: 'Por favor, seleccione una foto',
         nenhumaExplicacao: 'Ninguna explicación registrada todavía.',
+        usuarioExcluido: '¡Usuario eliminado con éxito!',
+        usuarioSalvo: '¡Usuario guardado con éxito!',
         
         // Modal Salir
         desejaSair: '¿Desea Salir?',
@@ -239,7 +274,17 @@ const translations = {
         
         // Quiénes Somos
         quemSomosTitle: 'Quiénes Somos',
-        nenhumaInfo: 'Ninguna información registrada todavía.'
+        nenhumaInfo: 'Ninguna información registrada todavía.',
+        
+        // Usuarios
+        usuarios: 'Usuarios',
+        nomeUsuario: 'Nombre de Usuario',
+        senha: 'Contraseña',
+        novoUsuario: 'Nuevo Usuario',
+        editarUsuario: 'Editar Usuario',
+        usuarioJaExiste: '¡Usuario ya existe!',
+        usuarioExcluido: '¡Usuario eliminado con éxito!',
+        usuarioSalvo: '¡Usuario guardado con éxito!',
     }
 };
 
@@ -256,7 +301,8 @@ function toggleLanguage(lang) {
     // Recarregar a tela atual
     const screens = ['home-screen', 'admin-login', 'admin-panel', 'config-screen', 
                     'consultoras-list', 'consultora-form', 'representantes-list', 
-                    'representante-form', 'explicacoes-screen', 'fotos-screen', 'fotos-admin', 'quem-somos-screen'];
+                    'representante-form', 'usuarios-list', 'usuario-form',
+                    'explicacoes-screen', 'fotos-screen', 'fotos-admin', 'quem-somos-screen'];
     
     const currentScreen = screens.find(id => !document.getElementById(id).classList.contains('hidden'));
     
@@ -268,6 +314,7 @@ function toggleLanguage(lang) {
         else if (currentScreen === 'config-screen') showConfigScreen();
         else if (currentScreen === 'consultoras-list') showConsultorasList();
         else if (currentScreen === 'representantes-list') showRepresentantesList();
+        else if (currentScreen === 'usuarios-list') showUsuariosList();
         else if (currentScreen === 'fotos-admin') showFotosAdmin();
         else if (currentScreen === 'explicacoes-screen') showExplicacoes();
         else if (currentScreen === 'fotos-screen') showFotos();
@@ -330,7 +377,8 @@ function applyTheme() {
 function showScreen(screenId) {
     const screens = ['home-screen', 'admin-login', 'admin-panel', 'config-screen', 
                     'consultoras-list', 'consultora-form', 'representantes-list', 
-                    'representante-form', 'explicacoes-screen', 'fotos-screen', 'fotos-admin', 'quem-somos-screen'];
+                    'representante-form', 'usuarios-list', 'usuario-form',
+                    'explicacoes-screen', 'fotos-screen', 'fotos-admin', 'quem-somos-screen'];
     screens.forEach(id => {
         const el = document.getElementById(id);
         if (el) el.classList.add('hidden');
@@ -338,6 +386,17 @@ function showScreen(screenId) {
     const targetScreen = document.getElementById(screenId);
     if (targetScreen) targetScreen.classList.remove('hidden');
     window.scrollTo(0, 0);
+}
+
+function hideAllScreens() {
+    const screens = ['home-screen', 'admin-login', 'admin-panel', 'config-screen', 
+                    'consultoras-list', 'consultora-form', 'representantes-list', 
+                    'representante-form', 'usuarios-list', 'usuario-form',
+                    'explicacoes-screen', 'fotos-screen', 'fotos-admin', 'quem-somos-screen'];
+    screens.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.add('hidden');
+    });
 }
 
 function showHome() {
@@ -597,6 +656,11 @@ function renderAdminPanel() {
                 <i class="fas fa-camera"></i>
                 <i class="fas fa-image"></i>
                 <div>${t('gerenciarFotos')}</div>
+            </button>
+            <button onclick="showUsuariosList()" class="btn-mobile-admin">
+                <i class="fas fa-user-shield"></i>
+                <i class="fas fa-key"></i>
+                <div>${t('gerenciarUsuarios')}</div>
             </button>
         </div>
     `;
