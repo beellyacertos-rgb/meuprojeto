@@ -253,8 +253,15 @@ async function saveAndSendConsultora() {
 📋 *Contrato:* ${data.aceita_contrato.toUpperCase()}
         `.trim();
 
-        const whatsapp = currentConfig.whatsapp || '5518996676409';
-        const url = `https://wa.me/${whatsapp}?text=${encodeURIComponent(message)}`;
+        // WhatsApp já está salvo com prefixo completo (https://wa.me/55...)
+        let whatsappFull = currentConfig.whatsapp || 'https://wa.me/5518996676409';
+        
+        // Se não tiver o prefixo https://wa.me/, adicionar
+        if (!whatsappFull.startsWith('https://wa.me/')) {
+            whatsappFull = `https://wa.me/${whatsappFull}`;
+        }
+        
+        const url = `${whatsappFull}?text=${encodeURIComponent(message)}`;
         window.open(url, '_blank');
 
         alert(t('consultora') + ' ' + t('cadastrado'));
@@ -582,8 +589,15 @@ async function saveAndSendRepresentante() {
 🚗 *${t('veiculo')}:* ${data.veiculo}
         `.trim();
 
-        const whatsapp = currentConfig.whatsapp || '5518996676409';
-        const url = `https://wa.me/${whatsapp}?text=${encodeURIComponent(message)}`;
+        // WhatsApp já está salvo com prefixo completo (https://wa.me/55...)
+        let whatsappFull = currentConfig.whatsapp || 'https://wa.me/5518996676409';
+        
+        // Se não tiver o prefixo https://wa.me/, adicionar
+        if (!whatsappFull.startsWith('https://wa.me/')) {
+            whatsappFull = `https://wa.me/${whatsappFull}`;
+        }
+        
+        const url = `${whatsappFull}?text=${encodeURIComponent(message)}`;
         window.open(url, '_blank');
 
         alert(t('representante') + ' ' + t('cadastrado'));
@@ -867,7 +881,7 @@ async function showUsuariosList() {
         let html = `
             <div class="config-container">
                 <div class="flex items-center mb-4">
-                    <button onclick="renderAdminPanel()" class="btn-voltar">
+                    <button onclick="showAdminPanel()" class="btn-voltar">
                         <i class="fas fa-arrow-left"></i> ${t('voltar')}
                     </button>
                 </div>

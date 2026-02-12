@@ -13,15 +13,17 @@ app.use('/static/*', serveStatic({ root: './public' }))
 
 // ================== AUTENTICAÇÃO ==================
 app.post('/api/login', async (c) => {
-  const { password } = await c.req.json()
-  const result = await c.env.DB.prepare(
-    'SELECT value FROM config WHERE key = ?'
-  ).bind('admin_password').first()
+  const { username, password } = await c.req.json()
   
-  if (result && result.value === password) {
-    return c.json({ success: true })
+  // Buscar usuário no banco
+  const user = await c.env.DB.prepare(
+    'SELECT * FROM users WHERE username = ? AND password = ?'
+  ).bind(username, password).first()
+  
+  if (user) {
+    return c.json({ success: true, user: { id: user.id, username: user.username } })
   }
-  return c.json({ success: false, message: 'Senha incorreta' }, 401)
+  return c.json({ success: false, message: 'Usuário ou senha incorretos' }, 401)
 })
 
 // ================== CONFIGURAÇÕES ==================

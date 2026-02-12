@@ -602,7 +602,8 @@ function renderAdminLogin() {
         </button>
         <h2 class="text-2xl font-bold mb-6" style="color: white;">${t('areaAdministrativa')}</h2>
         <div class="space-y-4">
-            <input type="password" id="admin-password" placeholder="${t('senhaDoAdministrador')}" class="form-input">
+            <input type="text" id="admin-username" placeholder="${t('nomeDoUsuario')}" class="form-input">
+            <input type="password" id="admin-password" placeholder="${t('senha')}" class="form-input">
             <button onclick="login()" class="btn-mobile" style="background: var(--color-tertiary); color: var(--color-quaternary);">
                 <i class="fas fa-sign-in-alt mr-2"></i> ${t('entrar')}
             </button>
@@ -611,9 +612,16 @@ function renderAdminLogin() {
 }
 
 async function login() {
+    const username = document.getElementById('admin-username').value;
     const password = document.getElementById('admin-password').value;
+    
+    if (!username || !password) {
+        alert(t('preenchaNome'));
+        return;
+    }
+    
     try {
-        const response = await axios.post('/api/login', { password });
+        const response = await axios.post('/api/login', { username, password });
         if (response.data.success) {
             isAdmin = true;
             showAdminPanel();
