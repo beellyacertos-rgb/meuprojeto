@@ -601,13 +601,13 @@ function renderAdminLogin() {
             <i class="fas fa-arrow-left mr-2"></i> ${t('voltar')}
         </button>
         <h2 class="text-2xl font-bold mb-6" style="color: white;">${t('areaAdministrativa')}</h2>
-        <div class="space-y-4">
-            <input type="text" id="admin-username" placeholder="${t('nomeDoUsuario')}" class="form-input">
-            <input type="password" id="admin-password" placeholder="${t('senha')}" class="form-input">
-            <button onclick="login()" class="btn-mobile" style="background: var(--color-tertiary); color: var(--color-quaternary);">
+        <form id="login-form" class="space-y-4" onsubmit="event.preventDefault(); login();">
+            <input type="text" id="admin-username" placeholder="${t('nomeDoUsuario')}" class="form-input" required>
+            <input type="password" id="admin-password" placeholder="${t('senha')}" class="form-input" required>
+            <button type="submit" class="btn-mobile" style="background: var(--color-tertiary); color: var(--color-quaternary);">
                 <i class="fas fa-sign-in-alt mr-2"></i> ${t('entrar')}
             </button>
-        </div>
+        </form>
     `;
 }
 
@@ -629,6 +629,7 @@ async function login() {
             alert(t('senhaIncorreta'));
         }
     } catch (error) {
+        console.error('Erro no login:', error);
         alert(t('erroLogin'));
     }
 }

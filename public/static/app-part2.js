@@ -327,6 +327,84 @@ async function generateConsultorasPDF(type) {
                 c.nome_completo.toLowerCase().includes(filtro.toLowerCase())
             );
             consultoras.sort((a, b) => a.nome_completo.localeCompare(b.nome_completo));
+            
+            // Para relatório por nome, criar ficha completa
+            if (consultoras.length === 0) {
+                alert('Nenhum resultado encontrado!');
+                return;
+            }
+            
+            const printWindow = window.open('', '', 'height=600,width=800');
+            printWindow.document.write(`
+                <html>
+                <head>
+                    <title>${t('relatorios')} - ${t('consultoras')}</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; padding: 20px; }
+                        h1 { color: ${currentConfig.cor_primaria}; text-align: center; }
+                        h2 { color: ${currentConfig.cor_terciaria}; margin-top: 30px; page-break-before: always; }
+                        .ficha { border: 2px solid ${currentConfig.cor_terciaria}; padding: 20px; margin-bottom: 30px; border-radius: 8px; }
+                        .campo { margin-bottom: 10px; display: flex; }
+                        .campo strong { min-width: 200px; color: ${currentConfig.cor_primaria}; }
+                        .campo span { flex: 1; }
+                        .secao { margin-top: 20px; border-top: 1px solid #ddd; padding-top: 10px; }
+                        @media print {
+                            .ficha { page-break-inside: avoid; }
+                        }
+                    </style>
+                </head>
+                <body>
+                    <h1>${t('relatorios')} - ${t('consultoras')}</h1>
+                    <p style="text-align: center;"><strong>${t('relatorioPorNome')}</strong> - Filtro: ${filtro}</p>
+                    
+                    ${consultoras.map(c => `
+                        <div class="ficha">
+                            <h2>${c.nome_completo}</h2>
+                            
+                            <div class="secao">
+                                <h3 style="color: ${currentConfig.cor_terciaria};">📋 Dados Pessoais</h3>
+                                <div class="campo"><strong>${t('nomeCompleto')}:</strong><span>${c.nome_completo || ''}</span></div>
+                                <div class="campo"><strong>${t('cpf')}:</strong><span>${c.cpf || ''}</span></div>
+                                <div class="campo"><strong>${t('telefone')}:</strong><span>${c.telefone || ''}</span></div>
+                                ${c.mes ? `<div class="campo"><strong>${t('mes')}:</strong><span>${c.mes}</span></div>` : ''}
+                            </div>
+                            
+                            <div class="secao">
+                                <h3 style="color: ${currentConfig.cor_terciaria};">📍 Endereço</h3>
+                                <div class="campo"><strong>${t('endereco')}:</strong><span>${c.endereco || ''}</span></div>
+                                <div class="campo"><strong>${t('bairro')}:</strong><span>${c.bairro || ''}</span></div>
+                                <div class="campo"><strong>${t('cidade')}:</strong><span>${c.cidade || ''}</span></div>
+                                <div class="campo"><strong>${t('cep')}:</strong><span>${c.cep || ''}</span></div>
+                            </div>
+                            
+                            <div class="secao">
+                                <h3 style="color: ${currentConfig.cor_terciaria};">👨‍👩‍👧 Filiação</h3>
+                                <div class="campo"><strong>${t('nomeDoPai')}:</strong><span>${c.nome_pai || ''}</span></div>
+                                <div class="campo"><strong>${t('nomeDaMae')}:</strong><span>${c.nome_mae || ''}</span></div>
+                            </div>
+                            
+                            <div class="secao">
+                                <h3 style="color: ${currentConfig.cor_terciaria};">📞 Contatos</h3>
+                                <div class="campo"><strong>${t('telefoneReferencia')}:</strong><span>${c.telefone_referencia || ''}</span></div>
+                                <div class="campo"><strong>${t('nomeDoRepresentante')}:</strong><span>${c.nome_representante || ''}</span></div>
+                            </div>
+                            
+                            <div class="secao">
+                                <h3 style="color: ${currentConfig.cor_terciaria};">✅ Aceites</h3>
+                                <div class="campo"><strong>Aceita Mostruário:</strong><span>${c.aceita_mostruario === 'sim' ? '✅ SIM' : '❌ NÃO'}</span></div>
+                                <div class="campo"><strong>Aceita Contrato:</strong><span>${c.aceita_contrato === 'sim' ? '✅ SIM' : '❌ NÃO'}</span></div>
+                            </div>
+                        </div>
+                    `).join('')}
+                    
+                    <script>
+                        window.onload = function() { window.print(); }
+                    </script>
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+            return;
         } else if (type === 'mes' && filtro) {
             consultoras = consultoras.filter(c => 
                 (c.mes || '').toLowerCase().includes(filtro.toLowerCase())
@@ -659,6 +737,70 @@ async function generateRepresentantesPDF(type) {
                 r.nome_completo.toLowerCase().includes(filtro.toLowerCase())
             );
             representantes.sort((a, b) => a.nome_completo.localeCompare(b.nome_completo));
+            
+            // Para relatório por nome, criar ficha completa
+            if (representantes.length === 0) {
+                alert('Nenhum resultado encontrado!');
+                return;
+            }
+            
+            const printWindow = window.open('', '', 'height=600,width=800');
+            printWindow.document.write(`
+                <html>
+                <head>
+                    <title>${t('relatorios')} - ${t('representantes')}</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; padding: 20px; }
+                        h1 { color: ${currentConfig.cor_primaria}; text-align: center; }
+                        h2 { color: ${currentConfig.cor_terciaria}; margin-top: 30px; page-break-before: always; }
+                        .ficha { border: 2px solid ${currentConfig.cor_terciaria}; padding: 20px; margin-bottom: 30px; border-radius: 8px; }
+                        .campo { margin-bottom: 10px; display: flex; }
+                        .campo strong { min-width: 200px; color: ${currentConfig.cor_primaria}; }
+                        .campo span { flex: 1; }
+                        .secao { margin-top: 20px; border-top: 1px solid #ddd; padding-top: 10px; }
+                        @media print {
+                            .ficha { page-break-inside: avoid; }
+                        }
+                    </style>
+                </head>
+                <body>
+                    <h1>${t('relatorios')} - ${t('representantes')}</h1>
+                    <p style="text-align: center;"><strong>${t('relatorioPorNome')}</strong> - Filtro: ${filtro}</p>
+                    
+                    ${representantes.map(r => `
+                        <div class="ficha">
+                            <h2>${r.nome_completo}</h2>
+                            
+                            <div class="secao">
+                                <h3 style="color: ${currentConfig.cor_terciaria};">📋 Dados Pessoais</h3>
+                                <div class="campo"><strong>${t('nomeCompleto')}:</strong><span>${r.nome_completo || ''}</span></div>
+                                <div class="campo"><strong>${t('cpf')}:</strong><span>${r.cpf || ''}</span></div>
+                                <div class="campo"><strong>${t('telefone')}:</strong><span>${r.telefone || ''}</span></div>
+                            </div>
+                            
+                            <div class="secao">
+                                <h3 style="color: ${currentConfig.cor_terciaria};">📍 Endereço</h3>
+                                <div class="campo"><strong>${t('endereco')}:</strong><span>${r.endereco || ''}</span></div>
+                                <div class="campo"><strong>${t('bairro')}:</strong><span>${r.bairro || ''}</span></div>
+                                <div class="campo"><strong>${t('cidade')}:</strong><span>${r.cidade || ''}</span></div>
+                                <div class="campo"><strong>${t('cep')}:</strong><span>${r.cep || ''}</span></div>
+                            </div>
+                            
+                            <div class="secao">
+                                <h3 style="color: ${currentConfig.cor_terciaria};">🚗 Veículo</h3>
+                                <div class="campo"><strong>${t('veiculo')}:</strong><span>${r.veiculo || ''}</span></div>
+                            </div>
+                        </div>
+                    `).join('')}
+                    
+                    <script>
+                        window.onload = function() { window.print(); }
+                    </script>
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+            return;
         }
         
         if (representantes.length === 0) {
