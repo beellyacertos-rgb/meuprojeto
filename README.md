@@ -1,293 +1,400 @@
-# 💎 App Mobile para Semi Jóias - ATUALIZADO
+# 💎 Beelly Semi Joias - Sistema de Gestão
 
-Aplicativo mobile completo e multilíngue (PT-BR/ES) para gestão de consultoras, representantes e galeria de produtos de semi jóias.
+Sistema completo de gestão para empresa de semi joias com cadastro de consultoras, representantes, galeria de fotos e área administrativa.
 
-## 🌐 URLs
+## 🌐 URLs de Acesso
 
-- **Desenvolvimento**: https://3000-i1y8jbap374a9vh2g8qf8-b9b802c4.sandbox.novita.ai
-- **API Base**: https://3000-i1y8jbap374a9vh2g8qf8-b9b802c4.sandbox.novita.ai/api
+### 🔗 Produção (Cloudflare Pages)
+- **URL Principal**: https://semijoias-app-di3.pages.dev
+- **Área Administrativa**: https://semijoias-app-di3.pages.dev/admin
+- **Consultoras**: https://semijoias-app-di3.pages.dev/consultoras
+- **Representantes**: https://semijoias-app-di3.pages.dev/representantes
+- **Galeria**: https://semijoias-app-di3.pages.dev/galeria
+- **Explicações**: https://semijoias-app-di3.pages.dev/explicacoes
 
-## ✨ NOVAS Funcionalidades Implementadas
+### 📦 Repositório
+- **GitHub**: https://github.com/beellyacertos-rgb/meuprojeto
 
-### 🌍 Sistema de Tradução
-- **Português (Brasil)**: Idioma padrão com bandeira 🇧🇷
-- **Espanhol**: Tradução completa com bandeira 🇪🇸
-- **Troca instantânea**: Alterna entre idiomas sem recarregar a página
-- **100% traduzido**: Todos os textos, botões, mensagens e formulários
+## ✨ Funcionalidades Implementadas
 
-### 🎨 Sistema de Cores Personalizado
-1. **Cor Primária**: Fundo do aplicativo
-2. **Cor Secundária**: Rodapé
-3. **Cor Terciária**: Botões
-4. **Cor Quaternária**: Texto dos botões
-5. **Aplicação global**: Todas as cores são aplicadas em todo o app (front e admin)
+### 👥 Gestão de Consultoras
+- ✅ Cadastro completo (nome, endereço, CPF, telefone, etc)
+- ✅ Listagem com busca por nome
+- ✅ Edição e exclusão de cadastros
+- ✅ Relatórios por cidade
+- ✅ Campo "mês" para controle mensal
 
-### 📊 Relatórios em PDF
-**Consultoras:**
-- Relatório por Cidade
-- Relatório por Nome
+### 🤝 Gestão de Representantes
+- ✅ Cadastro com dados pessoais e veículo
+- ✅ Listagem e busca
+- ✅ Edição e exclusão
+- ✅ Relatórios por cidade
 
-**Representantes:**
-- Relatório por Cidade
-- Relatório por Nome
+### 🖼️ Galeria de Fotos
+- ✅ Upload de imagens (400x600px)
+- ✅ Preview automático
+- ✅ Listagem de fotos
+- ✅ Exclusão de fotos
+- ✅ Salvamento com botão manual
 
-### 🏢 Quem Somos
-- Campo de texto no admin para história da empresa
-- Botão "Quem Somos" na tela inicial
-- Exibição formatada com quebras de linha
+### 🏢 Logos da Empresa
+- ✅ Logo principal (200x200px)
+- ✅ Logo rodapé (60x40px)
+- ✅ Preview antes de salvar
+- ✅ Botão "Salvar" para confirmar upload
 
-### 🎨 Interface Redesenhada
-- **2 ícones por botão**: Layout mais bonito e organizado
-- **Grid 2 colunas**: Desktop e mobile responsivo
-- **Botão Voltar**: Substituído setas por botões estilizados
-- **Modal personalizado**: Confirmação ao sair com cores do app
-- **Bandeiras repositionadas**: Canto superior direito para fácil acesso
+### 📝 Explicações
+- ✅ Campo de texto com múltiplas linhas
+- ✅ Suporte a Enter para quebras de linha
+- ✅ Botão "Salvar" para persistir no banco
+- ✅ Exibição pública na página /explicacoes
 
-### ✅ Simplificações
-- **Cadastro de Consultoras**: Apenas botão "Gravar e Enviar WhatsApp"
-- **Cadastro de Representantes**: Apenas botão "Gravar e Enviar WhatsApp"
-- **Área Admin**: Nome da empresa removido, logo centralizado
+### 🔐 Área Administrativa
+- ✅ Acesso direto (sem senha)
+- ✅ Interface organizada em 6 seções:
+  1. Logos da Empresa
+  2. Galeria de Fotos
+  3. Explicações
+  4. Relatórios PDF
+  5. Lista de Consultoras
+  6. Lista de Representantes
 
-## 📱 Área Pública (Frontend)
+## 🛠️ Stack Tecnológica
 
-1. **Tela Inicial** com 6 botões:
-   - Consultoras (2 ícones: user-plus + gem)
-   - Representante (2 ícones: id-card + briefcase)
-   - Explicações (2 ícones: info-circle + book)
-   - Fotos (2 ícones: images + camera)
-   - Quem Somos (2 ícones: building + users)
-   - Área Administrativa (2 ícones: lock + cog)
+### Backend
+- **Framework**: Hono.js (lightweight web framework)
+- **Runtime**: Cloudflare Workers
+- **Database**: Cloudflare D1 (SQLite distribuído)
+- **Deploy**: Cloudflare Pages
 
-2. **Cadastro de Consultoras**:
-   - Formulário completo
-   - Aceite de mostruário (Sim/Não)
-   - Aceite de contrato (Sim/Não)
-   - **Botão único**: Gravar e Enviar WhatsApp
+### Frontend
+- **Framework**: Vanilla JavaScript (SPA)
+- **Styling**: TailwindCSS v3
+- **Icons**: Font Awesome v6.4
+- **HTTP Client**: Axios v1.6
 
-3. **Cadastro de Representantes**:
-   - Formulário completo
-   - **Botão único**: Gravar e Enviar WhatsApp
-
-4. **Explicações**: Exibição de texto configurado
-
-5. **Galeria de Fotos**: Grid responsivo 400x600 pixels
-
-6. **Quem Somos**: História da empresa
-
-7. **Rodapé Fixo**:
-   - Logo customizável (60x40 pixels)
-   - Texto: "Vsual Consultoria em Marketing"
-   - Contato: "18 99667-6409"
-
-## 🔐 Área Administrativa
-
-**Senha padrão: 123**
-
-1. **Configurações do Sistema**:
-   - Alterar senha
-   - WhatsApp
-   - **4 cores**: Primária, Secundária, Terciária, Quaternária
-   - Logo da empresa (200x200)
-   - Logo do rodapé (60x40)
-   - Explicações
-   - **Quem Somos** (novo campo)
-
-2. **Gerenciar Consultoras**:
-   - Listagem em tabela
-   - CRUD completo: Novo, Alterar, Gravar, Excluir
-   - **Relatórios PDF**: Por cidade e por nome
-
-3. **Gerenciar Representantes**:
-   - Listagem em tabela
-   - CRUD completo
-   - **Relatórios PDF**: Por cidade e por nome
-
-4. **Gerenciar Fotos**:
-   - Upload de fotos 400x600 pixels
-   - Grid de visualização
-   - Botões: Novo, Gravar, Excluir
+### Ferramentas
+- **Build**: Vite v6.4
+- **Process Manager**: PM2
+- **Package Manager**: npm
+- **Version Control**: Git
 
 ## 📊 Estrutura do Banco de Dados
 
-### Tabela: config
-- admin_password
-- cor_primaria (fundo do app)
-- cor_secundaria (rodapé)
-- cor_terciaria (botões)
-- **cor_quaternaria** (texto dos botões) - NOVO
-- logo_empresa (200x200)
-- logo_rodape (60x40)
-- explicacoes
-- **quem_somos** - NOVO
-- whatsapp
+### Tabelas Principais
 
-### Tabela: consultoras
-- Todos os campos pessoais
-- aceita_mostruario (sim/nao)
-- aceita_contrato (sim/nao)
-- created_at, updated_at
+#### `consultoras`
+```sql
+- id (INTEGER PRIMARY KEY)
+- nome_completo (TEXT)
+- endereco (TEXT)
+- bairro (TEXT)
+- cep (TEXT)
+- cidade (TEXT)
+- cpf (TEXT)
+- telefone (TEXT)
+- nome_pai (TEXT)
+- nome_mae (TEXT)
+- telefone_referencia (TEXT)
+- nome_representante (TEXT)
+- aceita_mostruario (TEXT)
+- aceita_contrato (TEXT)
+- mes (TEXT)
+- created_at (DATETIME)
+- updated_at (DATETIME)
+```
 
-### Tabela: representantes
-- Todos os campos pessoais
-- veiculo
-- created_at, updated_at
+#### `representantes`
+```sql
+- id (INTEGER PRIMARY KEY)
+- nome_completo (TEXT)
+- endereco (TEXT)
+- bairro (TEXT)
+- cep (TEXT)
+- cidade (TEXT)
+- cpf (TEXT)
+- telefone (TEXT)
+- veiculo (TEXT)
+- created_at (DATETIME)
+- updated_at (DATETIME)
+```
 
-### Tabela: fotos
-- imagem_base64 (400x600)
-- created_at
+#### `fotos`
+```sql
+- id (INTEGER PRIMARY KEY)
+- imagem_base64 (TEXT)
+- created_at (DATETIME)
+```
 
-## 🎨 Personalização Avançada
+#### `explicacoes`
+```sql
+- id (INTEGER PRIMARY KEY)
+- texto (TEXT)
+- created_at (DATETIME)
+- updated_at (DATETIME)
+```
 
-### Cores Aplicadas Globalmente
-- **Cor Primária**: `background-color` do body
-- **Cor Secundária**: `background-color` do footer
-- **Cor Terciária**: `background-color` de todos os botões
-- **Cor Quaternária**: `color` do texto dos botões
+#### `configuracoes`
+```sql
+- id (INTEGER PRIMARY KEY)
+- chave (TEXT UNIQUE)
+- valor (TEXT)
+- created_at (DATETIME)
+- updated_at (DATETIME)
+```
 
-### Modal de Confirmação
-- Bordas com cor terciária
-- Botões com cores do tema
-- Animação suave de entrada
+#### `users`
+```sql
+- id (INTEGER PRIMARY KEY)
+- username (TEXT UNIQUE)
+- password (TEXT)
+- created_at (DATETIME)
+- updated_at (DATETIME)
+```
 
-## 📱 Integração WhatsApp
+## 🚀 APIs Disponíveis
 
-**Formato de mensagem multilíngue:**
-- Cabeçalho em maiúsculas
-- Emojis temáticos
-- Todos os dados formatados
-- Traduzido automaticamente para o idioma selecionado
+### Consultoras
+```
+GET    /api/clientes                      - Listar todas
+POST   /api/clientes                      - Criar nova
+GET    /api/consultoras/:id               - Buscar por ID
+PUT    /api/consultoras/:id               - Atualizar
+DELETE /api/consultoras/:id               - Excluir
+GET    /api/consultoras/buscar/:nome      - Buscar por nome
+GET    /api/consultoras/relatorio/cidade  - Relatório por cidade
+```
 
-## 🌍 Sistema de Idiomas
+### Representantes
+```
+GET    /api/representantes                      - Listar todos
+POST   /api/representantes                      - Criar novo
+GET    /api/representantes/:id                  - Buscar por ID
+PUT    /api/representantes/:id                  - Atualizar
+DELETE /api/representantes/:id                  - Excluir
+GET    /api/representantes/buscar/:nome         - Buscar por nome
+GET    /api/representantes/relatorio/cidade     - Relatório por cidade
+```
 
-**Português (Brasil) 🇧🇷:**
-- Idioma padrão do sistema
-- Salvo em localStorage
+### Galeria
+```
+GET    /api/galeria     - Listar fotos
+POST   /api/galeria     - Upload foto
+DELETE /api/galeria/:id - Excluir foto
+```
 
-**Espanhol 🇪🇸:**
-- Tradução completa e profissional
-- Todos os textos, botões e mensagens
-- Mantém estado entre sessões
+### Logos
+```
+GET  /api/logo?chave=logo_empresa  - Buscar logo
+POST /api/logo                     - Salvar logo
+     Body: { chave: "logo_empresa", valor: "base64..." }
+```
 
-**Funcionalidades:**
-- Bandeiras clicáveis no canto superior direito
-- Troca instantânea sem reload
-- Persistência com localStorage
-- Aplicado em todas as telas
+### Explicações
+```
+GET  /api/explicacoes  - Buscar última explicação
+POST /api/explicacoes  - Salvar nova explicação
+     Body: { texto: "..." }
+```
 
-## 📊 Relatórios PDF
+### Usuários
+```
+GET    /api/users     - Listar usuários
+POST   /api/users     - Criar usuário
+GET    /api/users/:id - Buscar por ID
+PUT    /api/users/:id - Atualizar
+DELETE /api/users/:id - Excluir
+```
 
-**Funcionalidades:**
-- Ordenação automática (por cidade ou nome)
-- Impressão direta do navegador
-- Cabeçalho com cores personalizadas
-- Tabela formatada com dados completos
-- Disponível para Consultoras e Representantes
+### Login
+```
+POST /api/login
+Body: { username: "admin", password: "123" }
+```
 
-## 🚀 Como Usar
+## 📱 Como Usar
 
-### Para Consultoras/Representantes:
-1. Escolha o idioma (🇧🇷 ou 🇪🇸)
-2. Clique em "Consultoras" ou "Representante"
-3. Preencha o formulário
-4. Clique em "Gravar e Enviar WhatsApp"
+### Área Administrativa
 
-### Para o Administrador:
-1. Escolha o idioma
-2. Acesse "Área Administrativa"
-3. Digite a senha (padrão: **123**)
-4. Configure:
-   - **4 cores personalizadas**
-   - Logo e logo do rodapé
-   - Explicações
-   - **Quem Somos** (novo)
-   - WhatsApp
-5. Gerencie cadastros
-6. Gere relatórios PDF
+1. **Acessar Admin**: https://semijoias-app-di3.pages.dev/admin
 
-## 🛠️ Tecnologias Utilizadas
+2. **Upload de Logo da Empresa (200x200px)**:
+   - Clique no quadrado do logo
+   - Selecione a imagem
+   - Veja o preview
+   - Clique em "SALVAR"
+   - Aguarde o alerta de confirmação
 
-- **Backend**: Hono + TypeScript
-- **Banco de Dados**: Cloudflare D1 (SQLite)
-- **Frontend**: HTML5 + CSS3 + JavaScript ES6+
-- **Estilização**: TailwindCSS + Font Awesome
-- **Internacionalização**: Sistema de tradução customizado
-- **Relatórios**: window.print() com formatação HTML
-- **Deploy**: Cloudflare Pages/Workers
-- **Desenvolvimento**: PM2 + Wrangler
+3. **Upload de Logo Rodapé (60x40px)**:
+   - Clique no quadrado do logo rodapé
+   - Selecione a imagem
+   - Veja o preview
+   - Clique em "SALVAR"
+   - Aguarde o alerta de confirmação
 
-## 📝 Comandos Úteis
+4. **Upload de Foto na Galeria (400x600px)**:
+   - Clique no quadrado de upload
+   - Selecione a imagem
+   - Veja o preview
+   - Clique em "SALVAR NA GALERIA"
+   - A foto aparecerá na lista abaixo
+   - Use o botão "Excluir" para remover
 
+5. **Salvar Explicações**:
+   - Digite o texto no campo (use Enter para quebras de linha)
+   - Clique em "SALVAR"
+   - Aguarde o alerta de confirmação
+
+6. **Gerenciar Consultoras**:
+   - Use o campo de busca para filtrar
+   - Clique nos botões de ação para editar/excluir
+
+7. **Gerenciar Representantes**:
+   - Use o campo de busca para filtrar
+   - Clique nos botões de ação para editar/excluir
+
+### Páginas Públicas
+
+- **Home**: Página inicial com menu de navegação
+- **Consultoras**: Lista pública de consultoras
+- **Representantes**: Lista pública de representantes
+- **Galeria**: Exibição das fotos cadastradas
+- **Explicações**: Texto informativo sobre a empresa
+
+## 🔧 Desenvolvimento Local
+
+### Pré-requisitos
 ```bash
-# Desenvolvimento local
-npm run build && pm2 restart semijoias-app
-
-# Adicionar nova config ao banco
-npx wrangler d1 execute semijoias-production --local --command="INSERT OR IGNORE INTO config (key, value) VALUES ('nova_config', 'valor');"
-
-# Ver logs
-pm2 logs semijoias-app --nostream
-
-# Limpar porta e reiniciar
-fuser -k 3000/tcp && pm2 restart semijoias-app
+Node.js 18+
+npm ou pnpm
+Cloudflare account
 ```
 
-## 📂 Estrutura de Arquivos
+### Instalação
+```bash
+# Clone o repositório
+git clone https://github.com/beellyacertos-rgb/meuprojeto.git
+cd meuprojeto
 
-```
-webapp/
-├── src/
-│   └── index.tsx              # Backend Hono com todas as rotas API
-├── public/
-│   └── static/
-│       ├── app.js             # Frontend JavaScript parte 1 (traduções, config, admin)
-│       ├── app-part2.js       # Frontend JavaScript parte 2 (CRUD, fotos, relatórios)
-│       └── style.css          # CSS customizado responsivo
-├── migrations/
-│   ├── 0001_initial_schema.sql       # Schema inicial do banco
-│   └── 0002_add_new_configs.sql      # Novas configurações (quaternária, quem somos)
-├── ecosystem.config.cjs       # Configuração PM2
-├── wrangler.jsonc             # Configuração Cloudflare
-├── package.json
-└── README.md
+# Instale dependências
+npm install
+
+# Configure wrangler.jsonc com seu database_id
 ```
 
-## ✅ Checklist de Funcionalidades
+### Executar Localmente
+```bash
+# Aplicar migrations no banco local
+npx wrangler d1 migrations apply semijoias-production --local
 
-### Interface ✅
-- [x] 2 ícones em cada botão (frontal e admin)
-- [x] Bandeiras 🇧🇷 e 🇪🇸 com ícones corretos
-- [x] Tradução completa PT-BR/ES
-- [x] Botão "Voltar" estilizado
-- [x] Modal de confirmação ao sair
-- [x] Remover botão "Gravar" (apenas WhatsApp)
+# Build do projeto
+npm run build
 
-### Cores ✅
-- [x] Cor Primária (fundo do app)
-- [x] Cor Secundária (rodapé)
-- [x] Cor Terciária (botões)
-- [x] Cor Quaternária (texto dos botões)
-- [x] Aplicação global em todo o app
+# Iniciar servidor de desenvolvimento
+npm run dev
 
-### Admin ✅
-- [x] Remover nome da empresa
-- [x] Reposicionar bandeiras
-- [x] Campo "Quem Somos"
-- [x] Botão "Quem Somos" na frente
+# Ou usar PM2
+pm2 start ecosystem.config.cjs
+```
 
-### Relatórios ✅
-- [x] PDF Consultoras por cidade
-- [x] PDF Consultoras por nome
-- [x] PDF Representantes por cidade
-- [x] PDF Representantes por nome
+### Acessar Local
+```
+http://localhost:3000
+```
 
-## 📊 Status do Projeto
+## 📦 Deploy
 
-**Status**: ✅ ATIVO E ATUALIZADO
+### Deploy Automático
+```bash
+# Build e deploy
+npm run deploy
 
-**Última Atualização**: 05 de Fevereiro de 2026
+# Ou manualmente
+npm run build
+npx wrangler pages deploy dist --project-name semijoias-app
+```
 
-**Todas as 13 alterações solicitadas foram implementadas e testadas com sucesso!**
+### Aplicar Migrations em Produção
+```bash
+npx wrangler d1 migrations apply semijoias-production --remote
+```
+
+## 🧪 Testes
+
+### Testar APIs Localmente
+```bash
+# Criar consultora
+curl -X POST http://localhost:3000/api/clientes \
+  -H "Content-Type: application/json" \
+  -d '{"nome_completo":"Maria Silva","cidade":"Sorocaba",...}'
+
+# Listar consultoras
+curl http://localhost:3000/api/clientes
+
+# Upload logo
+curl -X POST http://localhost:3000/api/logo \
+  -H "Content-Type: application/json" \
+  -d '{"chave":"logo_empresa","valor":"data:image/png;base64,..."}'
+```
+
+### Testar APIs em Produção
+```bash
+# Substituir localhost:3000 por semijoias-app-di3.pages.dev
+curl https://semijoias-app-di3.pages.dev/api/clientes
+```
+
+## ✅ Status do Projeto
+
+### Versão Atual: v9.0
+**Data**: 2026-02-23
+
+### Funcionalidades 100% Completas:
+- ✅ Sistema de uploads com preview e salvamento manual
+- ✅ Cadastro de consultoras com todos os campos
+- ✅ Cadastro de representantes
+- ✅ Galeria de fotos funcionando
+- ✅ Área administrativa acessível
+- ✅ APIs RESTful completas
+- ✅ Banco de dados D1 configurado
+- ✅ Deploy em produção funcionando
+- ✅ Rotas SPA para todas as páginas
+- ✅ Mobile responsivo
+
+### Testes Realizados:
+- ✅ Home page carrega corretamente
+- ✅ Admin page acessível
+- ✅ Criar consultora via API
+- ✅ Listar consultoras
+- ✅ Salvar explicação
+- ✅ Ler explicação
+- ✅ Upload logo empresa
+- ✅ Upload logo rodapé
+- ✅ Upload foto galeria
+- ✅ Listar galeria
+
+### Próximos Passos Recomendados:
+1. Adicionar sistema de autenticação real (JWT)
+2. Implementar paginação nas listagens
+3. Adicionar filtros avançados
+4. Criar dashboard com estatísticas
+5. Adicionar validação de CPF
+6. Implementar compressão de imagens no backend
+7. Adicionar cache de dados
+8. Criar testes automatizados
+
+## 📞 Contato
+
+**Empresa**: Beelly Semi Joias  
+**Consultoria**: Vsual Consultoria em Marketing  
+**Telefone**: 18 99667-6409  
+**WhatsApp**: +55 18 98118-6446
+
+## 📝 Licença
+
+Projeto desenvolvido para uso interno da Beelly Semi Joias.
 
 ---
 
-Desenvolvido com ❤️ por Vsual Consultoria em Marketing
+**Última atualização**: 2026-02-23  
+**Versão**: v9.0  
+**Status**: ✅ Em Produção
