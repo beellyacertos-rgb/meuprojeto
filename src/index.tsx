@@ -89,9 +89,20 @@ app.post('/api/consultoras', async (c) => {
       aceita_mostruario, aceita_contrato, mes
     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `).bind(
-    data.nome_completo, data.endereco, data.bairro, data.cep, data.cidade,
-    data.cpf, data.telefone, data.nome_pai, data.nome_mae, data.telefone_referencia,
-    data.nome_representante, data.aceita_mostruario, data.aceita_contrato, data.mes
+    data.nome_completo || '', 
+    data.endereco || '', 
+    data.bairro || '', 
+    data.cep || '', 
+    data.cidade || '',
+    data.cpf || '', 
+    data.telefone || '', 
+    data.nome_pai || '', 
+    data.nome_mae || '', 
+    data.telefone_referencia || '',
+    data.nome_representante || '', 
+    data.aceita_mostruario || 'nao', 
+    data.aceita_contrato || 'nao', 
+    data.mes || '01'
   ).run()
   
   return c.json({ success: true, id: result.meta.last_row_id })
@@ -163,8 +174,14 @@ app.post('/api/representantes', async (c) => {
       nome_completo, endereco, bairro, cep, cidade, cpf, telefone, veiculo
     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
   `).bind(
-    data.nome_completo, data.endereco, data.bairro, data.cep, data.cidade,
-    data.cpf, data.telefone, data.veiculo
+    data.nome_completo || '', 
+    data.endereco || '', 
+    data.bairro || '', 
+    data.cep || '', 
+    data.cidade || '',
+    data.cpf || '', 
+    data.telefone || '', 
+    data.veiculo || ''
   ).run()
   
   return c.json({ success: true, id: result.meta.last_row_id })
@@ -281,9 +298,20 @@ app.post('/api/clientes', async (c) => {
       aceita_mostruario, aceita_contrato, mes
     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `).bind(
-    data.nome_completo, data.endereco, data.bairro, data.cep, data.cidade,
-    data.cpf, data.telefone, data.nome_pai, data.nome_mae, data.telefone_referencia,
-    data.nome_representante, data.aceita_mostruario, data.aceita_contrato, data.mes
+    data.nome_completo || '', 
+    data.endereco || '', 
+    data.bairro || '', 
+    data.cep || '', 
+    data.cidade || '',
+    data.cpf || '', 
+    data.telefone || '', 
+    data.nome_pai || '', 
+    data.nome_mae || '', 
+    data.telefone_referencia || '',
+    data.nome_representante || '', 
+    data.aceita_mostruario || 'nao', 
+    data.aceita_contrato || 'nao', 
+    data.mes || '01'
   ).run()
   
   return c.json({ success: true, id: result.meta.last_row_id })
