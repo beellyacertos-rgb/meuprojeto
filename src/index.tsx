@@ -263,6 +263,109 @@ app.delete('/api/usuarios/:id', async (c) => {
   return c.json({ success: true })
 })
 
+// ================== ROTAS ALIAS PARA COMPATIBILIDADE ==================
+// Alias /api/clientes -> /api/consultoras
+app.get('/api/clientes', async (c) => {
+  const result = await c.env.DB.prepare(
+    'SELECT * FROM consultoras ORDER BY created_at DESC'
+  ).all()
+  return c.json({ total: result.results.length, clientes: result.results })
+})
+
+app.post('/api/clientes', async (c) => {
+  const data = await c.req.json()
+  const result = await c.env.DB.prepare(`
+    INSERT INTO consultoras (
+      nome_completo, endereco, bairro, cep, cidade, cpf, telefone,
+      nome_pai, nome_mae, telefone_referencia, nome_representante,
+      aceita_mostruario, aceita_contrato, mes
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `).bind(
+    data.nome_completo, data.endereco, data.bairro, data.cep, data.cidade,
+    data.cpf, data.telefone, data.nome_pai, data.nome_mae, data.telefone_referencia,
+    data.nome_representante, data.aceita_mostruario, data.aceita_contrato, data.mes
+  ).run()
+  
+  return c.json({ success: true, id: result.meta.last_row_id })
+})
+
+// Alias /api/galeria -> /api/fotos
+app.get('/api/galeria', async (c) => {
+  const result = await c.env.DB.prepare(
+    'SELECT * FROM fotos ORDER BY created_at DESC'
+  ).all()
+  return c.json({ total: result.results.length, images: result.results })
+})
+
+app.post('/api/galeria', async (c) => {
+  const { imagem_base64 } = await c.req.json()
+  const result = await c.env.DB.prepare(
+    'INSERT INTO fotos (imagem_base64) VALUES (?)'
+  ).bind(imagem_base64).run()
+  
+  return c.json({ success: true, id: result.meta.last_row_id })
+})
+
+app.delete('/api/galeria/:id', async (c) => {
+  const id = c.req.param('id')
+  await c.env.DB.prepare('DELETE FROM fotos WHERE id = ?').bind(id).run()
+  return c.json({ success: true })
+})
+
+// ================== EXPLICAÇÕES ==================
+app.get('/api/explicacoes', async (c) => {
+  const result = await c.env.DB.prepare(
+    'SELECT * FROM explicacoes ORDER BY created_at DESC LIMIT 1'
+  ).first()
+  return c.json(result)
+})
+
+app.post('/api/explicacoes', async (c) => {
+  const { texto } = await c.req.json()
+  
+  // Deletar todas as explicações existentes
+  await c.env.DB.prepare('DELETE FROM explicacoes').run()
+  
+  // Inserir nova explicação
+  const result = await c.env.DB.prepare(
+    'INSERT INTO explicacoes (texto) VALUES (?)'
+  ).bind(texto).run()
+  
+  return c.json({ success: true, id: result.meta.last_row_id })
+})
+
+// ================== LOGOS ==================
+app.get('/api/logo', async (c) => {
+  const chave = c.req.query('chave')
+  const result = await c.env.DB.prepare(
+    'SELECT * FROM configuracoes WHERE chave = ?'
+  ).bind(chave).first()
+  return c.json(result)
+})
+
+app.post('/api/logo', async (c) => {
+  const { chave, valor } = await c.req.json()
+  
+  // Verificar se já existe
+  const existing = await c.env.DB.prepare(
+    'SELECT * FROM configuracoes WHERE chave = ?'
+  ).bind(chave).first()
+  
+  if (existing) {
+    // Atualizar
+    await c.env.DB.prepare(
+      'UPDATE configuracoes SET valor = ?, updated_at = CURRENT_TIMESTAMP WHERE chave = ?'
+    ).bind(valor, chave).run()
+  } else {
+    // Inserir
+    await c.env.DB.prepare(
+      'INSERT INTO configuracoes (chave, valor) VALUES (?, ?)'
+    ).bind(chave, valor).run()
+  }
+  
+  return c.json({ success: true })
+})
+
 // ================== PÁGINA PRINCIPAL ==================
 app.get('/', (c) => {
   return c.html(`
@@ -309,6 +412,293 @@ app.get('/', (c) => {
     <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
     <script src="/static/app.js"></script>
     <script src="/static/app-part2.js"></script>
+</body>
+</html>
+  `)
+})
+
+// ================== ROTAS SPA ==================
+app.get('/admin', (c) => {
+  return c.html(`
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Admin - Semi Jóias App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="/static/style.css" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <div id="home-screen" class="hidden p-6"></div>
+        <div id="admin-login" class="hidden p-6"></div>
+        <div id="admin-panel" class="p-6"></div>
+        <div id="config-screen" class="hidden p-6"></div>
+        <div id="consultoras-list" class="hidden p-6"></div>
+        <div id="consultora-form" class="hidden p-6"></div>
+        <div id="representantes-list" class="hidden p-6"></div>
+        <div id="representante-form" class="hidden p-6"></div>
+        <div id="usuarios-list" class="hidden p-6"></div>
+        <div id="usuario-form" class="hidden p-6"></div>
+        <div id="explicacoes-screen" class="hidden p-6"></div>
+        <div id="fotos-screen" class="hidden p-6"></div>
+        <div id="fotos-admin" class="hidden p-6"></div>
+        <div id="quem-somos-screen" class="hidden p-6"></div>
+    </div>
+
+    <footer>
+        <div class="flex items-center justify-between">
+            <div>
+                <img id="footer-logo" src="" alt="" class="footer-logo hidden">
+            </div>
+            <div class="text-center flex-1">
+                <p class="font-semibold">Vsual Consultoria em Marketing</p>
+                <p class="text-sm">18 99667-6409</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
+    <script src="/static/app.js"></script>
+    <script src="/static/app-part2.js"></script>
+    <script>
+      // Inicializar painel admin
+      document.addEventListener('DOMContentLoaded', () => {
+        if (typeof mostrarAdminPanel === 'function') {
+          mostrarAdminPanel();
+        }
+      });
+    </script>
+</body>
+</html>
+  `)
+})
+
+app.get('/consultoras', (c) => {
+  return c.html(`
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Consultoras - Semi Jóias App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="/static/style.css" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <div id="home-screen" class="hidden p-6"></div>
+        <div id="admin-login" class="hidden p-6"></div>
+        <div id="admin-panel" class="hidden p-6"></div>
+        <div id="config-screen" class="hidden p-6"></div>
+        <div id="consultoras-list" class="p-6"></div>
+        <div id="consultora-form" class="hidden p-6"></div>
+        <div id="representantes-list" class="hidden p-6"></div>
+        <div id="representante-form" class="hidden p-6"></div>
+        <div id="usuarios-list" class="hidden p-6"></div>
+        <div id="usuario-form" class="hidden p-6"></div>
+        <div id="explicacoes-screen" class="hidden p-6"></div>
+        <div id="fotos-screen" class="hidden p-6"></div>
+        <div id="fotos-admin" class="hidden p-6"></div>
+        <div id="quem-somos-screen" class="hidden p-6"></div>
+    </div>
+
+    <footer>
+        <div class="flex items-center justify-between">
+            <div>
+                <img id="footer-logo" src="" alt="" class="footer-logo hidden">
+            </div>
+            <div class="text-center flex-1">
+                <p class="font-semibold">Vsual Consultoria em Marketing</p>
+                <p class="text-sm">18 99667-6409</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
+    <script src="/static/app.js"></script>
+    <script src="/static/app-part2.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        if (typeof listarConsultoras === 'function') {
+          listarConsultoras();
+        }
+      });
+    </script>
+</body>
+</html>
+  `)
+})
+
+app.get('/representantes', (c) => {
+  return c.html(`
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Representantes - Semi Jóias App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="/static/style.css" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <div id="home-screen" class="hidden p-6"></div>
+        <div id="admin-login" class="hidden p-6"></div>
+        <div id="admin-panel" class="hidden p-6"></div>
+        <div id="config-screen" class="hidden p-6"></div>
+        <div id="consultoras-list" class="hidden p-6"></div>
+        <div id="consultora-form" class="hidden p-6"></div>
+        <div id="representantes-list" class="p-6"></div>
+        <div id="representante-form" class="hidden p-6"></div>
+        <div id="usuarios-list" class="hidden p-6"></div>
+        <div id="usuario-form" class="hidden p-6"></div>
+        <div id="explicacoes-screen" class="hidden p-6"></div>
+        <div id="fotos-screen" class="hidden p-6"></div>
+        <div id="fotos-admin" class="hidden p-6"></div>
+        <div id="quem-somos-screen" class="hidden p-6"></div>
+    </div>
+
+    <footer>
+        <div class="flex items-center justify-between">
+            <div>
+                <img id="footer-logo" src="" alt="" class="footer-logo hidden">
+            </div>
+            <div class="text-center flex-1">
+                <p class="font-semibold">Vsual Consultoria em Marketing</p>
+                <p class="text-sm">18 99667-6409</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
+    <script src="/static/app.js"></script>
+    <script src="/static/app-part2.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        if (typeof listarRepresentantes === 'function') {
+          listarRepresentantes();
+        }
+      });
+    </script>
+</body>
+</html>
+  `)
+})
+
+app.get('/galeria', (c) => {
+  return c.html(`
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Galeria - Semi Jóias App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="/static/style.css" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <div id="home-screen" class="hidden p-6"></div>
+        <div id="admin-login" class="hidden p-6"></div>
+        <div id="admin-panel" class="hidden p-6"></div>
+        <div id="config-screen" class="hidden p-6"></div>
+        <div id="consultoras-list" class="hidden p-6"></div>
+        <div id="consultora-form" class="hidden p-6"></div>
+        <div id="representantes-list" class="hidden p-6"></div>
+        <div id="representante-form" class="hidden p-6"></div>
+        <div id="usuarios-list" class="hidden p-6"></div>
+        <div id="usuario-form" class="hidden p-6"></div>
+        <div id="explicacoes-screen" class="hidden p-6"></div>
+        <div id="fotos-screen" class="p-6"></div>
+        <div id="fotos-admin" class="hidden p-6"></div>
+        <div id="quem-somos-screen" class="hidden p-6"></div>
+    </div>
+
+    <footer>
+        <div class="flex items-center justify-between">
+            <div>
+                <img id="footer-logo" src="" alt="" class="footer-logo hidden">
+            </div>
+            <div class="text-center flex-1">
+                <p class="font-semibold">Vsual Consultoria em Marketing</p>
+                <p class="text-sm">18 99667-6409</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
+    <script src="/static/app.js"></script>
+    <script src="/static/app-part2.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        if (typeof mostrarFotos === 'function') {
+          mostrarFotos();
+        }
+      });
+    </script>
+</body>
+</html>
+  `)
+})
+
+app.get('/explicacoes', (c) => {
+  return c.html(`
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Explicações - Semi Jóias App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="/static/style.css" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <div id="home-screen" class="hidden p-6"></div>
+        <div id="admin-login" class="hidden p-6"></div>
+        <div id="admin-panel" class="hidden p-6"></div>
+        <div id="config-screen" class="hidden p-6"></div>
+        <div id="consultoras-list" class="hidden p-6"></div>
+        <div id="consultora-form" class="hidden p-6"></div>
+        <div id="representantes-list" class="hidden p-6"></div>
+        <div id="representante-form" class="hidden p-6"></div>
+        <div id="usuarios-list" class="hidden p-6"></div>
+        <div id="usuario-form" class="hidden p-6"></div>
+        <div id="explicacoes-screen" class="p-6"></div>
+        <div id="fotos-screen" class="hidden p-6"></div>
+        <div id="fotos-admin" class="hidden p-6"></div>
+        <div id="quem-somos-screen" class="hidden p-6"></div>
+    </div>
+
+    <footer>
+        <div class="flex items-center justify-between">
+            <div>
+                <img id="footer-logo" src="" alt="" class="footer-logo hidden">
+            </div>
+            <div class="text-center flex-1">
+                <p class="font-semibold">Vsual Consultoria em Marketing</p>
+                <p class="text-sm">18 99667-6409</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
+    <script src="/static/app.js"></script>
+    <script src="/static/app-part2.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        if (typeof mostrarExplicacoes === 'function') {
+          mostrarExplicacoes();
+        }
+      });
+    </script>
 </body>
 </html>
   `)
