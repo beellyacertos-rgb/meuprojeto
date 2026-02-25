@@ -445,6 +445,119 @@ app.get('/', (c) => {
   `)
 })
 
+// ================== LINKS SOCIAIS E PIX ==================
+// WhatsApp
+app.get('/api/whatsapp', async (c) => {
+  const result = await c.env.DB.prepare(
+    'SELECT * FROM configuracoes WHERE chave = ?'
+  ).bind('whatsapp_link').first()
+  return c.json(result)
+})
+
+app.post('/api/whatsapp', async (c) => {
+  const { link } = await c.req.json()
+  
+  const existing = await c.env.DB.prepare(
+    'SELECT * FROM configuracoes WHERE chave = ?'
+  ).bind('whatsapp_link').first()
+  
+  if (existing) {
+    await c.env.DB.prepare(
+      'UPDATE configuracoes SET valor = ?, updated_at = CURRENT_TIMESTAMP WHERE chave = ?'
+    ).bind(link, 'whatsapp_link').run()
+  } else {
+    await c.env.DB.prepare(
+      'INSERT INTO configuracoes (chave, valor) VALUES (?, ?)'
+    ).bind('whatsapp_link', link).run()
+  }
+  
+  return c.json({ success: true })
+})
+
+// Instagram
+app.get('/api/instagram', async (c) => {
+  const result = await c.env.DB.prepare(
+    'SELECT * FROM configuracoes WHERE chave = ?'
+  ).bind('instagram_link').first()
+  return c.json(result)
+})
+
+app.post('/api/instagram', async (c) => {
+  const { link } = await c.req.json()
+  
+  const existing = await c.env.DB.prepare(
+    'SELECT * FROM configuracoes WHERE chave = ?'
+  ).bind('instagram_link').first()
+  
+  if (existing) {
+    await c.env.DB.prepare(
+      'UPDATE configuracoes SET valor = ?, updated_at = CURRENT_TIMESTAMP WHERE chave = ?'
+    ).bind(link, 'instagram_link').run()
+  } else {
+    await c.env.DB.prepare(
+      'INSERT INTO configuracoes (chave, valor) VALUES (?, ?)'
+    ).bind('instagram_link', link).run()
+  }
+  
+  return c.json({ success: true })
+})
+
+// Pix - Chave e QR Code
+app.get('/api/pix', async (c) => {
+  const chavePix = await c.env.DB.prepare(
+    'SELECT * FROM configuracoes WHERE chave = ?'
+  ).bind('pix_chave').first()
+  
+  const qrcode = await c.env.DB.prepare(
+    'SELECT * FROM configuracoes WHERE chave = ?'
+  ).bind('pix_qrcode').first()
+  
+  return c.json({ 
+    chave: chavePix?.valor || '', 
+    qrcode: qrcode?.valor || '' 
+  })
+})
+
+app.post('/api/pix', async (c) => {
+  const { chave, qrcode } = await c.req.json()
+  
+  // Salvar chave PIX
+  if (chave !== undefined) {
+    const existingChave = await c.env.DB.prepare(
+      'SELECT * FROM configuracoes WHERE chave = ?'
+    ).bind('pix_chave').first()
+    
+    if (existingChave) {
+      await c.env.DB.prepare(
+        'UPDATE configuracoes SET valor = ?, updated_at = CURRENT_TIMESTAMP WHERE chave = ?'
+      ).bind(chave, 'pix_chave').run()
+    } else {
+      await c.env.DB.prepare(
+        'INSERT INTO configuracoes (chave, valor) VALUES (?, ?)'
+      ).bind('pix_chave', chave).run()
+    }
+  }
+  
+  // Salvar QR Code PIX
+  if (qrcode !== undefined) {
+    const existingQR = await c.env.DB.prepare(
+      'SELECT * FROM configuracoes WHERE chave = ?'
+    ).bind('pix_qrcode').first()
+    
+    if (existingQR) {
+      await c.env.DB.prepare(
+        'UPDATE configuracoes SET valor = ?, updated_at = CURRENT_TIMESTAMP WHERE chave = ?'
+      ).bind(qrcode, 'pix_qrcode').run()
+    } else {
+      await c.env.DB.prepare(
+        'INSERT INTO configuracoes (chave, valor) VALUES (?, ?)'
+      ).bind('pix_qrcode', qrcode).run()
+    }
+  }
+  
+  return c.json({ success: true })
+})
+
 // ================== ROTAS SPA ==================
 app.get('/admin', (c) => {
   return c.html(`

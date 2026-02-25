@@ -584,6 +584,21 @@ function renderHomePage() {
                 <i class="fas fa-building"></i>
                 <div>${t('quemSomos')}</div>
             </button>
+            <button onclick="openWhatsAppLink()" class="btn-mobile-home" id="btn-whatsapp" style="display: none;">
+                <i class="fab fa-whatsapp"></i>
+                <i class="fas fa-comment-dots"></i>
+                <div>Fale com Comercial</div>
+            </button>
+            <button onclick="openInstagramLink()" class="btn-mobile-home" id="btn-instagram" style="display: none;">
+                <i class="fab fa-instagram"></i>
+                <i class="fas fa-camera-retro"></i>
+                <div>Instagram</div>
+            </button>
+            <button onclick="showPixModal()" class="btn-mobile-home" id="btn-pix" style="display: none;">
+                <i class="fas fa-qrcode"></i>
+                <i class="fas fa-money-bill"></i>
+                <div>PIX</div>
+            </button>
             <button onclick="showAdminLogin()" class="btn-mobile-home">
                 <i class="fas fa-lock"></i>
                 <i class="fas fa-user-shield"></i>
@@ -591,6 +606,143 @@ function renderHomePage() {
             </button>
         </div>
     `;
+    
+    // Carregar e exibir botões sociais se configurados
+    loadSocialButtons();
+}
+
+// ================== BOTÕES SOCIAIS NO FRONTEND ==================
+let whatsappLink = '';
+let instagramLink = '';
+let pixData = { chave: '', qrcode: '' };
+
+async function loadSocialButtons() {
+    // Carregar WhatsApp
+    try {
+        const whatsappResponse = await axios.get('/api/whatsapp');
+        if (whatsappResponse.data && whatsappResponse.data.valor) {
+            whatsappLink = whatsappResponse.data.valor;
+            document.getElementById('btn-whatsapp').style.display = 'flex';
+        }
+    } catch (error) {
+        console.log('WhatsApp não configurado');
+    }
+    
+    // Carregar Instagram
+    try {
+        const instagramResponse = await axios.get('/api/instagram');
+        if (instagramResponse.data && instagramResponse.data.valor) {
+            instagramLink = instagramResponse.data.valor;
+            document.getElementById('btn-instagram').style.display = 'flex';
+        }
+    } catch (error) {
+        console.log('Instagram não configurado');
+    }
+    
+    // Carregar PIX
+    try {
+        const pixResponse = await axios.get('/api/pix');
+        if (pixResponse.data && (pixResponse.data.chave || pixResponse.data.qrcode)) {
+            pixData = pixResponse.data;
+            document.getElementById('btn-pix').style.display = 'flex';
+        }
+    } catch (error) {
+        console.log('PIX não configurado');
+    }
+}
+
+function openWhatsAppLink() {
+    if (whatsappLink) {
+        window.open(whatsappLink, '_blank');
+    } else {
+        alert('Link do WhatsApp não configurado!');
+    }
+}
+
+function openInstagramLink() {
+    if (instagramLink) {
+        window.open(instagramLink, '_blank');
+    } else {
+        alert('Link do Instagram não configurado!');
+    }
+}
+
+function showPixModal() {
+    if (!pixData.chave && !pixData.qrcode) {
+        alert('PIX não configurado!');
+        return;
+    }
+    
+    const modal = document.createElement('div');
+    modal.id = 'pix-modal';
+    modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        padding: 20px;
+    `;
+    
+    modal.innerHTML = `
+        <div style="background: white; padding: 30px; border-radius: 15px; max-width: 500px; width: 100%; position: relative;">
+            <button onclick="closePixModal()" style="position: absolute; top: 15px; right: 15px; background: #f44336; color: white; border: none; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center;">
+                ×
+            </button>
+            
+            <h2 style="text-align: center; color: #333; margin-bottom: 20px; font-size: 24px;">
+                <i class="fas fa-qrcode" style="color: #00a8ff;"></i> PIX
+            </h2>
+            
+            ${pixData.qrcode ? `
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <img src="${pixData.qrcode}" alt="QR Code PIX" style="max-width: 300px; width: 100%; border: 2px solid #ddd; border-radius: 10px;">
+                </div>
+            ` : ''}
+            
+            ${pixData.chave ? `
+                <div style="background: #f5f5f5; padding: 15px; border-radius: 10px; margin-bottom: 15px;">
+                    <p style="color: #666; margin-bottom: 5px; font-size: 14px;">Chave PIX:</p>
+                    <p style="color: #333; font-weight: bold; word-break: break-all; font-size: 16px;">${pixData.chave}</p>
+                    <button onclick="copyPixKey()" style="margin-top: 10px; background: #00a8ff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; width: 100%;">
+                        <i class="fas fa-copy"></i> Copiar Chave
+                    </button>
+                </div>
+            ` : ''}
+            
+            <p style="text-align: center; color: #999; font-size: 14px; margin-top: 15px;">
+                <i class="fas fa-info-circle"></i> Escaneie o QR Code ou copie a chave para fazer o pagamento
+            </p>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+}
+
+function closePixModal() {
+    const modal = document.getElementById('pix-modal');
+    if (modal) {
+        modal.remove();
+    }
+}
+
+function copyPixKey() {
+    if (!pixData.chave) return;
+    
+    // Criar elemento temporário para copiar
+    const temp = document.createElement('textarea');
+    temp.value = pixData.chave;
+    document.body.appendChild(temp);
+    temp.select();
+    document.execCommand('copy');
+    document.body.removeChild(temp);
+    
+    alert('✅ Chave PIX copiada para a área de transferência!');
 }
 
 // ================== LOGIN ==================
@@ -671,8 +823,307 @@ function renderAdminPanel() {
                 <i class="fas fa-key"></i>
                 <div>${t('gerenciarUsuarios')}</div>
             </button>
+            <button onclick="showWhatsAppConfig()" class="btn-mobile-admin">
+                <i class="fab fa-whatsapp"></i>
+                <i class="fas fa-comment-dots"></i>
+                <div>Fale com Comercial</div>
+            </button>
+            <button onclick="showInstagramConfig()" class="btn-mobile-admin">
+                <i class="fab fa-instagram"></i>
+                <i class="fas fa-camera-retro"></i>
+                <div>Instagram</div>
+            </button>
+            <button onclick="showPixConfig()" class="btn-mobile-admin">
+                <i class="fas fa-qrcode"></i>
+                <i class="fas fa-money-bill"></i>
+                <div>PIX</div>
+            </button>
         </div>
     `;
+}
+
+// ================== WHATSAPP CONFIG ==================
+async function showWhatsAppConfig() {
+    // Carregar configuração atual
+    let currentLink = '';
+    try {
+        const response = await axios.get('/api/whatsapp');
+        if (response.data && response.data.valor) {
+            currentLink = response.data.valor;
+        }
+    } catch (error) {
+        console.log('Nenhum link WhatsApp configurado ainda');
+    }
+    
+    const screen = document.getElementById('config-screen');
+    screen.innerHTML = `
+        <button onclick="showAdminPanel()" class="btn-voltar">
+            <i class="fas fa-arrow-left mr-2"></i> Voltar
+        </button>
+        <h2 class="text-2xl font-bold mb-6" style="color: white;">
+            <i class="fab fa-whatsapp mr-2"></i> Configurar Fale com Comercial
+        </h2>
+        
+        <div class="space-y-6 config-form">
+            <div>
+                <label class="block font-semibold mb-2 text-white">Link do WhatsApp</label>
+                <input type="text" 
+                       id="whatsapp-link" 
+                       value="${currentLink}" 
+                       class="form-input" 
+                       placeholder="https://wa.me/5518996676409">
+                <p class="text-sm text-gray-300 mt-2">
+                    <i class="fas fa-info-circle mr-1"></i> 
+                    Exemplo: https://wa.me/5518996676409
+                </p>
+            </div>
+            
+            <button onclick="salvarWhatsApp()" class="btn-primary w-full">
+                <i class="fas fa-save mr-2"></i> Salvar
+            </button>
+        </div>
+        
+        ${currentLink ? `
+        <div class="mt-6 p-4 bg-green-800 rounded-lg">
+            <p class="text-white font-semibold mb-2">✅ Preview do botão:</p>
+            <a href="${currentLink}" 
+               target="_blank" 
+               class="inline-flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700">
+                <i class="fab fa-whatsapp text-xl"></i>
+                <span>Fale com Comercial</span>
+            </a>
+        </div>
+        ` : ''}
+    `;
+    showScreen('config-screen');
+}
+
+async function salvarWhatsApp() {
+    const link = document.getElementById('whatsapp-link').value.trim();
+    
+    if (!link) {
+        alert('Por favor, insira o link do WhatsApp!');
+        return;
+    }
+    
+    if (!link.startsWith('https://wa.me/') && !link.startsWith('http')) {
+        alert('Link inválido! Use o formato: https://wa.me/5518996676409');
+        return;
+    }
+    
+    try {
+        await axios.post('/api/whatsapp', { link });
+        alert('✅ Link do WhatsApp salvo com sucesso!');
+        showWhatsAppConfig(); // Recarregar para mostrar preview
+    } catch (error) {
+        console.error('Erro ao salvar WhatsApp:', error);
+        alert('❌ Erro ao salvar. Tente novamente.');
+    }
+}
+
+// ================== INSTAGRAM CONFIG ==================
+async function showInstagramConfig() {
+    // Carregar configuração atual
+    let currentLink = '';
+    try {
+        const response = await axios.get('/api/instagram');
+        if (response.data && response.data.valor) {
+            currentLink = response.data.valor;
+        }
+    } catch (error) {
+        console.log('Nenhum link Instagram configurado ainda');
+    }
+    
+    const screen = document.getElementById('config-screen');
+    screen.innerHTML = `
+        <button onclick="showAdminPanel()" class="btn-voltar">
+            <i class="fas fa-arrow-left mr-2"></i> Voltar
+        </button>
+        <h2 class="text-2xl font-bold mb-6" style="color: white;">
+            <i class="fab fa-instagram mr-2"></i> Configurar Instagram
+        </h2>
+        
+        <div class="space-y-6 config-form">
+            <div>
+                <label class="block font-semibold mb-2 text-white">Link do Instagram</label>
+                <input type="text" 
+                       id="instagram-link" 
+                       value="${currentLink}" 
+                       class="form-input" 
+                       placeholder="https://instagram.com/sua_empresa">
+                <p class="text-sm text-gray-300 mt-2">
+                    <i class="fas fa-info-circle mr-1"></i> 
+                    Exemplo: https://instagram.com/beellysemijoias
+                </p>
+            </div>
+            
+            <button onclick="salvarInstagram()" class="btn-primary w-full">
+                <i class="fas fa-save mr-2"></i> Salvar
+            </button>
+        </div>
+        
+        ${currentLink ? `
+        <div class="mt-6 p-4 bg-pink-800 rounded-lg">
+            <p class="text-white font-semibold mb-2">✅ Preview do botão:</p>
+            <a href="${currentLink}" 
+               target="_blank" 
+               class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg hover:from-purple-700 hover:to-pink-700">
+                <i class="fab fa-instagram text-xl"></i>
+                <span>Instagram</span>
+            </a>
+        </div>
+        ` : ''}
+    `;
+    showScreen('config-screen');
+}
+
+async function salvarInstagram() {
+    const link = document.getElementById('instagram-link').value.trim();
+    
+    if (!link) {
+        alert('Por favor, insira o link do Instagram!');
+        return;
+    }
+    
+    if (!link.startsWith('https://instagram.com/') && !link.startsWith('https://www.instagram.com/') && !link.startsWith('http')) {
+        alert('Link inválido! Use o formato: https://instagram.com/sua_empresa');
+        return;
+    }
+    
+    try {
+        await axios.post('/api/instagram', { link });
+        alert('✅ Link do Instagram salvo com sucesso!');
+        showInstagramConfig(); // Recarregar para mostrar preview
+    } catch (error) {
+        console.error('Erro ao salvar Instagram:', error);
+        alert('❌ Erro ao salvar. Tente novamente.');
+    }
+}
+
+// ================== PIX CONFIG ==================
+let pixQRCodeBase64 = null;
+
+async function showPixConfig() {
+    // Carregar configuração atual
+    let currentPix = { chave: '', qrcode: '' };
+    try {
+        const response = await axios.get('/api/pix');
+        if (response.data) {
+            currentPix = response.data;
+            pixQRCodeBase64 = currentPix.qrcode;
+        }
+    } catch (error) {
+        console.log('Nenhuma configuração PIX ainda');
+    }
+    
+    const screen = document.getElementById('config-screen');
+    screen.innerHTML = `
+        <button onclick="showAdminPanel()" class="btn-voltar">
+            <i class="fas fa-arrow-left mr-2"></i> Voltar
+        </button>
+        <h2 class="text-2xl font-bold mb-6" style="color: white;">
+            <i class="fas fa-qrcode mr-2"></i> Configurar PIX
+        </h2>
+        
+        <div class="space-y-6 config-form">
+            <div>
+                <label class="block font-semibold mb-2 text-white">Chave PIX</label>
+                <input type="text" 
+                       id="pix-chave" 
+                       value="${currentPix.chave || ''}" 
+                       class="form-input" 
+                       placeholder="Digite a chave PIX (CPF, CNPJ, email, telefone ou chave aleatória)">
+                <p class="text-sm text-gray-300 mt-2">
+                    <i class="fas fa-info-circle mr-1"></i> 
+                    Pode ser CPF, CNPJ, email, telefone ou chave aleatória
+                </p>
+            </div>
+            
+            <div>
+                <label class="block font-semibold mb-2 text-white">QR Code PIX</label>
+                <div class="border-2 border-dashed border-gray-600 rounded-lg p-6 text-center cursor-pointer hover:bg-gray-800 transition"
+                     onclick="document.getElementById('pix-qrcode-input').click()">
+                    ${pixQRCodeBase64 ? `
+                        <img src="${pixQRCodeBase64}" 
+                             alt="QR Code PIX" 
+                             id="pix-qrcode-preview"
+                             class="mx-auto mb-4"
+                             style="max-width: 300px; max-height: 300px;">
+                        <p class="text-white">Clique para alterar a imagem</p>
+                    ` : `
+                        <i class="fas fa-qrcode text-6xl text-gray-400 mb-4"></i>
+                        <p class="text-white">Clique para fazer upload do QR Code</p>
+                        <p class="text-sm text-gray-400 mt-2">PNG, JPG ou JPEG</p>
+                    `}
+                </div>
+                <input type="file" 
+                       id="pix-qrcode-input" 
+                       accept="image/*" 
+                       style="display: none;" 
+                       onchange="handlePixQRCodeUpload(event)">
+            </div>
+            
+            <button onclick="salvarPix()" class="btn-primary w-full">
+                <i class="fas fa-save mr-2"></i> Salvar
+            </button>
+        </div>
+        
+        ${currentPix.chave || currentPix.qrcode ? `
+        <div class="mt-6 p-4 bg-blue-800 rounded-lg">
+            <p class="text-white font-semibold mb-3">✅ Preview do botão PIX:</p>
+            <button onclick="alert('Modal PIX será aberto no site')" 
+                    class="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                <i class="fas fa-qrcode text-xl"></i>
+                <span>PIX</span>
+            </button>
+            ${currentPix.chave ? `
+                <p class="text-white mt-3"><strong>Chave:</strong> ${currentPix.chave}</p>
+            ` : ''}
+        </div>
+        ` : ''}
+    `;
+    showScreen('config-screen');
+}
+
+function handlePixQRCodeUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        pixQRCodeBase64 = e.target.result;
+        
+        // Atualizar preview
+        const preview = document.getElementById('pix-qrcode-preview');
+        if (preview) {
+            preview.src = pixQRCodeBase64;
+        } else {
+            // Recarregar a tela para mostrar o preview
+            showPixConfig();
+        }
+    };
+    reader.readAsDataURL(file);
+}
+
+async function salvarPix() {
+    const chave = document.getElementById('pix-chave').value.trim();
+    
+    if (!chave && !pixQRCodeBase64) {
+        alert('Por favor, preencha a chave PIX ou faça upload do QR Code!');
+        return;
+    }
+    
+    try {
+        await axios.post('/api/pix', { 
+            chave: chave || '', 
+            qrcode: pixQRCodeBase64 || '' 
+        });
+        alert('✅ Configuração PIX salva com sucesso!');
+        showPixConfig(); // Recarregar para mostrar preview
+    } catch (error) {
+        console.error('Erro ao salvar PIX:', error);
+        alert('❌ Erro ao salvar. Tente novamente.');
+    }
 }
 
 // ================== CONFIGURAÇÕES ==================
