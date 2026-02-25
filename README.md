@@ -49,6 +49,21 @@ Sistema completo de gestão para empresa de semi joias com cadastro de consultor
 - ✅ Botão "Salvar" para persistir no banco
 - ✅ Exibição pública na página /explicacoes
 
+### 💬 Links Sociais (NOVO v10.0)
+- ✅ **Fale com Comercial (WhatsApp)**: Configurar link do WhatsApp no admin
+- ✅ Botão no frontend que abre WhatsApp em nova aba
+- ✅ **Instagram**: Configurar link do Instagram no admin
+- ✅ Botão no frontend que abre Instagram em nova aba
+- ✅ Exibição automática apenas se configurados
+
+### 💰 PIX (NOVO v10.0)
+- ✅ Configurar chave PIX no admin
+- ✅ Upload de QR Code PIX (imagem)
+- ✅ Botão no frontend que abre modal com dados PIX
+- ✅ Modal exibe QR Code e chave PIX
+- ✅ Botão para copiar chave PIX
+- ✅ Preview na área administrativa
+
 ### 🔐 Área Administrativa
 - ✅ Acesso direto (sem senha)
 - ✅ Interface organizada em 6 seções:
@@ -212,6 +227,30 @@ POST /api/login
 Body: { username: "admin", password: "123" }
 ```
 
+### WhatsApp (NOVO v10.0)
+```
+GET  /api/whatsapp  - Buscar link do WhatsApp
+POST /api/whatsapp  - Salvar link do WhatsApp
+     Body: { link: "https://wa.me/5518996676409" }
+```
+
+### Instagram (NOVO v10.0)
+```
+GET  /api/instagram  - Buscar link do Instagram
+POST /api/instagram  - Salvar link do Instagram
+     Body: { link: "https://instagram.com/sua_empresa" }
+```
+
+### PIX (NOVO v10.0)
+```
+GET  /api/pix  - Buscar dados PIX (chave e QR Code)
+POST /api/pix  - Salvar dados PIX
+     Body: { 
+       chave: "18996676409", 
+       qrcode: "data:image/png;base64,..." 
+     }
+```
+
 ## 📱 Como Usar
 
 ### Área Administrativa
@@ -252,6 +291,27 @@ Body: { username: "admin", password: "123" }
 7. **Gerenciar Representantes**:
    - Use o campo de busca para filtrar
    - Clique nos botões de ação para editar/excluir
+
+8. **Configurar Fale com Comercial (WhatsApp)** (NOVO v10.0):
+   - Clique no botão "Fale com Comercial" no painel admin
+   - Digite o link do WhatsApp no formato: https://wa.me/5518996676409
+   - Clique em "Salvar"
+   - O botão aparecerá automaticamente na página inicial do site
+
+9. **Configurar Instagram** (NOVO v10.0):
+   - Clique no botão "Instagram" no painel admin
+   - Digite o link do Instagram no formato: https://instagram.com/sua_empresa
+   - Clique em "Salvar"
+   - O botão aparecerá automaticamente na página inicial do site
+
+10. **Configurar PIX** (NOVO v10.0):
+    - Clique no botão "PIX" no painel admin
+    - Digite a chave PIX (CPF, CNPJ, email, telefone ou chave aleatória)
+    - Faça upload da imagem do QR Code PIX
+    - Clique em "Salvar"
+    - O botão PIX aparecerá automaticamente na página inicial
+    - Usuários poderão clicar e ver o QR Code + chave PIX
+    - Funcionalidade de copiar chave PIX com um clique
 
 ### Páginas Públicas
 
@@ -345,8 +405,8 @@ curl https://semijoias-app-di3.pages.dev/api/clientes
 
 ## ✅ Status do Projeto
 
-### Versão Atual: v9.0
-**Data**: 2026-02-23
+### Versão Atual: v10.0
+**Data**: 2026-02-25
 
 ### Funcionalidades 100% Completas:
 - ✅ Sistema de uploads com preview e salvamento manual
@@ -359,6 +419,8 @@ curl https://semijoias-app-di3.pages.dev/api/clientes
 - ✅ Deploy em produção funcionando
 - ✅ Rotas SPA para todas as páginas
 - ✅ Mobile responsivo
+- ✅ **Botões Sociais**: WhatsApp, Instagram (v10.0)
+- ✅ **Sistema PIX**: Chave + QR Code com modal (v10.0)
 
 ### Testes Realizados:
 - ✅ Home page carrega corretamente
@@ -371,6 +433,9 @@ curl https://semijoias-app-di3.pages.dev/api/clientes
 - ✅ Upload logo rodapé
 - ✅ Upload foto galeria
 - ✅ Listar galeria
+- ✅ **Configurar WhatsApp** (v10.0)
+- ✅ **Configurar Instagram** (v10.0)
+- ✅ **Configurar PIX com QR Code** (v10.0)
 
 ### Próximos Passos Recomendados:
 1. Adicionar sistema de autenticação real (JWT)
@@ -395,6 +460,6 @@ Projeto desenvolvido para uso interno da Beelly Semi Joias.
 
 ---
 
-**Última atualização**: 2026-02-23  
-**Versão**: v9.0  
+**Última atualização**: 2026-02-25  
+**Versão**: v10.0  
 **Status**: ✅ Em Produção
